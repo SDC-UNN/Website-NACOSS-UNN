@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Mar 16, 2015 at 11:42 AM
+-- Generation Time: Mar 14, 2015 at 02:53 PM
 -- Server version: 5.6.17
 -- PHP Version: 5.5.12
 
@@ -19,19 +19,6 @@ SET time_zone = "+00:00";
 --
 -- Database: `nacoss_db`
 --
-
--- --------------------------------------------------------
-
---
--- Table structure for table `error_log`
---
-
-CREATE TABLE IF NOT EXISTS `error_log` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `time_of_error` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `message` text NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 
@@ -73,28 +60,22 @@ CREATE TABLE IF NOT EXISTS `users` (
   `regno` varchar(11) NOT NULL,
   `first_name` varchar(30) NOT NULL,
   `last_name` varchar(30) NOT NULL,
-  `other_names` varchar(30) DEFAULT NULL,
+  `other_names` varchar(30) NOT NULL,
   `password` varchar(40) NOT NULL,
-  `department` varchar(20) DEFAULT NULL,
-  `level` varchar(3) DEFAULT NULL,
+  `department` varchar(20) NOT NULL,
+  `level` varchar(3) NOT NULL,
   `phone` varchar(13) NOT NULL,
   `email` text NOT NULL,
-  `dob` date DEFAULT NULL,
-  `address1` text,
-  `address2` text,
-  `interest` text,
-  `bio` text,
   `verified` int(1) NOT NULL DEFAULT '0',
-  PRIMARY KEY (`regno`),
-  UNIQUE KEY `regno` (`regno`)
+  PRIMARY KEY (`regno`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `users`
 --
 
-INSERT INTO `users` (`regno`, `first_name`, `last_name`, `other_names`, `password`, `department`, `level`, `phone`, `email`, `dob`, `address1`, `address2`, `interest`, `bio`, `verified`) VALUES
-('1234/123456', 'Jane', 'Doe', 'Anonymous', 'd14f21b5919900f4cc49333652fb4e92940ac55d', '', '', '', '', NULL, NULL, NULL, NULL, NULL, 0);
+INSERT INTO `users` (`regno`, `first_name`, `last_name`, `other_names`, `password`, `department`, `level`, `phone`, `email`, `verified`) VALUES
+('1234/123456', 'Jane', 'Doe', 'Anonymous', 'd14f21b5919900f4cc49333652fb4e92940ac55d', '', '', '', '', 0);
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
