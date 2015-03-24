@@ -1,3 +1,7 @@
+<?php
+require_once './class_lib.php';
+$news = new NewsFeeds();
+?>
 <!DOCTYPE html>
 <!--
 Copyright 2015 NACOSS UNN Developers Group (NDG).
@@ -51,41 +55,26 @@ limitations under the License.
     <body class="metro" style="background-image: url(img/bg.jpg); background-repeat: repeat;">
         <div class="container bg-white">            
             <?php require_once './header.php'; ?>
-            <?php require_once './functions.php'; ?>
             <br/>
             <div class="padding20">
 
                 <h1>News / Events</h1>
                 <?php
-                $array = getNews();
+                $array = $news->getNews();
                 for ($index = 0; $index < count($array); $index++) {
                     ?>
                     <div class="listview-outlook" data-role="listview">
-                        <div class="list-group">
-                            <a href=" $array[$index]['content']" class="group-title"><?= "Headline: " . $array[$index]['headline'] ?></a>
-                            <div class="group-content">
-
-                                <a href="content.php?id=<?= $array[$index]['id'] ?>" class="list">
-                                    <div class="list-content"><?= "Posted: " . $array[$index]['time_of_post'] ?></div>
-
-
-                                </a>
-
-                            </div>
-
-                        </div>
-
                         <div class="list-group collapsed">
-                            <a href="" class="group-title"><?= "Yersterday " . $array[$index]['headline'] ?></a>
+                            <a href="#" class="group-title">
+                                <?= "Posted: " . $array[$index]['time_of_post'] ?>
+                            </a>
                             <div class="group-content">
-                                <a href="<?= $array[$index]['id'] ?>" class="list">
-                                    <div class="list-content"><?= "Posted: " . $array[$index]['time_of_post'] ?></div>
+                                <a href="news_post.php?id=<?= $array[$index]['id'] ?>" class="list">
+                                    <div class="list-content"><?= "Headline: " . $array[$index]['headline'] ?></div>
                                 </a>
-                                <?= $array[$index]['content'] ?>
                             </div>
                         </div>
                     </div>
-
                     <?php
                 }
                 ?>

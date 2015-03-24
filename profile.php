@@ -1,9 +1,8 @@
 <?php
-require_once './functions.php';
+require_once './class_lib.php';
+$user = new User();
 
-if (isLoggedIn()) {
-    $display_name = getDisplayName();
-
+if ($user->isLoggedIn()) {
     /* Page 1: View profile page
      * Page 2: Edit profile page
      * Page 3: View Results page
@@ -23,7 +22,7 @@ if (isLoggedIn()) {
             }
 
             //Validating details
-            $error_message = getInvalidParameters($array);
+            $error_message = Utility::getInvalidParameters($array);
             $ok = empty($error_message);
         } else {
             $ok = false;
@@ -32,7 +31,7 @@ if (isLoggedIn()) {
 
         //update user
         if ($ok) {
-            $success = updateUserInfo($array);
+            $success = $user->updateUserInfo($array);
             if (!$success) {
                 //update unsuccessful
                 $error_message = "Oops! Something went wrong, please try again.";
@@ -66,7 +65,7 @@ if (isLoggedIn()) {
 
             //Send bug report
             if ($ok) {
-                $success = reportBug($array);
+                $success = $user->reportBug($array);
                 if (!$success) {
                     //Sending failed
                     $error_message = "Oops! Something went wrong, please try again.";
@@ -140,7 +139,7 @@ limitations under the License.
         <script src="js/github.info.js"></script>
 
         <!-- Page Title -->
-        <title>NACOSS UNN : <?= $display_name ?></title>        
+        <title>NACOSS UNN : <?= $user->getDisplayName() ?></title>        
     </head>
     <body class="metro" style="background-image: url(img/bg.jpg); background-repeat: repeat;">
         <div class="container bg-white">            
@@ -168,9 +167,9 @@ limitations under the License.
                         </div>
 
                         <div class="span9">
-                            <?php if (isUserDeleted()) { ?>
+                            <?php if ($user->isUserDeleted()) { ?>
                                 <h2>This account no longer exist, please contact site admin if this is an error</h2>
-                            <?php } else if (isUserSuspended()) {
+                            <?php } else if ($user->isUserSuspended()) {
                                 ?>
                                 <h2>This account has been suspended, contact site admin to resolve this</h2>
                                 <?php

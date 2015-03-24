@@ -1,3 +1,6 @@
+<?php require_once './class_lib.php'; 
+?>
+
 <!DOCTYPE html>
 <!--
 Copyright 2015 NACOSS UNN Developers Group (NDG).
@@ -51,13 +54,12 @@ limitations under the License.
     <body class="metro" style="background-image: url(img/bg.jpg); background-repeat: repeat;">
         <div class="container bg-white">            
             <?php require_once './header.php'; ?>
-            <?php require_once './functions.php'; ?>
             <br/>
             <div class="padding20">
                 <h1>Frequently Asked Questions</h1>
                 <br/>
                 <?php
-                $array = getFAQs();
+                $array = Utility::getFAQs();
                 for ($index = 0; $index < count($array); $index++) {
                     ?>
                     <div class="panel shadow" data-role="panel">

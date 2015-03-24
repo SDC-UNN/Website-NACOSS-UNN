@@ -15,10 +15,10 @@
  * limitations under the License.
  */
 
-require_once './functions.php';
 if (empty($array)) {
-    $array = getUserData();
+    $array = $user->getUserData();
 }
+
 ?>
 <div>
     <h2>Edit Profile</h2>

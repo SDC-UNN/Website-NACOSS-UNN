@@ -16,7 +16,8 @@
  * limitations under the License.
  */
 
-require_once './class_lib.php';
-$user = new User();
-$user->logoutUser();
-header("location: profile.php");
+require_once './constants.php';
+require_once './Utility.php';
+require_once './User.php';
+require_once './Collections.php';
+require_once './NewsFeeds.php';

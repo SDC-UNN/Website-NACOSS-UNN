@@ -1,16 +1,22 @@
 <?php
-require_once './functions.php';
+require_once './class_lib.php';
+$user = new User();
+$library = new Collections();
 
-if (!isLoggedIn()) {
+if (!$user->isLoggedIn()) {
     //This page is for registered users only
     header("Location: login.php");
 } else {
     $searchQuery = "";
     $request = filter_input(INPUT_POST, "submit");
     if (isset($request)) {
-        $searchQuery = filter_input(INPUT_POST, "search");
+        $searchQuery = html_entity_decode(filter_input(INPUT_POST, "search"));
         
         //Process query
+        $array = $library->searchBooks($searchQuery);
+    }
+    else{
+        $array = $library->getBooks("");
     }
 }
 ?>
@@ -72,7 +78,7 @@ limitations under the License.
             <div class="padding20">
                 <form method="post" action="library.php">
                     <div class="input-control text" data-role="input-control">
-                        <input type="text" value="<?=$searchQuery?>" placeholder="Search" name="search"/>
+                        <input type="text" value="<?=$searchQuery?>" placeholder="Search Library" name="search"/>
                         <button class="btn-search" name="submit" type="submit"></button>
                     </div>
                 </form>

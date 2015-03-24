@@ -1,6 +1,8 @@
 <?php
-require_once './functions.php';
-if (isLoggedIn()) {
+require_once './class_lib.php';
+$user = new User();
+
+if ($user->isLoggedIn()) {
     header("location: profile.php");
 } else {
     $isFormRequest = filter_input(INPUT_POST, "submit");
@@ -12,21 +14,23 @@ if (isLoggedIn()) {
             //handle request from registration form
             $showLoginPage = false;
 
-            $first_name = html_entity_decode(filter_input(INPUT_POST, "first_name"));
-            $last_name = html_entity_decode(filter_input(INPUT_POST, "last_name"));
-            $regno = html_entity_decode(filter_input(INPUT_POST, "regno"));
-            $password1 = html_entity_decode(filter_input(INPUT_POST, "password1"));
-            $password2 = html_entity_decode(filter_input(INPUT_POST, "password2"));
-            $phone = html_entity_decode(filter_input(INPUT_POST, "phone"));
-            $email = html_entity_decode(filter_input(INPUT_POST, "email"));
+            $array = filter_input_array(INPUT_POST);
+            if ($array !== FALSE || $array !== null) {
+                foreach ($array as $key => $value) {
+                    $array[$key] = html_entity_decode($array[$key]);
+                }
 
-            //Validating details
-            $error_message = getInvalidParameters($regno, $password1, $password2, $email, $first_name, $last_name, $phone);
-            $ok = empty($error_message);
+                //Validating details
+                $error_message = Utility::getInvalidParameters($array);
+                $ok = empty($error_message);
+            } else {
+                $ok = false;
+                $error_message = "Oops! Something went wrong, parameters are invalid.";
+            }
 
             //register user
             if ($ok) {
-                $success = registerUser($regno, $password1, $email, $first_name, $last_name, $phone);
+                $success = $user->registerUser($regno, $password1, $email, $first_name, $last_name, $phone);
                 if ($success) {
                     header("location: profile.php");
                 } else {
@@ -42,7 +46,7 @@ if (isLoggedIn()) {
             $error_message = "";
             $id = html_entity_decode(filter_input(INPUT_POST, "id"));
             $password = html_entity_decode(filter_input(INPUT_POST, "password"));
-            $success = loginUser($id, $password);
+            $success = $user->loginUser($id, $password);
             if ($success) {
                 header("location: profile.php");
             } else {

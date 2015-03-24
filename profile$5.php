@@ -15,7 +15,6 @@
  * limitations under the License.
  */
 
-require_once './functions.php';
 ?>
 <div>
     <h2>Report a Bug</h2>

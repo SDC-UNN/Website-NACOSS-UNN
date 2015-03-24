@@ -1,6 +1,6 @@
 <?php
 
-/* 
+/*
  * Copyright 2015 NACOSS UNN Developers Group (NDG).
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -16,7 +16,26 @@
  * limitations under the License.
  */
 
-require_once './class_lib.php';
-$user = new User();
-$user->logoutUser();
-header("location: profile.php");
+class Collections {
+
+    /**
+     * 
+     * @return array
+     */
+    public static function getBooks($order) {
+        $array = array();
+
+        return $array;
+    }
+
+    /**
+     * 
+     * @return array
+     */
+    public static function searchBooks($query) {
+        $array = array();
+
+        return $array;
+    }
+
+}

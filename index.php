@@ -1,6 +1,6 @@
 <?php
-require_once './functions.php';
-$array = getHomePageSliderImages();
+require_once './class_lib.php';
+$array = NewsFeeds::getHomePageSliderImages();
 ?>
 
 <!DOCTYPE html>

@@ -15,8 +15,8 @@
  * limitations under the License.
  */
 
-require_once './functions.php';
-$array = getResults();
+$array = Utility::getResults($user->getUserID());
+
 ?>
 <div>
     <h2>Results</h2>

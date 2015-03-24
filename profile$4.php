@@ -15,8 +15,8 @@
  * limitations under the License.
  */
 
-require_once './functions.php';
-$array = getPayments();
+$array = Utility::getPayments($user->getUserID());
+
 ?>
 <div>
     <h2>Payments</h2>

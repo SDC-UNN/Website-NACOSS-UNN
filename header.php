@@ -1,6 +1,6 @@
 <?php
-require_once './functions.php';
-$loggedIn = isLoggedIn();
+require_once './class_lib.php';
+$user = new User();
 ?>
 
 <div class="">
@@ -12,7 +12,7 @@ $loggedIn = isLoggedIn();
                 <a class="element1 pull-menu" href="#"></a>
                 <ul class="element-menu">
                     <li class="on-phone on-tablet no-desktop">
-                        <?php if ($loggedIn) { ?>
+                        <?php if ($user->isLoggedIn()) { ?>
                             <a class="bg-hover-dark" href="profile.php">Profile</a>
                         <?php } else { ?>
                             <a class="bg-hover-dark" href="login.php">Login | Register</a>
@@ -24,7 +24,7 @@ $loggedIn = isLoggedIn();
                     <li>
                         <a class="bg-hover-dark" href="prospectus.php">Prospectus</a>
                     </li>
-                    <?php if ($loggedIn) { ?>
+                    <?php if ($user->isLoggedIn()) { ?>
                         <li>
                             <a class="bg-hover-dark" href="library.php">Library</a>
                         </li>
@@ -47,9 +47,9 @@ $loggedIn = isLoggedIn();
                 <div class="no-phone no-tablet">
 
                     <span class="element-divider place-right"></span>
-                    <?php if ($loggedIn) { ?>
+                    <?php if ($user->isLoggedIn()) { ?>
                         <a href="profile.php" title="Profile" class="element bg-transparent bg-hover-dark place-right">
-                            <i class="icon-user"></i> &nbsp <?= getDisplayName() ?>
+                            <i class="icon-user"></i> &nbsp <?= $user->getDisplayName() ?>
                         </a>
                     <?php } else { ?>
                         <a href="login.php" title="Login or Register" class="element bg-transparent bg-hover-dark place-right">

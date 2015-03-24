@@ -15,8 +15,8 @@
  * limitations under the License.
  */
 
-require_once './functions.php';
-$array = getUserData();
+$array = $user->getUserData();
+
 ?>
 <div>
     <h2>Profile</h2>
