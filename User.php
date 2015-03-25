@@ -110,7 +110,10 @@ class User {
             $query = "update users set password='" . $array["password"] . "',email='" . $array["email"] . "',"
                     . "first_name='" . $array["first_name"] . "',last_name='" . $array["last_name"] . "',"
                     . "other_names='" . $array["other_names"] . "',department='" . $array["department"] . "',"
-                    . "level='" . $array["level"] . "',phone='" . $array["phone"] . "' "
+                    . "level='" . $array["level"] . "',phone='" . $array["phone"] . "',"
+                    . "address1='" . $array["address1"] . "',address2='" . $array["address2"] . "',"
+                    . "interests='" . $array["interests"] . "',bio='" . $array["bio"] . "',"
+                    . "entry_year='" . $array["entry_year"] . "',dob='" . $array["dob"] . "' "
                     //Add more field as needed
                     . "where regno='" . $array["regno"] . "'";
             $ok = mysqli_query($link, $query);
@@ -255,11 +258,26 @@ class User {
      * @return boolean true if report was successfully sent, false otherwise
      */
     public function reportBug($array) {
-        $link = $this->getDefaultDBConnection();
-        $query = "insert into error_reports set userid = '" . $this->getCookiesID() . "', "
+        $link = Utility::getDefaultDBConnection();
+        $query = "insert into error_reports set user_id = '" . $this->getCookiesID() . "', "
                 . "subject='" . $array['subject'] . "', "
                 . "comment = '" . $array['comment'] . "'";
         return mysqli_query($link, $query);
+    }
+
+    public function changePassword($oldPassword, $newPassword) {
+        if (strcmp($this->getUserPassword(), sha1($oldPassword)) === 0) {
+            $link = Utility::getDefaultDBConnection();
+            $query = "update users set password='" . sha1($newPassword) . "' where regno='" . $this->getUserID() . "'";
+            $ok = mysqli_query($link, $query);
+
+            //Reload
+            $this->userInfo = $this->getUserData();
+            $this->setUserCookies($this->getUserID(), $this->getUserPassword());
+            return $ok;
+        } else {
+            throw new Exception("Wrong password");
+        }
     }
 
 }
