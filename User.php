@@ -146,7 +146,7 @@ class User {
     }
 
     private function addNewUser($ID, $password, $email, $first_name, $last_name, $phone) {
-        $link = $this->getDefaultDBConnection();
+        $link = Utility::getDefaultDBConnection();
         $regno = mysqli_escape_string($link, $ID);
         $pwd = sha1($password);
         $email_address = mysqli_escape_string($link, $email);
@@ -183,7 +183,7 @@ class User {
         // Mail login id and password to user
         if ($ok) {
             try {
-                mail($email, "Subject: NACOSS UNN login details", wordwrap(getVerificationMessage($ID, $password), 70, "\r\n"), "From: NACOSS UNN\r\n"
+                mail($email, "Subject: NACOSS UNN login details", wordwrap(Utility::getVerificationMessage($ID, $password), 70, "\r\n"), "From: NACOSS UNN\r\n"
                         . 'Reply-To: ' . $GLOBALS['contact_email'] . "\r\n"
                         . 'X-Mailer: PHP/' . phpversion());
             } catch (Exception $exc) {

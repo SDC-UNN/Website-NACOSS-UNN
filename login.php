@@ -30,7 +30,8 @@ if ($user->isLoggedIn()) {
 
             //register user
             if ($ok) {
-                $success = $user->registerUser($regno, $password1, $email, $first_name, $last_name, $phone);
+                $success = $user->
+                        registerUser($array['regno'], $array['password1'], $array['email'], $array['first_name'], $array['last_name'], $array['phone']);
                 if ($success) {
                     header("location: profile.php");
                 } else {
@@ -227,16 +228,16 @@ limitations under the License.
                                                 <label class="span2">Name<span class="fg-red">*</span></label>
                                                 <div class="span4">
                                                     <input type='text' required maxlength="30" placeholder="Last name" name='last_name'
-                                                           <?= $isFormRequest ? "value='$last_name'" : ""; ?> tabindex='3' />
+                                                           <?= $isFormRequest && isset($array['last_name']) ? "value='" . $array['last_name'] . "'" : ""; ?> tabindex='3' />
                                                     <input type='text' required maxlength="30" placeholder="First name" name='first_name'
-                                                           <?= $isFormRequest ? "value='$first_name'" : ""; ?> tabindex='4' />
+                                                           <?= $isFormRequest && isset($array['first_name']) ? "value='" . $array['first_name'] . "'" : ""; ?> tabindex='4' />
                                                 </div>
                                             </div>
                                             <div class="row" >
                                                 <label class="span2">Reg. Number<span class="fg-red">*</span></label>
                                                 <div class="span4">
                                                     <input name='regno' style="width: inherit" maxlength="11" type='text' 
-                                                           <?= $isFormRequest ? "value='$regno'" : ""; ?>  tabindex='6'  />
+                                                           <?= $isFormRequest && isset($array['regno']) ? "value='" . $array['regno'] . "'" : ""; ?>  tabindex='6'  />
                                                 </div>
                                             </div>
                                             <div class="row" >
@@ -255,7 +256,7 @@ limitations under the License.
                                                 <label class="span2">Phone<span class="fg-red">*</span></label>
                                                 <div class="span4">
                                                     <input name='phone' style="width: inherit" type='tel' 
-                                                           <?= $isFormRequest ? "value='$phone'" : ""; ?> tabindex='6'/>
+                                                           <?= $isFormRequest && isset($array['phone']) ? "value='" . $array['phone'] . "'" : ""; ?> tabindex='6'/>
                                                 </div>
                                             </div>
                                             <div class="row" >
@@ -263,7 +264,7 @@ limitations under the License.
                                                 </label>
                                                 <div class="span4">
                                                     <input name='email' style="width: inherit" required type='email' 
-                                                           <?= $isFormRequest ? "value='$email'" : ""; ?>  tabindex='7'   />
+                                                           <?= $isFormRequest && isset($array['email']) ? "value='" . $array['email'] . "'" : ""; ?>  tabindex='7'   />
                                                 </div>
                                             </div>
                                             <div class="no-phone offset2">
