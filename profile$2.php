@@ -18,7 +18,6 @@
 if (empty($array)) {
     $array = $user->getUserData();
 }
-
 ?>
 <div>
     <h2>Edit Profile</h2>
@@ -30,6 +29,17 @@ if (empty($array)) {
     </div>
     <div class="row bg-grayLighter grid">
         <div class="padding10">
+            <?php
+            if ($isEditFormRequest) {
+                if ($success) {
+                    ?>
+                    <p class="fg-NACOSS-UNN">Profile was successfully updated.</p>
+                <?php } else { ?>
+                    <p class="fg-red"><?= $error_message ?></p>
+                    <?php
+                }
+            }
+            ?>
             <form method="post" action="profile.php?p=2">
                 <div class="row ntm" >
                     <h2 class="bg-grayLight padding5">Personal Information</h2>
@@ -59,13 +69,14 @@ if (empty($array)) {
                     <div class="row" >
                         <label class="span2">Date of Birth</label>
                         <div class="span4">
+                            <!--old data-format="dddd, mmmm d, yyyy"-->
                             <div class="input-control text" data-role="datepicker"
                                  data-date="<?= isset($array['dob']) ? $array['dob'] : "2015-01-01"; ?>"
-                                 data-format="dddd, mmmm d, yyyy"
+                                 data-format="yyyy-mm-dd"
                                  data-position="top"
                                  data-effect="slide">
                                 <input type="text" name="dob">
-                                <button class="btn-date"></button>
+                                <button type="button" class="btn-date"></button>
                             </div>
                         </div>
                     </div>                    
@@ -116,21 +127,35 @@ if (empty($array)) {
                         </div>
                     </div>
                     <h2 class="bg-grayLight padding5">Education</h2>
+                    <?php
+                    $deptOption = array("COMPUTER SCIENCE",
+                        "COMPUTER SCIENCE/MATHEMATICS",
+                        "COMPUTER SCIENCE/STATISTICS",
+                        "COMPUTER SCIENCE/PHYSICS",
+                        "COMPUTER SCIENCE/GEOLOGY");
+                    $levelOption = array("100",
+                        "200",
+                        "300",
+                        "400");
+                    ?>
                     <div class="row">
                         <label class="span2">Department</label>
                         <div class="span4">
-                            <select name="dept">
-                                <option>COMPUTER SCIENCE</option>
-                                <option>COMPUTER SCIENCE/MATHEMATICS</option>
-                                <option>COMPUTER SCIENCE/STATISTICS</option>
-                                <option>COMPUTER SCIENCE/PHYSICS</option>
-                                <option>COMPUTER SCIENCE/GEOLOGY</option>
+                            <select name="department">
+                                <?php
+                                foreach ($deptOption as $value) {
+                                    $selected = isset($array['department']) ? strcasecmp($value, $array['department']) === 0 : FALSE;
+                                    echo "<option " . ($selected ? "selected" : "") . ">$value</option>";
+                                }
+                                ?>
                             </select>
                             <select name="level">
-                                <option>100 Level</option>
-                                <option>200 Level</option>
-                                <option>300 Level</option>
-                                <option>400 Level</option>
+                                <?php
+                                foreach ($levelOption as $value) {
+                                    $selected = isset($array['level']) ? strcasecmp($value, $array['level']) === 0 : FALSE;
+                                    echo "<option " . ($selected ? "selected" : "") . ">$value Level</option>";
+                                }
+                                ?>
                             </select>
                         </div>
                     </div>
@@ -141,20 +166,24 @@ if (empty($array)) {
                                    <?= isset($array['entry_year']) ? "value='" . $array['entry_year'] . "'" : ""; ?>  tabindex='9'   />
                         </div>
                     </div>
-                    <h2 class="bg-grayLight padding5">Change Password</h2>
+                    <div class="row" >
+                        <label class="span2">Interests</label>
+                        <div class="span4">
+                            <textarea name='interests' style="width: inherit" tabindex='7'><?=
+                                isset($array['interests']) ?
+                                        $array['interests'] :
+                                        "";
+                                ?></textarea>
+                            <small><em>e.g. Programming, Gaming, Graphics</em></small>
+                        </div>
+                    </div>
+                    <h2 class="bg-grayLight padding5">Enter Password</h2>
                     <div class="row" >
                         <label class="span2">Password<span class="fg-red">*</span></label>
                         <div class="span4">
-                            <input class="password" name='password1' style="width: inherit" type='password' tabindex='2' />
+                            <input class="password" name='password' style="width: inherit" type='password' tabindex='2' />
                         </div>
                     </div>
-                    <div class="row" >
-                        <label class="span2">Confirm Password<span class="fg-red">*</span></label>
-                        <div class="span4">
-                            <input class="password" name='password2' style="width: inherit" type='password' tabindex='2' />
-                        </div>
-                    </div>
-
                     <div class="row no-phone offset2">
                         <input class="button default bg-NACOSS-UNN bg-hover-dark" type='submit'
                                name='editProfileForm' value='Update' tabindex='9'/>

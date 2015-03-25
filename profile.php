@@ -30,7 +30,7 @@ if ($user->isLoggedIn()) {
         }
 
         //update user
-        if ($ok) {
+        if ($ok) {            
             $success = $user->updateUserInfo($array);
             if (!$success) {
                 //update unsuccessful
@@ -66,7 +66,10 @@ if ($user->isLoggedIn()) {
             //Send bug report
             if ($ok) {
                 $success = $user->reportBug($array);
-                if (!$success) {
+                if ($success){
+                    $array = "";
+                }
+                else {
                     //Sending failed
                     $error_message = "Oops! Something went wrong, please try again.";
                 }
@@ -75,14 +78,49 @@ if ($user->isLoggedIn()) {
             }
             $page = 5;
         } else {
-            //Check if switch request
-            $switchRequest = filter_input(INPUT_GET, "p");
-            if (!empty($switchRequest)) {
-                //switch form
-                $page = $switchRequest;
+            $isPasswordChangeRequest = filter_input(INPUT_POST, "changePasswordForm");
+            if ($isPasswordChangeRequest) {
+                //Handle request from "Change Password" page
+                $array = filter_input_array(INPUT_POST);
+                if ($array !== FALSE || $array !== null) {
+                    foreach ($array as $key => $value) {
+                        $array[$key] = html_entity_decode($array[$key]);
+                    }
+
+                    //Validating details
+                    $error_message = Utility::getInvalidParameters($array);
+                    $ok = empty($error_message);
+                } else {
+                    $ok = false;
+                    $error_message = "Oops! Something went wrong, parameters are invalid.";
+                }
+
+                //Change password
+                if ($ok) {
+                    try {
+                        $success = $user->changePassword($array['password'], $array['password2']);
+                        if (!$success) {
+                            //Updates failed
+                            $error_message = "Oops! Something went wrong, please try again.";
+                        }
+                    } catch (Exception $exc) {
+                        $success = false;
+                        $error_message = $exc->getMessage();
+                    }
+                } else {
+                    $success = false;
+                }
+                $page = 6;
             } else {
-                //show page 1 (profile page)
-                $page = 1;
+                //Check if switch request
+                $switchRequest = filter_input(INPUT_GET, "p");
+                if (!empty($switchRequest)) {
+                    //switch form
+                    $page = $switchRequest;
+                } else {
+                    //show page 1 (profile page)
+                    $page = 1;
+                }
             }
         }
     }
@@ -153,13 +191,19 @@ limitations under the License.
                             <nav class="sidebar">
                                 <ul class="">
                                     <li class="<?= $page == 1 || $page == 2 ? "stick bg-NACOSS-UNN" : "" ?>">
-                                        <a href="profile.php?p=1">Profile</a>
+                                        <a class="dropdown-toggle" href="#"><i class="icon-user"></i>Profile</a>
+                                        <ul class="dropdown-menu" data-role="dropdown">
+                                            <li><a href="profile.php?p=1">View Profile</a></li>
+                                            <li><a href="profile.php?p=2">Edit Profile</a></li>
+                                            <li><a href="profile.php?p=6">Change Password</a></li>
+                                        </ul>
                                     </li>
+
                                     <li class="<?= $page == 3 ? "stick bg-NACOSS-UNN" : "" ?>">
-                                        <a href="profile.php?p=3">Results</a>
+                                        <a href="profile.php?p=3"><i class="icon-file"></i> Results</a>
                                     </li>
                                     <li class="<?= $page == 4 ? "stick bg-NACOSS-UNN" : "" ?>">
-                                        <a href="profile.php?p=4">Payments</a>
+                                        <a href="profile.php?p=4"><i class="icon-dollar-2"></i> Payments</a>
                                     </li>
                                 </ul>
                             </nav>
@@ -189,6 +233,9 @@ limitations under the License.
                                         break;
                                     case 5:
                                         include_once './profile$5.php';
+                                        break;
+                                    case 6:
+                                        include_once './profile$6.php';
                                         break;
                                 }
                             }

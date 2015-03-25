@@ -16,7 +16,6 @@
  */
 
 $array = $user->getUserData();
-
 ?>
 <div>
     <h2>Profile</h2>
@@ -68,19 +67,11 @@ $array = $user->getUserData();
                             <!--Department and level-->
                             <?php
                             if (isset($array['department']) && !empty($array['department'])) {
-                                echo "Department of ".ucwords($array['department']) . " ";
-                                echo ucwords($array['level']);
+                                echo "Department of " . ucwords($array['department']);
                                 echo '<br/>';
-                                echo 'Class of '.$array['entry_year'];
+                                echo ucwords($array['level']) . " Level";
                                 echo '<br/>';
-                            }
-                            ?>
-                            <!--Email-->
-                            <p class="email"><?= $array['email'] ?></p>
-                            <!--Bio-->
-                            <?php
-                            if (isset($array['bio']) && !empty($array['bio'])) {
-                                echo $array['bio'];
+                                echo 'Class of ' . $array['entry_year'];
                                 echo '<br/>';
                             }
                             ?>
@@ -95,23 +86,34 @@ $array = $user->getUserData();
             <div class="panel no-border bg-transparent" data-role="panel">
                 <p class="panel-header">Personal Information</p>
                 <div class="panel-content bg-grayLighter">
-                    <p><strong>Date of Birth:</strong> <?= $array['dob']?></p>
-                </div>
+                    <p><strong>Date of Birth:</strong> 
+                        <!--Displays date in the format: Saturday, 29, July 1995-->
+                            <?= empty($array['dob']) ? "" : strftime("%A, %#d, %B %Y", strtotime($array['dob'])) ?>
+                    </p>
+                    <p><strong>Bio:</strong>
+                        <?php
+                        if (isset($array['bio']) && !empty($array['bio'])) {
+                            echo $array['bio'];
+                        }
+                        ?>
+                    </p>
+                </div>                    
             </div>
             <br/>
             <div class="panel no-border bg-transparent" data-role="panel">
                 <p class="panel-header">Contact Information</p>
                 <div class="panel-content bg-grayLighter">
-                    <p><strong>Phone:</strong> <?= $array['phone']?></p>
-                    <p><strong>Address 1:</strong> <?= $array['address1']?></p>
-                    <p><strong>Address 1:</strong> <?= $array['address2']?></p>                    
+                    <p><strong>Phone:</strong> <?= $array['phone'] ?></p>
+                    <p><strong>Email:</strong> <?= $array['email'] ?></p>
+                    <p><strong>Address 1:</strong> <?= $array['address1'] ?></p>
+                    <p><strong>Address 2:</strong> <?= $array['address2'] ?></p>                    
                 </div>
             </div>
             <br/>
             <div class="panel no-border bg-transparent" data-role="panel">
                 <p class="panel-header">Interests/Activities</p>
                 <div class="panel-content bg-grayLighter">
-                    <p><strong>Interest:</strong> <?= $array['interest']?></p>                    
+                    <p><strong>Interest:</strong> <?= $array['interests'] ?></p>                    
                 </div>
             </div>
         </div>

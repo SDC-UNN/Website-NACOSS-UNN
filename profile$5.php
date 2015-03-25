@@ -23,10 +23,10 @@
             <div class="row container">
                 <div class="label">
                     <?php if ($success) { ?>
-                        <h2 class="success fg-green">Thank You!</h2>
+                        <h2 class="fg-green">Thank You!</h2>
                         <p>Your report has been sent, our Tech team will be on it soon.</p>
                     <?php } else { ?>
-                        <p class="error">
+                        <p class="fg-red">
                             <?= $error_message ?>
                         </p>
                     <?php } ?>
@@ -47,7 +47,7 @@
                 <label class="span2">Comment<span class="fg-red">*</span></label>
                 <div class="span6">
                     <textarea name='comment' required="" style="width: inherit; height: 200px"
-                              tabindex='6'><?= isset($array['comment']) ? "value='" . $array['comment'] . "'" : ""; ?></textarea>
+                              tabindex='6'><?= isset($array['comment']) ? $array['comment'] : ""; ?></textarea>
                 </div>
             </div>
             <div class="row no-phone offset2">
