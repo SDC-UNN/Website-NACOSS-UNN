@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Mar 25, 2015 at 08:50 AM
+-- Generation Time: Mar 25, 2015 at 08:54 AM
 -- Server version: 5.6.17
 -- PHP Version: 5.5.12
 
@@ -276,7 +276,7 @@ CREATE TABLE IF NOT EXISTS `users` (
 --
 
 INSERT INTO `users` (`regno`, `first_name`, `last_name`, `other_names`, `password`, `department`, `level`, `entry_year`, `phone`, `email`, `dob`, `address1`, `address2`, `interests`, `bio`, `pic_url`, `verified`, `is_suspended`, `is_deleted`) VALUES
-('1234/123456', 'Jane', 'Doe', 'Anonymous', '36691790920734ffcdc9611c3a12039e84baeff6', 'COMPUTER SCIENCE', '400', 2015, '07012345678', 'example@domain.com', '1995-07-29', '', '', 'Java', 'Find out', '', 1, 0, 0);
+('1234/123456', 'Jane', 'Doe', 'Anonymous', 'd14f21b5919900f4cc49333652fb4e92940ac55d', 'COMPUTER SCIENCE', '400', 2015, '07012345678', 'example@domain.com', '1995-07-29', '', '', 'Java', 'Find out', '', 1, 0, 0);
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
