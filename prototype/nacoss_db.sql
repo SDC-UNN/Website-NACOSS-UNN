@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Mar 23, 2015 at 03:23 AM
+-- Generation Time: Mar 25, 2015 at 08:28 AM
 -- Server version: 5.6.17
 -- PHP Version: 5.5.12
 
@@ -37,6 +37,25 @@ CREATE TABLE IF NOT EXISTS `admins` (
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `board_members`
+--
+
+CREATE TABLE IF NOT EXISTS `board_members` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `first_name` varchar(30) NOT NULL,
+  `last_name` varchar(30) NOT NULL,
+  `other_names` varchar(30) NOT NULL,
+  `post` varchar(60) NOT NULL,
+  `session` varchar(9) NOT NULL,
+  `email` text NOT NULL,
+  `phone_number` varchar(13) NOT NULL,
+  `user_id` varchar(11) NOT NULL COMMENT 'regno in users table',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `error_log`
 --
 
@@ -60,7 +79,14 @@ CREATE TABLE IF NOT EXISTS `error_reports` (
   `comment` text NOT NULL,
   `time_of_report` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=3 ;
+
+--
+-- Dumping data for table `error_reports`
+--
+
+INSERT INTO `error_reports` (`id`, `user_id`, `subject`, `comment`, `time_of_report`) VALUES
+(1, '1234/123456', 'Report to prove if reporting bugs really works', 'I just reported a BUG!!!!', '2015-03-25 05:04:22');
 
 -- --------------------------------------------------------
 
@@ -118,8 +144,27 @@ CREATE TABLE IF NOT EXISTS `library` (
   `author` varchar(30) NOT NULL,
   `keywords` varchar(30) NOT NULL,
   `date_added` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `link` text NOT NULL,
+  `file_type` varchar(10) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=12 ;
+
+--
+-- Dumping data for table `library`
+--
+
+INSERT INTO `library` (`id`, `title`, `author`, `keywords`, `date_added`, `link`, `file_type`) VALUES
+(1, 'How to be a programmer', 'K.L Foo', 'programming', '2015-03-24 17:35:14', '', ''),
+(2, 'Java: How to Program', 'Harvey Deitel', 'java, programming', '2015-03-24 17:35:14', '', ''),
+(3, 'C++: How to program', 'Paul Deitel', 'C++, programming', '2015-03-24 17:36:43', '', ''),
+(4, 'Database: Beginners Guide', 'Agozie Eneh', 'mysql, database', '2015-03-24 17:36:43', '', 'docx'),
+(5, 'Java: How to Program Edition 8', 'Harvey Deitel', 'java, programming', '2015-03-24 17:35:14', '', ''),
+(6, 'Java: How to Program Edition 9', 'Harvey Deitel', 'java, programming', '2015-03-24 17:35:14', '', 'pdf'),
+(7, 'C++: How to program Edition 5', 'Paul Deitel', 'C++, programming', '2015-03-24 17:36:43', '', ''),
+(8, 'C++: How to program Edition 6', 'Paul Deitel', 'C++, programming', '2015-03-24 17:36:43', '', ''),
+(9, 'C++: How to program Edition 9', 'Paul Deitel', 'C++, programming', '2015-03-24 17:36:43', '', ''),
+(10, 'Database: Advanced Guide', 'Agozie Eneh', 'mysql, database', '2015-03-24 17:36:43', '', ''),
+(11, 'Java: How to Program Edition 10', 'Harvey Deitel', 'java, programming', '2015-03-25 17:35:14', '', '');
 
 -- --------------------------------------------------------
 
@@ -216,7 +261,7 @@ CREATE TABLE IF NOT EXISTS `users` (
   `dob` date DEFAULT NULL,
   `address1` text,
   `address2` text,
-  `interest` text,
+  `interests` text,
   `bio` text,
   `pic_url` text NOT NULL,
   `verified` int(1) NOT NULL DEFAULT '0',
@@ -230,8 +275,8 @@ CREATE TABLE IF NOT EXISTS `users` (
 -- Dumping data for table `users`
 --
 
-INSERT INTO `users` (`regno`, `first_name`, `last_name`, `other_names`, `password`, `department`, `level`, `entry_year`, `phone`, `email`, `dob`, `address1`, `address2`, `interest`, `bio`, `pic_url`, `verified`, `is_suspended`, `is_deleted`) VALUES
-('1234/123456', 'Jane', 'Doe', 'Anonymous', 'd14f21b5919900f4cc49333652fb4e92940ac55d', '', '', 2015, '', 'example@domain.com', '2012-12-12', NULL, NULL, NULL, NULL, '', 1, 0, 0);
+INSERT INTO `users` (`regno`, `first_name`, `last_name`, `other_names`, `password`, `department`, `level`, `entry_year`, `phone`, `email`, `dob`, `address1`, `address2`, `interests`, `bio`, `pic_url`, `verified`, `is_suspended`, `is_deleted`) VALUES
+('1234/123456', 'Jane', 'Doe', 'Anonymous', '36691790920734ffcdc9611c3a12039e84baeff6', 'COMPUTER SCIENCE', '400', 2015, '07012345678', 'example@domain.com', '1995-07-29', '', '', 'Java', 'Find out', '', 1, 0, 0);
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
