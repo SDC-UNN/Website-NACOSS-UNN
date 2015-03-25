@@ -33,6 +33,7 @@ if ($user->isLoggedIn()) {
                 $success = $user->
                         registerUser($array['regno'], $array['password1'], $array['email'], $array['first_name'], $array['last_name'], $array['phone']);
                 if ($success) {
+                    $user->loginUser($array['regno'], $array['password1']);
                     header("location: profile.php");
                 } else {
                     //login unsuccessful
