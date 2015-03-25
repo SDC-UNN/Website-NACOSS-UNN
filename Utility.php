@@ -137,7 +137,7 @@ class Utility {
                     }
                     break;
                 case 'password2': //confirmation passwords
-                    if (strcasecmp($value, $array["password1"]) !== 0) {
+                    if (strcmp($value, $array["password1"]) !== 0) {
                         return "Passwords do not match";
                     }
                     break;
@@ -201,7 +201,7 @@ class Utility {
      * Writes exception to log file
      * @param type $exc exception
      */
-    public static function writeToLog($exc) {
+    public static function writeToLog(Exception $exc) {
         $link = getDefaultDBConnection();
         $message = "File: " . $exc->getFile() . " [line " . $exc->getLine() . "]\n"
                 . "Message: " . $exc->getMessage();
