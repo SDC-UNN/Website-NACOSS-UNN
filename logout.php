@@ -1,6 +1,6 @@
 <?php
 
-/* 
+/*
  * Copyright 2015 NACOSS UNN Developers Group (NDG).
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -18,5 +18,8 @@
 
 require_once './class_lib.php';
 $user = new User();
-$user->logoutUser();
-header("location: profile.php");
+if ($user->logoutUser()) {
+    header("location: profile.php");
+} else {
+    echo '<h1>Server error<h1>';
+}
