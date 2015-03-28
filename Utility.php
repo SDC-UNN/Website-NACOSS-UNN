@@ -79,6 +79,19 @@ class Utility {
         }
         return $array;
     }
+    
+    public static function getErrorReports($ID) {
+        $array = array();
+        $query = "select * from error_reports where user_id='" . $ID . "'";
+        $link = Utility::getDefaultDBConnection();
+        $result = mysqli_query($link, $query);
+        if ($result) {
+            while ($row = mysqli_fetch_array($result)) {
+                array_push($array, $row);
+            }
+        }
+        return $array;
+    }
 
     public static function getResults($ID) {
         $array = array();
