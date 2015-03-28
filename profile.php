@@ -196,6 +196,7 @@ limitations under the License.
                                             <li><a href="profile.php?p=1">View Profile</a></li>
                                             <li><a href="profile.php?p=2">Edit Profile</a></li>
                                             <li><a href="profile.php?p=6">Change Password</a></li>
+                                            <li><a href="logout.php">Logout</a></li>
                                         </ul>
                                     </li>
 
