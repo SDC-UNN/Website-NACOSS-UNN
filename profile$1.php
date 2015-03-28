@@ -27,7 +27,7 @@ $array = $user->getUserData();
             &nbsp;
         </div>
         <a class="place-right button default bg-NACOSS-UNN bg-hover-dark fg-hover-white" href="profile.php?p=2">
-            Edit Profile
+            Update Profile
         </a>
     </div>
     <div class="row ntp ntm">
