@@ -14,7 +14,6 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 ?>
 <div>
     <h2>Report a Bug</h2>
@@ -59,5 +58,33 @@
                        name='reportBugForm' value='Send' tabindex='9'/>
             </div>
         </form>
+
+
+        <div class="panel">
+            <div class="panel-header">Reports By you</div>
+            <div class="panel-content">
+                <?php
+                $array = Utility::getErrorReports($user->getUserID());
+                if (empty($array)) {
+                    echo '<p>No previous reports</p>';
+                } else {
+                    for ($index = 0; $index < count($array); $index++) {
+                        ?>
+                        <div class="listview-outlook" data-role="listview">
+                            <div class="list-group collapsed">
+                                <a href="#" class="group-title">
+                                    <?= "[" . $array[$index]['time_of_report'] . "] " . $array[$index]['subject'] ?>
+                                </a>
+                                <div class="group-content">
+                                    <div class="list-content"><?= $array[$index]['comment'] ?></div>
+                                </div>
+                            </div>
+                        </div>
+                        <?php
+                    }
+                }
+                ?>
+            </div>
+        </div>
     </div>
 </div>
