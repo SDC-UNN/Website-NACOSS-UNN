@@ -160,7 +160,7 @@ if (empty($array)) {
                         </div>
                     </div>
                     <div class="row" >
-                        <label class="span2">Class of</label>
+                        <label class="span2">Expected year of Graduation</label>
                         <div class="span4">
                             <input name='entry_year' style="width: inherit" required type='text' 
                                    <?= isset($array['entry_year']) ? "value='" . $array['entry_year'] . "'" : ""; ?>  tabindex='9'   />
