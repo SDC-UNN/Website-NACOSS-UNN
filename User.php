@@ -261,14 +261,14 @@ class User {
      * @returns students registration number from cookies
      */
     private function getCookiesID() {
-        return filter_input(INPUT_COOKIE, "id");
+        return filter_input(INPUT_COOKIE, "user_id");
     }
 
     /**
      * @returns students password from cookies
      */
     private function getCookiesPassword() {
-        return filter_input(INPUT_COOKIE, "pwd");
+        return filter_input(INPUT_COOKIE, "user_pwd");
     }
 
     public function getUserID() {
