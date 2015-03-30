@@ -40,10 +40,14 @@ $array = $user->getUserData();
                                 $array['pic_url'] :
                                 "img/picture5.png"
                         ?>" alt=""/>
-                        <br/>
-                        <button class="button bg-NACOSS-UNN bg-hover-dark fg-hover-white file" style="width: inherit;">
-                            Change Picture
-                        </button>
+                    </div>
+                    <!--For phones and tablets-->
+                    <div style="height: 100px; width: 100px" class="on-phone on-tablet no-desktop bg-grayLighter">
+                        <img style="height: inherit; width: inherit" class="image padding5" src="<?=
+                        isset($array['pic_url']) && !empty($array['pic_url']) ?
+                                $array['pic_url'] :
+                                "img/picture5.png"
+                        ?>" alt=""/>
                     </div>
                     <div class="span7 bg-grayLighter shadow">
                         <div class="padding10">
@@ -69,8 +73,7 @@ $array = $user->getUserData();
                             if (isset($array['department']) && !empty($array['department'])) {
                                 echo "Department of " . ucwords($array['department']);
                                 echo '<br/>';
-                                echo ucwords($array['level']) . " Level";
-                                echo '<br/>';
+                                echo ucwords($array['level']) . " Level, ";
                                 echo 'Class of ' . $array['entry_year'];
                                 echo '<br/>';
                             }
