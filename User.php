@@ -95,7 +95,7 @@ class User {
      * @param type $array array of fields mapped to values
      * @return boolean returns true if user's data was successfully updated, false otherwise
      */
-    public function updateUserInfo($array) {
+    public function updateUserInfo(array $array) {
         $link = Utility::getDefaultDBConnection();
         foreach ($array as $key => $value) {
             if (strcasecmp($key, "password") === 0) {
@@ -106,22 +106,84 @@ class User {
         }
         $ok = $this->validateInfo($array["regno"], $array["password"], $array["email"], $array["first_name"], $array["last_name"], $array["phone"]);
 
+        if ($ok && !empty($_FILES["pic_url"]['name'])) {
+            $url = $this->uploadUserImage("pic_url"); //Throws exception if not successful
+            $array['pic_url'] = $url;
+        } else {
+            $array['pic_url'] = $this->userInfo['pic_url'];
+        }
+
         if ($ok) {
-            $query = "update users set password='" . $array["password"] . "',email='" . $array["email"] . "',"
-                    . "first_name='" . $array["first_name"] . "',last_name='" . $array["last_name"] . "',"
-                    . "other_names='" . $array["other_names"] . "',department='" . $array["department"] . "',"
-                    . "level='" . $array["level"] . "',phone='" . $array["phone"] . "',"
-                    . "address1='" . $array["address1"] . "',address2='" . $array["address2"] . "',"
-                    . "interests='" . $array["interests"] . "',bio='" . $array["bio"] . "',"
-                    . "entry_year='" . $array["entry_year"] . "',dob='" . $array["dob"] . "' "
-                    //Add more field as needed
-                    . "where regno='" . $array["regno"] . "'";
+            $query = $this->getUpdateQuery($array);
             $ok = mysqli_query($link, $query);
 
             //Reload
             $this->userInfo = $this->getUserData();
+        } else {
+            throw new Exception("Oops! Something went wrong, please try again");
         }
-        return $ok;
+    }
+
+    private function uploadUserImage($filename) {
+
+        switch ($_FILES[$filename]["type"]) {
+            case "image/gif":
+                $file_ext = ".gif";
+                break;
+            case "image/jpeg":
+                $file_ext = ".jpeg";
+                break;
+            case "image/pjpeg":
+                $file_ext = ".jpeg";
+                break;
+            case "image/png":
+                $file_ext = ".png";
+                break;
+            default:
+                $file_ext = "";
+                break;
+        }
+
+        if (empty($file_ext)) {
+            throw new Exception("Unknown file format");
+        }
+
+        if (($_FILES[$filename]["size"] / 1024) > 250) { //250kb
+            throw new Exception("File too large");
+        }
+
+        if ($_FILES[$filename]["error"] > 0) {
+            throw new Exception("Oops! Error occurred while uploading file");
+//            echo "Return Code: " . $_FILES["file"]["error"] . "<br />";
+        }
+
+        //Delete old profile picture
+        if (file_exists($this->userInfo['pic_url'])) {
+            unlink($this->userInfo['pic_url']);
+        }
+
+        $prefix = str_replace("/", "", $this->getUserID());
+        $url = "uploads/" . uniqid($prefix) . $file_ext;
+        $moved = move_uploaded_file($_FILES[$filename]["tmp_name"], $url);
+
+        if ($moved) {
+            return $url;
+        } else {
+            throw new Exception("Oops! Error occurred while uploading file");
+        }
+    }
+
+    private function getUpdateQuery(array $array) {
+        return "update users set password='" . $array["password"] . "',email='" . $array["email"] . "',"
+                . "first_name='" . $array["first_name"] . "',last_name='" . $array["last_name"] . "',"
+                . "other_names='" . $array["other_names"] . "',department='" . $array["department"] . "',"
+                . "level='" . $array["level"] . "',phone='" . $array["phone"] . "',"
+                . "address1='" . $array["address1"] . "',address2='" . $array["address2"] . "',"
+                . "interests='" . $array["interests"] . "',bio='" . $array["bio"] . "',"
+                . "pic_url='" . $array["pic_url"] . "',"
+                . "entry_year='" . $array["entry_year"] . "',dob='" . $array["dob"] . "' "
+                //Add more field as needed
+                . "where regno='" . $array["regno"] . "'";
     }
 
     public function getUserData() {
@@ -174,20 +236,20 @@ class User {
      * @return boolean returns true if user's data was successfully registered, false otherwise
      */
     public function registerUser($ID, $password, $email, $first_name, $last_name, $phone) {
-        // Validate details
+// Validate details
         $ok = $this->validateInfo($ID, $password, $email, $first_name, $last_name, $phone);
-        // Add to database
+// Add to database
         if ($ok) {
             $ok = $this->addNewUser($ID, $password, $email, $first_name, $last_name, $phone);
         }
-        // Mail login id and password to user
+// Mail login id and password to user
         if ($ok) {
             try {
                 mail($email, "Subject: NACOSS UNN login details", wordwrap(Utility::getVerificationMessage($ID, $password), 70, "\r\n"), "From: NACOSS UNN\r\n"
                         . 'Reply-To: ' . $GLOBALS['contact_email'] . "\r\n"
                         . 'X-Mailer: PHP/' . phpversion());
             } catch (Exception $exc) {
-                //Mailing failed
+//Mailing failed
                 Utility::writeToLog($exc);
 //            return false;
             }
@@ -231,9 +293,9 @@ class User {
      */
     private function setUserCookies($id, $password) {
         $expire = time() + (60 * 60 * 24 * 7); //1 week i.e 60secs * 60mins * 2hhrs * 7days
-        $ok = setcookie("id", $id, $expire);
+        $ok = setcookie("user_id", $id, $expire);
         if ($ok) {
-            $ok = setcookie("pwd", $password, $expire);
+            $ok = setcookie("user_pwd", $password, $expire);
         }
         return $ok;
     }
@@ -247,8 +309,8 @@ class User {
      * @return type true if all cookies were removed, false otherwise
      */
     private function clearUserCookies() {
-        $clearIDOk = setcookie("id", "", time() - 3600);
-        $clearPwdOk = setcookie("pwd", "", time() - 3600);
+        $clearIDOk = setcookie("user_id", "", time() - 3600);
+        $clearPwdOk = setcookie("user_pwd", "", time() - 3600);
         return $clearIDOk && $clearPwdOk;
     }
 
@@ -257,7 +319,7 @@ class User {
      * @param type $array
      * @return boolean true if report was successfully sent, false otherwise
      */
-    public function reportBug($array) {
+    public function reportBug(array $array) {
         $link = Utility::getDefaultDBConnection();
         $query = "insert into error_reports set user_id = '" . $this->getCookiesID() . "', "
                 . "subject='" . $array['subject'] . "', "
@@ -271,7 +333,7 @@ class User {
             $query = "update users set password='" . sha1($newPassword) . "' where regno='" . $this->getUserID() . "'";
             $ok = mysqli_query($link, $query);
 
-            //Reload
+//Reload
             $this->userInfo = $this->getUserData();
             $this->setUserCookies($this->getUserID(), $this->getUserPassword());
             return $ok;
