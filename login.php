@@ -53,7 +53,7 @@ if ($user->isLoggedIn()) {
                 header("location: profile.php");
             } else {
                 //login unsuccessful
-                $error_message = "Wrong reg. number or password";
+                $error_message = "Wrong ID or password";
             }
         }
     } else {
@@ -194,7 +194,7 @@ limitations under the License.
                                         <div class="grid">
                                             <input name="type" value="1" hidden=""/>
                                             <div class="row ntm">
-                                                <label class="span1">ID</label>
+                                                <label class="span1">ID <i title="Registration number" class="icon-help fg-blue"></i></label>
                                                 <div class="span4">
                                                     <input class="text" name='id' maxlength="11" style="width: inherit" required type='text' 
                                                            <?= $isFormRequest ? "value='$id'" : ""; ?> tabindex='1' />
