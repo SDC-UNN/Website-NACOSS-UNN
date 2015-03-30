@@ -30,15 +30,19 @@ if ($user->isLoggedIn()) {
         }
 
         //update user
-        if ($ok) {            
-            $success = $user->updateUserInfo($array);
-            if (!$success) {
-                //update unsuccessful
-                $error_message = "Oops! Something went wrong, please try again.";
+        if ($ok) {
+            try {
+                $user->updateUserInfo($array);  
+                $success = true;
+                $error_message = "";
+            } catch (Exception $exc) {
+                $success = false;
+                $error_message = $exc->getMessage();
             }
         } else {
             $success = false;
         }
+        
         $page = $success ? 1 : 2;
     } else {
         $isreportBugRequest = filter_input(INPUT_POST, "reportBugForm");
@@ -66,10 +70,9 @@ if ($user->isLoggedIn()) {
             //Send bug report
             if ($ok) {
                 $success = $user->reportBug($array);
-                if ($success){
+                if ($success) {
                     $array = "";
-                }
-                else {
+                } else {
                     //Sending failed
                     $error_message = "Oops! Something went wrong, please try again.";
                 }
