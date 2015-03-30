@@ -82,7 +82,7 @@ class Utility {
     
     public static function getErrorReports($ID) {
         $array = array();
-        $query = "select * from error_reports where user_id='" . $ID . "'";
+        $query = "select * from error_reports where user_id='" . $ID . "' order by time_of_report DESC";
         $link = Utility::getDefaultDBConnection();
         $result = mysqli_query($link, $query);
         if ($result) {
