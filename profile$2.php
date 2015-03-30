@@ -40,15 +40,15 @@ if (empty($array)) {
                 }
             }
             ?>
-            <form method="post" action="profile.php?p=2">
-                <div class="row ntm" >
+            <form method="post" enctype="multipart/form-data" action="profile.php?p=2">
+                <div class="row" >
                     <h2 class="bg-grayLight padding5">Personal Information</h2>
                     <div class="row ntm">
                         <label class="span2">Name<span class="fg-red">*</span></label>
-                        <div class="span6">
-                            <input class="span3" type='text' required maxlength="30" placeholder="Last name" name='last_name'
+                        <div class="span4">
+                            <input class="" style="width: inherit" type='text' required maxlength="30" placeholder="Last name" name='last_name'
                                    <?= isset($array['last_name']) ? "value='" . $array['last_name'] . "'" : ""; ?> tabindex='3' />
-                            <input class="span3" type='text' required maxlength="30" placeholder="First name" name='first_name'
+                            <input class="" style="width: inherit" type='text' required maxlength="30" placeholder="First name" name='first_name'
                                    <?= isset($array['first_name']) ? "value='" . $array['first_name'] . "'" : ""; ?> tabindex='4' />
                         </div>
                     </div>
@@ -88,6 +88,15 @@ if (empty($array)) {
                                         $array['bio'] :
                                         "";
                                 ?></textarea>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <label class="span2">Change Picture <small><em>(max 250kb)</em></small></label>
+                        <div class="span4">
+                            <div class="input-control file">
+                                <input type="file" name="pic_url" value="<?= isset($array['pic_url']) ? $array['pic_url'] : ""; ?>"/>
+                                <button class="btn-file"></button>
+                            </div>
                         </div>
                     </div>
                     <h2 class="bg-grayLight padding5">Contact Information</h2>
