@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Mar 25, 2015 at 08:54 AM
+-- Generation Time: Mar 30, 2015 at 01:51 PM
 -- Server version: 5.6.17
 -- PHP Version: 5.5.12
 
@@ -27,12 +27,22 @@ SET time_zone = "+00:00";
 --
 
 CREATE TABLE IF NOT EXISTS `admins` (
-  `username` varchar(15) NOT NULL,
+  `username` varchar(15) NOT NULL COMMENT 'For class_reps, this username should match their regno on users table',
   `password` varchar(40) NOT NULL,
-  `type` enum('WEBMASTER','PRO','LIBRARIAN','') NOT NULL,
+  `type` enum('WEBMASTER','PRO','LIBRARIAN','CLASS_REP') NOT NULL,
   `email` text NOT NULL,
   PRIMARY KEY (`username`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `admins`
+--
+
+INSERT INTO `admins` (`username`, `password`, `type`, `email`) VALUES
+('2011/177392', 'd14f21b5919900f4cc49333652fb4e92940ac55d', 'CLASS_REP', 'example@domain.com'),
+('libraryadmin', 'd14f21b5919900f4cc49333652fb4e92940ac55d', 'LIBRARIAN', 'example@domain.com'),
+('newsadmin', 'd14f21b5919900f4cc49333652fb4e92940ac55d', 'PRO', 'example@domain.com'),
+('webadmin', 'd14f21b5919900f4cc49333652fb4e92940ac55d', 'WEBMASTER', 'example@domain.com');
 
 -- --------------------------------------------------------
 
@@ -79,7 +89,7 @@ CREATE TABLE IF NOT EXISTS `error_reports` (
   `comment` text NOT NULL,
   `time_of_report` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=3 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=2 ;
 
 --
 -- Dumping data for table `error_reports`
@@ -265,6 +275,7 @@ CREATE TABLE IF NOT EXISTS `users` (
   `bio` text,
   `pic_url` text NOT NULL,
   `verified` int(1) NOT NULL DEFAULT '0',
+  `is_class_rep` int(1) NOT NULL DEFAULT '0',
   `is_suspended` int(1) NOT NULL DEFAULT '0',
   `is_deleted` int(1) NOT NULL DEFAULT '0',
   PRIMARY KEY (`regno`),
@@ -275,8 +286,9 @@ CREATE TABLE IF NOT EXISTS `users` (
 -- Dumping data for table `users`
 --
 
-INSERT INTO `users` (`regno`, `first_name`, `last_name`, `other_names`, `password`, `department`, `level`, `entry_year`, `phone`, `email`, `dob`, `address1`, `address2`, `interests`, `bio`, `pic_url`, `verified`, `is_suspended`, `is_deleted`) VALUES
-('1234/123456', 'Jane', 'Doe', 'Anonymous', 'd14f21b5919900f4cc49333652fb4e92940ac55d', 'COMPUTER SCIENCE', '400', 2015, '07012345678', 'example@domain.com', '1995-07-29', '', '', 'Java', 'Find out', '', 1, 0, 0);
+INSERT INTO `users` (`regno`, `first_name`, `last_name`, `other_names`, `password`, `department`, `level`, `entry_year`, `phone`, `email`, `dob`, `address1`, `address2`, `interests`, `bio`, `pic_url`, `verified`, `is_class_rep`, `is_suspended`, `is_deleted`) VALUES
+('1234/123456', 'Jane', 'Doe', 'Anonymous', 'd14f21b5919900f4cc49333652fb4e92940ac55d', 'COMPUTER SCIENCE/MATHEMATICS', '100', 2015, '07012345678', 'example@domain.com', '1995-07-29', '', '', 'Java', 'Find out', 'uploads/12341234565518047d54a75.jpeg', 1, 0, 0, 0),
+('2011/177392', 'Victor', 'Anuebunwa', '', '36691790920734ffcdc9611c3a12039e84baeff6', 'COMPUTER SCIENCE', '100', 2014, '07064561570', 'anuebunwa.victor@gmail.com', '2001-02-14', '', '', 'Programming, Gaming', '', 'uploads/20111773925518ac310be9e.jpeg', 0, 0, 0, 0);
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
