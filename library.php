@@ -175,7 +175,7 @@ limitations under the License.
                                     </h4>
                                     <p>
                                         by <?= $array[$index]['author'] ?>
-                                        <a class="button link" target="_blank" href="<?= $array[$index]['link'] ?>">Download</a>
+                                        <a class="button link" target="_blank" href="download.php?id=<?= $array[$index]['id'] ?>">Download</a>
                                     </p>
                                 </td>
                             </tr>
