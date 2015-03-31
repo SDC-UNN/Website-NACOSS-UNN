@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-$array = Utility::getResults($user->getUserID());
+$array = UserUtility::getResults($user->getUserID());
 
 ?>
 <div>

@@ -16,7 +16,7 @@
  * limitations under the License.
  */
 
-require_once 'Utility.php';
+require_once './UserUtility.php';
 
 class User {
 
@@ -73,7 +73,7 @@ class User {
     public function loginUser($ID, $password) {
         if (!(empty($ID) | empty($password))) {
             $query = "select * from users where regno = '$ID'";
-            $link = Utility::getDefaultDBConnection();
+            $link = UserUtility::getDefaultDBConnection();
             $result = mysqli_query($link, $query);
             if ($result) {
                 $row = mysqli_fetch_array($result);
@@ -96,7 +96,7 @@ class User {
      * @return boolean returns true if user's data was successfully updated, false otherwise
      */
     public function updateUserInfo(array $array) {
-        $link = Utility::getDefaultDBConnection();
+        $link = UserUtility::getDefaultDBConnection();
         foreach ($array as $key => $value) {
             if (strcasecmp($key, "password") === 0) {
                 $array[$key] = sha1($value);
@@ -188,7 +188,7 @@ class User {
 
     public function getUserData() {
         $query = "select * from users where regno = '" . $this->getCookiesID() . "'";
-        $link = Utility::getDefaultDBConnection();
+        $link = UserUtility::getDefaultDBConnection();
         $result = mysqli_query($link, $query);
         if ($result) {
             $array = mysqli_fetch_array($result);
@@ -208,7 +208,7 @@ class User {
     }
 
     private function addNewUser($ID, $password, $email, $first_name, $last_name, $phone) {
-        $link = Utility::getDefaultDBConnection();
+        $link = UserUtility::getDefaultDBConnection();
         $regno = mysqli_escape_string($link, $ID);
         $pwd = sha1($password);
         $email_address = mysqli_escape_string($link, $email);
@@ -245,12 +245,12 @@ class User {
 // Mail login id and password to user
         if ($ok) {
             try {
-                mail($email, "Subject: NACOSS UNN login details", wordwrap(Utility::getVerificationMessage($ID, $password), 70, "\r\n"), "From: NACOSS UNN\r\n"
+                mail($email, "Subject: NACOSS UNN login details", wordwrap(UserUtility::getVerificationMessage($ID, $password), 70, "\r\n"), "From: NACOSS UNN\r\n"
                         . 'Reply-To: ' . $GLOBALS['contact_email'] . "\r\n"
                         . 'X-Mailer: PHP/' . phpversion());
             } catch (Exception $exc) {
 //Mailing failed
-                Utility::writeToLog($exc);
+                UserUtility::writeToLog($exc);
 //            return false;
             }
         }
@@ -320,7 +320,7 @@ class User {
      * @return boolean true if report was successfully sent, false otherwise
      */
     public function reportBug(array $array) {
-        $link = Utility::getDefaultDBConnection();
+        $link = UserUtility::getDefaultDBConnection();
         $query = "insert into error_reports set user_id = '" . $this->getCookiesID() . "', "
                 . "subject='" . $array['subject'] . "', "
                 . "comment = '" . $array['comment'] . "'";
@@ -329,7 +329,7 @@ class User {
 
     public function changePassword($oldPassword, $newPassword) {
         if (strcmp($this->getUserPassword(), sha1($oldPassword)) === 0) {
-            $link = Utility::getDefaultDBConnection();
+            $link = UserUtility::getDefaultDBConnection();
             $query = "update users set password='" . sha1($newPassword) . "' where regno='" . $this->getUserID() . "'";
             $ok = mysqli_query($link, $query);
 

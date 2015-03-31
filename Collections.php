@@ -29,7 +29,7 @@ class Collections {
     function Collections() {
         $array = array();
         $query = "select * from library order by title ASC";
-        $link = Utility::getDefaultDBConnection();
+        $link = UserUtility::getDefaultDBConnection();
         $result = mysqli_query($link, $query);
         if ($result) {
             while ($row = mysqli_fetch_array($result)) {

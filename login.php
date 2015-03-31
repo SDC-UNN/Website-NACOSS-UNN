@@ -21,7 +21,7 @@ if ($user->isLoggedIn()) {
                 }
 
                 //Validating details
-                $error_message = Utility::getInvalidParameters($array);
+                $error_message = UserUtility::getInvalidParameters($array);
                 $ok = empty($error_message);
             } else {
                 $ok = false;

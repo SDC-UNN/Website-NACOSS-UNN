@@ -64,7 +64,7 @@
             <div class="panel-header">Reports By you</div>
             <div class="panel-content">
                 <?php
-                $array = Utility::getErrorReports($user->getUserID());
+                $array = UserUtility::getErrorReports($user->getUserID());
                 if (empty($array)) {
                     echo '<p>No previous reports</p>';
                 } else {

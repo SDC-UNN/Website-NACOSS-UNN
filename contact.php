@@ -3,7 +3,7 @@ require_once './class_lib.php';
 $request = filter_input(INPUT_POST, "submit");
 if (isset($request)) {
     //Set values
-    $contact_email = Utility::getContactEmail();
+    $contact_email = UserUtility::getContactEmail();
 
     $user_email = html_entity_decode(filter_input(INPUT_POST, "email"));
     $company = html_entity_decode(filter_input(INPUT_POST, "company"));
@@ -35,7 +35,7 @@ if (isset($request)) {
                 $success = false;
             }
         } catch (Exception $exc) {
-            Utility::writeToLog($exc);
+            UserUtility::writeToLog($exc);
             $success = false;
         }
     } else {
@@ -105,7 +105,7 @@ limitations under the License.
                     <strong>CALL <i class="icon-phone-2"></i></strong>
                     <br/>
                     <?php
-                    $array = Utility::getContactNumbers();
+                    $array = UserUtility::getContactNumbers();
                     for ($index = 0; $index < count($array); $index++) {
                         echo '<span class="fg-lightBlue">' . $array[$index] . '</span>';
                         if ($index < count($array) - 1) {

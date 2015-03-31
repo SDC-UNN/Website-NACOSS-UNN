@@ -60,7 +60,7 @@ limitations under the License.
 
                 <h1>News / Events</h1>
                 <?php
-                $array = $news->getNews();
+                $array = $news->getAllNews();
                 for ($index = 0; $index < count($array); $index++) {
                     ?>
                     <div class="listview-outlook" data-role="listview">

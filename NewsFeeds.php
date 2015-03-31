@@ -16,7 +16,7 @@
  * limitations under the License.
  */
 
-require_once './Utility.php';
+require_once './UserUtility.php';
 
 class NewsFeeds {
 
@@ -27,7 +27,7 @@ class NewsFeeds {
     }
 
     public function getHeadLines() {
-        if(isset($this->news)){
+        if (isset($this->news)) {
             return array();
         }
         return array();
@@ -36,7 +36,7 @@ class NewsFeeds {
     public static function getHomePageSliderImages() {
         $array = array();
         $query = "select * from home_page_slider limit 10";
-        $link = Utility::getDefaultDBConnection();
+        $link = UserUtility::getDefaultDBConnection();
         $result = mysqli_query($link, $query);
         if ($result) {
             while ($row = mysqli_fetch_array($result)) {
@@ -49,7 +49,7 @@ class NewsFeeds {
     private function setNews() {
         $array = array();
         $query = "select * from news order by time_of_post DESC";
-        $link = Utility::getDefaultDBConnection();
+        $link = UserUtility::getDefaultDBConnection();
         $result = mysqli_query($link, $query);
         if ($result) {
             while ($row = mysqli_fetch_array($result)) {
@@ -59,8 +59,16 @@ class NewsFeeds {
         $this->news = $array;
     }
 
-    public function getNews() {
+    public function getAllNews() {
         return $this->news;
     }
-    
+
+    public function getNews($id) {
+        foreach ($this->news as $news) {
+            if (strcmp($news[$id], $id) === 0) {
+                return $news;
+            }
+        }
+    }
+
 }

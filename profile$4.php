@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-$array = Utility::getPayments($user->getUserID());
+$array = UserUtility::getPayments($user->getUserID());
 
 ?>
 <div>

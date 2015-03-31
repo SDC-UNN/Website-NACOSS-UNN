@@ -59,7 +59,7 @@ limitations under the License.
                 <h1>Frequently Asked Questions</h1>
                 <br/>
                 <?php
-                $array = Utility::getFAQs();
+                $array = UserUtility::getFAQs();
                 for ($index = 0; $index < count($array); $index++) {
                     ?>
                     <div class="panel shadow" data-role="panel">
