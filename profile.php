@@ -16,7 +16,7 @@ if ($user->isLoggedIn()) {
     if ($isEditFormRequest) {
         //Handle a post request from form
         $array = filter_input_array(INPUT_POST);
-        if ($array !== FALSE || $array !== null) {
+        if ($array !== FALSE && $array !== null) {
             foreach ($array as $key => $value) {
                 $array[$key] = html_entity_decode($array[$key]);
             }
@@ -32,7 +32,7 @@ if ($user->isLoggedIn()) {
         //update user
         if ($ok) {
             try {
-                $user->updateUserInfo($array);  
+                $user->updateUserInfo($array);
                 $success = true;
                 $error_message = "";
             } catch (Exception $exc) {
@@ -42,7 +42,7 @@ if ($user->isLoggedIn()) {
         } else {
             $success = false;
         }
-        
+
         $page = $success ? 1 : 2;
     } else {
         $isreportBugRequest = filter_input(INPUT_POST, "reportBugForm");
@@ -69,12 +69,17 @@ if ($user->isLoggedIn()) {
 
             //Send bug report
             if ($ok) {
-                $success = $user->reportBug($array);
-                if ($success) {
-                    $array = "";
-                } else {
-                    //Sending failed
-                    $error_message = "Oops! Something went wrong, please try again.";
+                try {
+                    $success = $user->reportBug($array);
+                    if ($success) {
+                        $array = "";
+                    } else {
+                        //Sending failed
+                        $error_message = "Oops! Something went wrong, please try again.";
+                    }
+                } catch (Exception $exc) {
+                    $success = FALSE;
+                    $error_message = $exc->getMessage();
                 }
             } else {
                 $success = false;

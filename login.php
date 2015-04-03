@@ -15,7 +15,7 @@ if ($user->isLoggedIn()) {
             $showLoginPage = false;
 
             $array = filter_input_array(INPUT_POST);
-            if ($array !== FALSE || $array !== null) {
+            if ($array !== FALSE && $array !== null) {
                 foreach ($array as $key => $value) {
                     $array[$key] = html_entity_decode($array[$key]);
                 }

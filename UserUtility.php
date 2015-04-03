@@ -16,7 +16,6 @@
  * limitations under the License.
  */
 
-
 class UserUtility {
 
     public static function getContactEmail() {
@@ -26,6 +25,12 @@ class UserUtility {
         if ($result) {
             $row = mysqli_fetch_array($result);
             return $row['value'];
+        } else {
+            //Log error
+            $error = mysqli_error($link);
+            if (!empty($error)) {
+                UserUtility::writeToLog(new Exception($error));
+            }
         }
         return "";
     }
@@ -37,6 +42,12 @@ class UserUtility {
         if ($result) {
             $row = mysqli_fetch_array($result);
             return empty($row['value']) ? array() : explode(",", $row['value']);
+        } else {
+            //Log error
+            $error = mysqli_error($link);
+            if (!empty($error)) {
+                UserUtility::writeToLog(new Exception($error));
+            }
         }
         return array();
     }
@@ -49,6 +60,12 @@ class UserUtility {
         if ($result) {
             while ($row = mysqli_fetch_array($result)) {
                 array_push($array, $row);
+            }
+        } else {
+            //Log error
+            $error = mysqli_error($link);
+            if (!empty($error)) {
+                UserUtility::writeToLog(new Exception($error));
             }
         }
         return $array;
@@ -63,6 +80,12 @@ class UserUtility {
             while ($row = mysqli_fetch_array($result)) {
                 array_push($array, $row);
             }
+        } else {
+            //Log error
+            $error = mysqli_error($link);
+            if (!empty($error)) {
+                UserUtility::writeToLog(new Exception($error));
+            }
         }
         return $array;
     }
@@ -76,10 +99,16 @@ class UserUtility {
             while ($row = mysqli_fetch_array($result)) {
                 array_push($array, $row);
             }
+        } else {
+            //Log error
+            $error = mysqli_error($link);
+            if (!empty($error)) {
+                UserUtility::writeToLog(new Exception($error));
+            }
         }
         return $array;
     }
-    
+
     public static function getErrorReports($ID) {
         $array = array();
         $query = "select * from error_reports where user_id='" . $ID . "' order by time_of_report DESC";
@@ -88,6 +117,12 @@ class UserUtility {
         if ($result) {
             while ($row = mysqli_fetch_array($result)) {
                 array_push($array, $row);
+            }
+        } else {
+            //Log error
+            $error = mysqli_error($link);
+            if (!empty($error)) {
+                UserUtility::writeToLog(new Exception($error));
             }
         }
         return $array;
@@ -101,6 +136,12 @@ class UserUtility {
         if ($result) {
             $row = mysqli_fetch_array($result);
             $entry_year = $row['entry_year'];
+        } else {
+            //Log error
+            $error = mysqli_error($link);
+            if (!empty($error)) {
+                UserUtility::writeToLog(new Exception($error));
+            }
         }
 
         if (isset($entry_year)) {
@@ -109,6 +150,12 @@ class UserUtility {
             if ($result) {
                 while ($row = mysqli_fetch_array($result)) {
                     array_push($array, $row);
+                }
+            } else {
+                //Log error
+                $error = mysqli_error($link);
+                if (!empty($error)) {
+                    UserUtility::writeToLog(new Exception($error));
                 }
             }
         }
@@ -187,7 +234,6 @@ class UserUtility {
      * @return connection to default database
      */
     public static function getDefaultDBConnection() {
-        require_once './constants.php';
         $link = UserUtility::getConnection();
         if ($link) {
             $successful = mysqli_select_db($link, $GLOBALS['default_db_name']);
@@ -215,11 +261,30 @@ class UserUtility {
      * @param type $exc exception
      */
     public static function writeToLog(Exception $exc) {
-        $link = getDefaultDBConnection();
-        $message = "File: " . $exc->getFile() . " [line " . $exc->getLine() . "]\n"
-                . "Message: " . $exc->getMessage();
-        $query = "insert into error_log set message = '$message'";
-        mysqli_query($link, $query);
+        $link = UserUtility::getDefaultDBConnection();
+        $line = $exc->getLine();
+        $file = mysqli_escape_string($link, $exc->getFile());
+        $message = mysqli_escape_string($link, $exc->getMessage());
+        //Check if error has been logged previously
+        $query = "select * from error_log where message = '$message' and file='$file' and line='$line'";
+        $result = mysqli_query($link, $query);
+        if ($result) {
+            $row = mysqli_fetch_array($result);
+        } else {
+            //Log error
+            $error = mysqli_error($link);
+            if (!empty($error)) {
+                UserUtility::writeToLog(new Exception($error));
+            }
+        }
+
+        //If previously logged, update time and set is-fixed = 0 else insert new log
+        if ($result && $row) {
+            $query = "update error_log set time_of_error = now(), is_fixed = 0 where id = '" . $row['id'] . "'";
+        } else {
+            $query = "insert into error_log set message = '$message', file='$file', line='$line', time_of_error = now()";
+        }
+        return mysqli_query($link, $query);
     }
 
 }

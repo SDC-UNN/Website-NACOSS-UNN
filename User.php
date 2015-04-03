@@ -85,7 +85,13 @@ class User {
                         return true;
                     }
                 }
+            } else {
+            //Log error
+            $error = mysqli_error($link);
+            if (!empty($error)) {
+                UserUtility::writeToLog(new Exception($error));
             }
+        }
         }
         return false;
     }
@@ -116,7 +122,12 @@ class User {
         if ($ok) {
             $query = $this->getUpdateQuery($array);
             $ok = mysqli_query($link, $query);
-
+            //Log error
+            $error = mysqli_error($link);
+            if (!empty($error)) {
+                UserUtility::writeToLog(new Exception($error));
+            }
+        
             //Reload
             $this->userInfo = $this->getUserData();
         } else {
@@ -193,6 +204,12 @@ class User {
         if ($result) {
             $array = mysqli_fetch_array($result);
             return $array;
+        } else {
+            //Log error
+            $error = mysqli_error($link);
+            if (!empty($error)) {
+                UserUtility::writeToLog(new Exception($error));
+            }
         }
         return array();
     }
@@ -321,10 +338,30 @@ class User {
      */
     public function reportBug(array $array) {
         $link = UserUtility::getDefaultDBConnection();
-        $query = "insert into error_reports set user_id = '" . $this->getCookiesID() . "', "
-                . "subject='" . $array['subject'] . "', "
+        //Check if report already exist
+        $query = "select * from error_reports where "
+                . "user_id = '" . $this->getCookiesID() . "' and "
+                . "subject='" . $array['subject'] . "' and "
                 . "comment = '" . $array['comment'] . "'";
-        return mysqli_query($link, $query);
+        $result = mysqli_query($link, $query);
+        if ($result) {
+            $row = mysqli_fetch_array($result);
+        } else {
+            //Log error
+            $error = mysqli_error($link);
+            if (!empty($error)) {
+                UserUtility::writeToLog(new Exception($error));
+            }
+        }
+        
+        if ($result && $row) {
+            throw new Exception("Already posted");
+        } else {
+            $query = "insert into error_reports set user_id = '" . $this->getCookiesID() . "', "
+                    . "subject='" . $array['subject'] . "', "
+                    . "comment = '" . $array['comment'] . "'";
+            return mysqli_query($link, $query);
+        }
     }
 
     public function changePassword($oldPassword, $newPassword) {

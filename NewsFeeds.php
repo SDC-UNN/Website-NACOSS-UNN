@@ -42,6 +42,12 @@ class NewsFeeds {
             while ($row = mysqli_fetch_array($result)) {
                 array_push($array, $row);
             }
+        } else {
+            //Log error
+            $error = mysqli_error($link);
+            if (!empty($error)) {
+                UserUtility::writeToLog(new Exception($error));
+            }
         }
         return $array;
     }
@@ -54,6 +60,12 @@ class NewsFeeds {
         if ($result) {
             while ($row = mysqli_fetch_array($result)) {
                 array_push($array, $row);
+            }
+        } else {
+            //Log error
+            $error = mysqli_error($link);
+            if (!empty($error)) {
+                UserUtility::writeToLog(new Exception($error));
             }
         }
         $this->news = $array;

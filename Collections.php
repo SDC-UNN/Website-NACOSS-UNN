@@ -35,6 +35,12 @@ class Collections {
             while ($row = mysqli_fetch_array($result)) {
                 array_push($array, $row);
             }
+        } else {
+            //Log error
+            $error = mysqli_error($link);
+            if (!empty($error)) {
+                UserUtility::writeToLog(new Exception($error));
+            }
         }
         $this->books = $array;
     }
@@ -88,11 +94,11 @@ class Collections {
         if (strlen($query) > 0) {
             $array = array();
             foreach ($this->books as $value) {
-                if(stripos($value['title'], $query) !== FALSE ||
+                if (stripos($value['title'], $query) !== FALSE ||
                         stripos($value['author'], $query) !== FALSE ||
-                        stripos($value['keywords'], $query) !== FALSE){
+                        stripos($value['keywords'], $query) !== FALSE) {
                     array_push($array, $value);
-                        }
+                }
             }
             return $array;
         }
