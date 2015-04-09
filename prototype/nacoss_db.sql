@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Mar 30, 2015 at 01:51 PM
+-- Generation Time: Apr 09, 2015 at 07:48 PM
 -- Server version: 5.6.17
 -- PHP Version: 5.5.12
 
@@ -28,8 +28,8 @@ SET time_zone = "+00:00";
 
 CREATE TABLE IF NOT EXISTS `admins` (
   `username` varchar(15) NOT NULL COMMENT 'For class_reps, this username should match their regno on users table',
-  `password` varchar(40) NOT NULL,
-  `type` enum('WEBMASTER','PRO','LIBRARIAN','CLASS_REP') NOT NULL,
+  `password` varchar(255) NOT NULL,
+  `type` enum('WEBMASTER','PRO','LIBRARIAN','CLASS_REP','TREASURER') NOT NULL,
   `email` text NOT NULL,
   PRIMARY KEY (`username`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
@@ -39,10 +39,14 @@ CREATE TABLE IF NOT EXISTS `admins` (
 --
 
 INSERT INTO `admins` (`username`, `password`, `type`, `email`) VALUES
-('2011/177392', 'd14f21b5919900f4cc49333652fb4e92940ac55d', 'CLASS_REP', 'example@domain.com'),
-('libraryadmin', 'd14f21b5919900f4cc49333652fb4e92940ac55d', 'LIBRARIAN', 'example@domain.com'),
-('newsadmin', 'd14f21b5919900f4cc49333652fb4e92940ac55d', 'PRO', 'example@domain.com'),
-('webadmin', 'd14f21b5919900f4cc49333652fb4e92940ac55d', 'WEBMASTER', 'example@domain.com');
+('1234/123456', '$2y$10$JRjBJLF1Td6e9xWVttk9juRXK7UOdIrAyF7buxloPei/8.06/GccC', 'CLASS_REP', 'example@domain.com'),
+('2011/111111', '$2y$08$KJvecJJmpauEyUM4vnYJF.zJvFWEKMvNQWmQsLLLRd.cUipEGQIYu', 'CLASS_REP', 'ubahjennifer@gmail.com'),
+('2011/111222', '$2y$10$CkYXw5Y6.mR0GSDJCq/k..c608PGInY4YAcgNFbbBzQKq3wjk2asW', 'CLASS_REP', 'eanthony@yahoo.com'),
+('2011/177392', '$2y$10$YyJfgW.y1Jrt3zyWJPFGTuKk9at.e/jLqK8n1VRELdyBJoPi3RDj6', 'CLASS_REP', 'anuebunwa.victor@gmail.com'),
+('libraryadmin', '$2y$10$YyJfgW.y1Jrt3zyWJPFGTuKk9at.e/jLqK8n1VRELdyBJoPi3RDj6', 'LIBRARIAN', 'example@domain.com'),
+('newsadmin', '$2y$10$YyJfgW.y1Jrt3zyWJPFGTuKk9at.e/jLqK8n1VRELdyBJoPi3RDj6', 'PRO', 'example@domain.com'),
+('treasurer', '$2y$10$YyJfgW.y1Jrt3zyWJPFGTuKk9at.e/jLqK8n1VRELdyBJoPi3RDj6', 'TREASURER', 'example@domain.com'),
+('webadmin', '$2y$10$YyJfgW.y1Jrt3zyWJPFGTuKk9at.e/jLqK8n1VRELdyBJoPi3RDj6', 'WEBMASTER', 'example@domain.com');
 
 -- --------------------------------------------------------
 
@@ -73,8 +77,23 @@ CREATE TABLE IF NOT EXISTS `error_log` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `time_of_error` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `message` text NOT NULL,
+  `trace` text NOT NULL,
+  `file` varchar(100) NOT NULL,
+  `line` int(4) NOT NULL,
+  `is_fixed` int(1) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=13 ;
+
+--
+-- Dumping data for table `error_log`
+--
+
+INSERT INTO `error_log` (`id`, `time_of_error`, `message`, `trace`, `file`, `line`, `is_fixed`) VALUES
+(7, '2015-04-03 09:35:14', 'You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ''u.regno = a.username where a.type = ''CLASS_REP'''' at line 1', '', 'C:\\wamp\\www\\Website-NACOSS-UNN\\cpanel\\webmaster\\functions.php', 206, 1),
+(8, '2015-04-05 19:39:37', 'Unknown column ''id'' in ''where clause''', '', 'C:\\wamp\\www\\Website-NACOSS-UNN\\cpanel\\webmaster\\functions.php', 149, 1),
+(9, '2015-04-07 22:38:39', 'Unknown column ''hash_algo_cost'' in ''field list''', '', 'C:\\wamp\\www\\Website-NACOSS-UNN\\cpanel\\webmaster\\WebsiteAdmin.php', 29, 1),
+(10, '2015-04-08 22:54:49', 'Duplicate entry ''2011/111111'' for key ''PRIMARY''', '', 'C:\\wamp\\www\\Website-NACOSS-UNN\\cpanel\\AdminUtility.php', 155, 1),
+(11, '2015-04-08 23:46:49', 'Unknown column ''username'' in ''where clause''', '', 'C:\\wamp\\www\\Website-NACOSS-UNN\\cpanel\\AdminUtility.php', 155, 1);
 
 -- --------------------------------------------------------
 
@@ -88,15 +107,18 @@ CREATE TABLE IF NOT EXISTS `error_reports` (
   `subject` varchar(100) NOT NULL,
   `comment` text NOT NULL,
   `time_of_report` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `seen` int(11) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=2 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=5 ;
 
 --
 -- Dumping data for table `error_reports`
 --
 
-INSERT INTO `error_reports` (`id`, `user_id`, `subject`, `comment`, `time_of_report`) VALUES
-(1, '1234/123456', 'Report to prove if reporting bugs really works', 'I just reported a BUG!!!!', '2015-03-25 05:04:22');
+INSERT INTO `error_reports` (`id`, `user_id`, `subject`, `comment`, `time_of_report`, `seen`) VALUES
+(1, '1234/123456', 'Report to prove if reporting bugs really works', 'I just reported a BUG!!!!', '2015-03-25 05:04:22', 0),
+(2, '1234/123456', 'Report to prove if reporting bugs really works', 'I just reported a BUG again!!!!', '2015-03-25 05:04:22', 1),
+(4, '1234/123456', 'Testing again', 'This is a report', '2015-04-08 20:39:21', 0);
 
 -- --------------------------------------------------------
 
@@ -239,17 +261,22 @@ CREATE TABLE IF NOT EXISTS `results` (
 --
 
 CREATE TABLE IF NOT EXISTS `settings` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(30) NOT NULL,
-  `value` text NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+  `value` text NOT NULL,
+  `description` text NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=6 ;
 
 --
 -- Dumping data for table `settings`
 --
 
-INSERT INTO `settings` (`name`, `value`) VALUES
-('email', 'example@domain.com'),
-('help_lines', '+23412345678, +23487654321');
+INSERT INTO `settings` (`id`, `name`, `value`, `description`) VALUES
+(1, 'email', 'example@domain.com', 'Organization contact email. This is the email address at which message from website visitors will be sent to.'),
+(2, 'help_lines', '+2348012345678, +2347087654321', 'Organisation contact lines. Phone number(s) that will be publicly displayed on website for visitors to call. NOTE: Multiple numbers should be separated with commas'),
+(3, 'hash_algo_cost', '10', 'Highest cost this server can afford without slowing down when computing hash algorithm'),
+(5, 'max_hash_time', '250', 'Minimum amount of time in milliseconds that it should take to calculate the (password) hashes. Field hash_algo_cost should be recalculated if this value changes.');
 
 -- --------------------------------------------------------
 
@@ -262,7 +289,7 @@ CREATE TABLE IF NOT EXISTS `users` (
   `first_name` varchar(30) NOT NULL,
   `last_name` varchar(30) NOT NULL,
   `other_names` varchar(30) DEFAULT NULL,
-  `password` varchar(40) NOT NULL,
+  `password` varchar(255) NOT NULL,
   `department` varchar(30) DEFAULT NULL,
   `level` varchar(3) DEFAULT NULL,
   `entry_year` year(4) NOT NULL,
@@ -287,8 +314,10 @@ CREATE TABLE IF NOT EXISTS `users` (
 --
 
 INSERT INTO `users` (`regno`, `first_name`, `last_name`, `other_names`, `password`, `department`, `level`, `entry_year`, `phone`, `email`, `dob`, `address1`, `address2`, `interests`, `bio`, `pic_url`, `verified`, `is_class_rep`, `is_suspended`, `is_deleted`) VALUES
-('1234/123456', 'Jane', 'Doe', 'Anonymous', 'd14f21b5919900f4cc49333652fb4e92940ac55d', 'COMPUTER SCIENCE/MATHEMATICS', '100', 2015, '07012345678', 'example@domain.com', '1995-07-29', '', '', 'Java', 'Find out', 'uploads/12341234565518047d54a75.jpeg', 1, 0, 0, 0),
-('2011/177392', 'Victor', 'Anuebunwa', '', '36691790920734ffcdc9611c3a12039e84baeff6', 'COMPUTER SCIENCE', '100', 2014, '07064561570', 'anuebunwa.victor@gmail.com', '2001-02-14', '', '', 'Programming, Gaming', '', 'uploads/20111773925518ac310be9e.jpeg', 0, 0, 0, 0);
+('1234/123456', 'Jane', 'Doe', 'Anonymous', '$2y$10$JRjBJLF1Td6e9xWVttk9juRXK7UOdIrAyF7buxloPei/8.06/GccC', 'COMPUTER SCIENCE/MATHEMATICS', '100', 2015, '07012345678', 'example@domain.com', '1995-07-29', '', '', 'Java', 'Find out', 'uploads/12341234565518047d54a75.jpeg', 1, 0, 0, 0),
+('2011/111111', 'Jennifer', 'Ubah', NULL, '$2y$08$KJvecJJmpauEyUM4vnYJF.zJvFWEKMvNQWmQsLLLRd.cUipEGQIYu', NULL, NULL, 0000, '07012345678', 'ubahjennifer@gmail.com', NULL, NULL, NULL, NULL, NULL, '', 0, 0, 0, 1),
+('2011/111222', 'Anthony', 'Ejinwa', '', '$2y$10$CkYXw5Y6.mR0GSDJCq/k..c608PGInY4YAcgNFbbBzQKq3wjk2asW', 'COMPUTER SCIENCE', '100', 2015, '07012345678', 'eanthony@yahoo.com', '2015-01-01', '', '', '', '', '', 0, 0, 0, 0),
+('2011/177392', 'Victor', 'Anuebunwa', '', '$2y$10$YyJfgW.y1Jrt3zyWJPFGTuKk9at.e/jLqK8n1VRELdyBJoPi3RDj6', 'COMPUTER SCIENCE', '100', 2014, '07064561570', 'anuebunwa.victor@gmail.com', '2001-02-14', '', '', 'Programming, Gaming', '', 'uploads/20111773925518ac310be9e.jpeg', 0, 0, 0, 0);
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
