@@ -19,25 +19,25 @@ if ($user->isLoggedIn()) {
                 foreach ($array as $key => $value) {
                     $array[$key] = html_entity_decode($array[$key]);
                 }
-
-                //Validating details
-                $error_message = UserUtility::getInvalidParameters($array);
-                $ok = empty($error_message);
             } else {
                 $ok = false;
                 $error_message = "Oops! Something went wrong, parameters are invalid.";
             }
-
             //register user
             if ($ok) {
-                $success = $user->
-                        registerUser($array['regno'], $array['password1'], $array['email'], $array['first_name'], $array['last_name'], $array['phone']);
-                if ($success) {
-                    $user->loginUser($array['regno'], $array['password1']);
-                    header("location: profile.php");
-                } else {
+                try {
+                    $success = $user->
+                            registerUser($array['regno'], $array['password1'], $array['password2'], $array['email'], $array['first_name'], $array['last_name'], $array['phone']);
+                    if ($success and $user->loginUser($array['regno'], $array['password1'])) {                        
+                        header("location: profile.php");
+                    } else {
+                        $success = FALSE;
+                        $error_message = "Oops! Something went wrong, please try again.";
+                    }
+                } catch (Exception $exc) {
                     //login unsuccessful
-                    $error_message = "Oops! Something went wrong, please try again.";
+                    $success = FALSE;
+                    $error_message = $exc->getMessage();
                 }
             } else {
                 $success = false;
@@ -157,7 +157,7 @@ limitations under the License.
                                                 <div class="panel span5 no-border text-center" style="background-color: rgba(0,0,0,0.35)">
                                                     <div class="panel-content">
                                                         <h2 class="fg-white text-left">Scientists with a difference</h2>
-                                                        <a href="<?= $GLOBALS["ndg_homepage"] ?>" target="_blank" 
+                                                        <a href="<?= NDG_HOMEPAGE ?>" target="_blank" 
                                                            class="button large bg-lightOlive bg-hover-dark fg-white">join NDG today</a>
                                                     </div>
                                                 </div>

@@ -37,10 +37,7 @@ class Collections {
             }
         } else {
             //Log error
-            $error = mysqli_error($link);
-            if (!empty($error)) {
-                UserUtility::writeToLog(new Exception($error));
-            }
+            UserUtility::logMySQLError($link);
         }
         $this->books = $array;
     }

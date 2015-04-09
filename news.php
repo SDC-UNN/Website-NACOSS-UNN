@@ -50,7 +50,7 @@ limitations under the License.
         <script src="js/github.info.js"></script>
 
         <!-- Page Title -->
-        <title>NACOSS UNN : Title</title>        
+        <title>NACOSS UNN : News</title>        
     </head>
     <body class="metro" style="background-image: url(img/bg.jpg); background-repeat: repeat;">
         <div class="container bg-white">            

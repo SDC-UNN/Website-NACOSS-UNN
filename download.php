@@ -1,5 +1,4 @@
 <?php
-
 /*
  * Copyright 2015 NACOSS UNN Developers Group (NDG).
  *
@@ -25,16 +24,12 @@ $result = mysqli_query($link, $query);
 if ($result) {
     $row = mysqli_fetch_array($result);
     $link = $row['link'];
-    
+
     //Redirect to download
     header("location: $link");
-} else {
-            //Log error
-            $error = mysqli_error($link);
-            if (!empty($error)) {
-                UserUtility::writeToLog(new Exception($error));
-            }
-        }
+}
+//Log error
+UserUtility::logMySQLError($link);
 ?>
 <!--if not successful-->
 <div>

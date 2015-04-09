@@ -72,26 +72,34 @@ class User {
      */
     public function loginUser($ID, $password) {
         if (!(empty($ID) | empty($password))) {
-            $query = "select * from users where regno = '$ID'";
+            $query = "select password from users where regno = '$ID'";
             $link = UserUtility::getDefaultDBConnection();
             $result = mysqli_query($link, $query);
             if ($result) {
                 $row = mysqli_fetch_array($result);
-                $password = sha1($password);
-                $match = strcasecmp($password, $row['password']);
-                if ($match === 0) {
-                    if ($this->setUserCookies($ID, $password)) {
-                        $this->userInfo = $row;
-                        return true;
+                $hash = $row['password'];
+                // Verify stored hash against plain-text password
+                if (password_verify($password, $hash)) {
+                    $options = array('cost' => UserUtility::getHashCost());
+                    // Check if a newer hashing algorithm is available
+                    // or the cost has changed
+                    if (password_needs_rehash($hash, PASSWORD_DEFAULT, $options)) {
+                        // If so, create a new hash, and replace the old one
+                        $newHash = password_hash($password, PASSWORD_DEFAULT, $options);
+                        $hash = mysqli_escape_string($link, $newHash);
+                        $query = "update users set password = '$hash' where regno = '$ID'";
+                        mysqli_query($link, $query);
                     }
+                    //Log error
+                    UserUtility::logMySQLError($link);
+                    //update data
+                    $ok = $this->setUserCookies($ID, $hash);
+                    $this->userInfo = $this->getUserData();
+                    return $ok;
                 }
-            } else {
-            //Log error
-            $error = mysqli_error($link);
-            if (!empty($error)) {
-                UserUtility::writeToLog(new Exception($error));
             }
-        }
+            //Log error
+            UserUtility::logMySQLError($link);
         }
         return false;
     }
@@ -104,30 +112,23 @@ class User {
     public function updateUserInfo(array $array) {
         $link = UserUtility::getDefaultDBConnection();
         foreach ($array as $key => $value) {
-            if (strcasecmp($key, "password") === 0) {
-                $array[$key] = sha1($value);
-            } else {
-                $array[$key] = mysqli_escape_string($link, $value);
-            }
+            $array[$key] = mysqli_escape_string($link, $value);
         }
-        $ok = $this->validateInfo($array["regno"], $array["password"], $array["email"], $array["first_name"], $array["last_name"], $array["phone"]);
-
-        if ($ok && !empty($_FILES["pic_url"]['name'])) {
-            $url = $this->uploadUserImage("pic_url"); //Throws exception if not successful
-            $array['pic_url'] = $url;
-        } else {
-            $array['pic_url'] = $this->userInfo['pic_url'];
-        }
+        $ok = $this->validateInfo($array["regno"], $array["email"], $array["first_name"], $array["last_name"], $array["phone"]);
 
         if ($ok) {
+            if (!empty($_FILES["pic_url"]['name'])) {
+                $url = $this->uploadUserImage("pic_url"); //Throws exception if not successful
+                $array['pic_url'] = $url;
+            } else {
+                $array['pic_url'] = $this->userInfo['pic_url'];
+            }
+
             $query = $this->getUpdateQuery($array);
             $ok = mysqli_query($link, $query);
             //Log error
-            $error = mysqli_error($link);
-            if (!empty($error)) {
-                UserUtility::writeToLog(new Exception($error));
-            }
-        
+            UserUtility::logMySQLError($link);
+
             //Reload
             $this->userInfo = $this->getUserData();
         } else {
@@ -185,7 +186,7 @@ class User {
     }
 
     private function getUpdateQuery(array $array) {
-        return "update users set password='" . $array["password"] . "',email='" . $array["email"] . "',"
+        return "update users set email='" . $array["email"] . "',"
                 . "first_name='" . $array["first_name"] . "',last_name='" . $array["last_name"] . "',"
                 . "other_names='" . $array["other_names"] . "',department='" . $array["department"] . "',"
                 . "level='" . $array["level"] . "',phone='" . $array["phone"] . "',"
@@ -206,28 +207,60 @@ class User {
             return $array;
         } else {
             //Log error
-            $error = mysqli_error($link);
-            if (!empty($error)) {
-                UserUtility::writeToLog(new Exception($error));
-            }
+            UserUtility::logMySQLError($link);
         }
         return array();
     }
 
-    private function validateInfo($ID, $password, $email, $first_name, $last_name, $phone) {
-        return isset($ID) &&
-                isset($password) &&
-                isset($email) &&
-                isset($password) &&
-                isset($first_name) &&
-                isset($last_name) &&
-                isset($phone);
+    private function validatePassword($password) {
+        if (strlen($password) >= 8) {
+            $regex = "#([A-Z]+[a-z]*[0-9]*\S*)([A-Z]*[a-z]+[0-9]*\S*)([A-Z]*[a-z]*[0-9]+\S*)#";
+            if (!preg_match($regex, $password)) {
+                throw new Exception("Invalid password: try switching letter cases, adding numbers and special characters");
+            }
+        } else {
+            throw new Exception("Password should be up to 8 characters long");
+        }
+    }
+
+    private function validateInfo($ID, $email, $first_name, $last_name, $phone, $password = null) {
+        if (isset($ID) && isset($email) && isset($first_name) &&
+                isset($last_name) && isset($phone)) {
+            //Check ID
+            if (!preg_match("#\d{4}/\d{6}#", $ID)) {
+                throw new Exception("Invalid ID");
+            }
+            //Check email
+            if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+                throw new Exception("Invalid email");
+            }
+            //Check first name
+            if (!preg_match("#[[:alpha:]]{2,}#", $first_name)) {
+                throw new Exception("Invalid first name");
+            }
+            //Check last name
+            if (!preg_match("#[[:alpha:]]{2,}#", $last_name)) {
+                throw new Exception("Invalid last name");
+            }
+            //Check phone
+            if (!preg_match("#\d{11}|(\+234{10})#", $phone)) {
+                throw new Exception("Invalid phone number");
+            }
+            //Check password
+            if (isset($password)) {
+                $this->validatePassword($password);
+            }
+            return TRUE;
+        }
+        throw new Exception("Field not set");
     }
 
     private function addNewUser($ID, $password, $email, $first_name, $last_name, $phone) {
         $link = UserUtility::getDefaultDBConnection();
         $regno = mysqli_escape_string($link, $ID);
-        $pwd = sha1($password);
+        $options = array('cost' => UserUtility::getHashCost());
+        $hash = password_hash($password, PASSWORD_DEFAULT, $options);
+        $pwd = mysqli_escape_string($link, $hash);
         $email_address = mysqli_escape_string($link, $email);
         $fname = mysqli_escape_string($link, $first_name);
         $lname = mysqli_escape_string($link, $last_name);
@@ -252,23 +285,27 @@ class User {
      * @param type $phone user's phone number
      * @return boolean returns true if user's data was successfully registered, false otherwise
      */
-    public function registerUser($ID, $password, $email, $first_name, $last_name, $phone) {
-// Validate details
-        $ok = $this->validateInfo($ID, $password, $email, $first_name, $last_name, $phone);
-// Add to database
+    public function registerUser($ID, $password, $retypedPassword, $email, $first_name, $last_name, $phone) {
+        // Validate details
+        $ok = strcmp($password, $retypedPassword) === 0;
+        if ($ok) {
+            $ok = $this->validateInfo($ID, $email, $first_name, $last_name, $phone, $password);
+        } else {
+            throw new Exception("Passwords do not match");
+        }
+        // Add to database
         if ($ok) {
             $ok = $this->addNewUser($ID, $password, $email, $first_name, $last_name, $phone);
         }
-// Mail login id and password to user
+        // Mail login id and password to user
         if ($ok) {
             try {
                 mail($email, "Subject: NACOSS UNN login details", wordwrap(UserUtility::getVerificationMessage($ID, $password), 70, "\r\n"), "From: NACOSS UNN\r\n"
-                        . 'Reply-To: ' . $GLOBALS['contact_email'] . "\r\n"
                         . 'X-Mailer: PHP/' . phpversion());
             } catch (Exception $exc) {
-//Mailing failed
+                //Mailing failed
                 UserUtility::writeToLog($exc);
-//            return false;
+                //            return false;
             }
         }
         return $ok;
@@ -348,12 +385,9 @@ class User {
             $row = mysqli_fetch_array($result);
         } else {
             //Log error
-            $error = mysqli_error($link);
-            if (!empty($error)) {
-                UserUtility::writeToLog(new Exception($error));
-            }
+            UserUtility::logMySQLError($link);
         }
-        
+
         if ($result && $row) {
             throw new Exception("Already posted");
         } else {
@@ -364,16 +398,27 @@ class User {
         }
     }
 
-    public function changePassword($oldPassword, $newPassword) {
-        if (strcmp($this->getUserPassword(), sha1($oldPassword)) === 0) {
-            $link = UserUtility::getDefaultDBConnection();
-            $query = "update users set password='" . sha1($newPassword) . "' where regno='" . $this->getUserID() . "'";
-            $ok = mysqli_query($link, $query);
+    public function changePassword($oldPassword, $newPassword1, $newPassword2) {
+        if (password_verify($oldPassword, $this->getUserPassword())) {
+            //Check password
+            $this->validatePassword($newPassword1);
+            $ok = strcmp($newPassword1, $newPassword2) === 0;
+            if ($ok) {
+                $link = UserUtility::getDefaultDBConnection();
+                $options = array('cost' => UserUtility::getHashCost());
+                $pwd = password_hash($newPassword1, PASSWORD_DEFAULT, $options);
+                $query = "update users set password='" . $pwd . "' where regno='" . $this->getUserID() . "'";
+                mysqli_query($link, $query);
+                //Log error
+                UserUtility::logMySQLError($link);
 
-//Reload
-            $this->userInfo = $this->getUserData();
-            $this->setUserCookies($this->getUserID(), $this->getUserPassword());
-            return $ok;
+                //Reload
+                $this->userInfo = $this->getUserData();
+                $ok = $this->setUserCookies($this->userInfo['regno'], $this->userInfo['password']);
+                return $ok;
+            } else {
+                throw new Exception("Passwords do not match");
+            }
         } else {
             throw new Exception("Wrong password");
         }

@@ -30,7 +30,7 @@ if (empty($array)) {
     <div class="row bg-grayLighter grid">
         <div class="padding10">
             <?php
-            if ($isEditFormRequest) {
+            if (isset($array["editProfileForm"])) {
                 if ($success) {
                     ?>
                     <p class="fg-NACOSS-UNN">Profile was successfully updated.</p>

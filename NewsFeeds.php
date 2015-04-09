@@ -43,11 +43,8 @@ class NewsFeeds {
                 array_push($array, $row);
             }
         } else {
-            //Log error
-            $error = mysqli_error($link);
-            if (!empty($error)) {
-                UserUtility::writeToLog(new Exception($error));
-            }
+            //Log error            
+            UserUtility::logMySQLError($link);
         }
         return $array;
     }
@@ -63,10 +60,7 @@ class NewsFeeds {
             }
         } else {
             //Log error
-            $error = mysqli_error($link);
-            if (!empty($error)) {
-                UserUtility::writeToLog(new Exception($error));
-            }
+            UserUtility::logMySQLError($link);
         }
         $this->news = $array;
     }

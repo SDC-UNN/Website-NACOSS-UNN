@@ -8,131 +8,68 @@ if ($user->isLoggedIn()) {
      * Page 3: View Results page
      * Page 4: View payments page
      * Page 5: View Report a Bug page
+     * Page 6: Change password page
      */
     $page = 1;
-    $array = array();
 
-    $isEditFormRequest = filter_input(INPUT_POST, "editProfileForm");
-    if ($isEditFormRequest) {
-        //Handle a post request from form
-        $array = filter_input_array(INPUT_POST);
-        if ($array !== FALSE && $array !== null) {
-            foreach ($array as $key => $value) {
+    //Check for post request
+    $array = filter_input_array(INPUT_POST);
+    if ($array !== FALSE && $array !== null) {
+        foreach ($array as $key => $value) {
+            if (is_array($array[$key])) {
+                foreach ($array[$key] as $subkey => $subvalue) {
+                    $subvalue[$subkey] = html_entity_decode($subvalue[$subkey]);
+                }
+            } else {
                 $array[$key] = html_entity_decode($array[$key]);
             }
-
-            //Validating details
-            $error_message = UserUtility::getInvalidParameters($array);
-            $ok = empty($error_message);
-        } else {
-            $ok = false;
-            $error_message = "Oops! Something went wrong, parameters are invalid.";
         }
+        //Further processing is done in the page to which the request was directed to
+    }
 
-        //update user
-        if ($ok) {
-            try {
-                $user->updateUserInfo($array);
-                $success = true;
-                $error_message = "";
-            } catch (Exception $exc) {
-                $success = false;
-                $error_message = $exc->getMessage();
-            }
-        } else {
+    if (isset($array["editProfileForm"])) {
+        //Handle a post request from form
+        //Validating details and update user
+        try {
+            $user->updateUserInfo($array);
+            $success = true;
+            $error_message = "";
+        } catch (Exception $exc) {
             $success = false;
+            $error_message = $exc->getMessage();
         }
 
         $page = $success ? 1 : 2;
+    } elseif (isset($array["reportBugForm"])) {
+        //Further processing will be handled in "Report Bug" page
+        $page = 5;
+    } elseif (isset($array["changePasswordForm"])) {
+        //Handle request from "Change Password" page
+        //Validating details and change password
+        try {
+            $success = $user->changePassword($array['password'], $array['password1'], $array['password2']);
+            if (!$success) {
+                //Updates failed
+                $error_message = "Oops! Something went wrong, please try again.";
+            }
+        } catch (Exception $exc) {
+            $success = false;
+            $error_message = $exc->getMessage();
+        }
+        $page = 6;
     } else {
-        $isreportBugRequest = filter_input(INPUT_POST, "reportBugForm");
-        if ($isreportBugRequest) {
-            //Handle request from "Report a Bug" page
-            $array = filter_input_array(INPUT_POST);
-            if ($array !== FALSE || $array !== null) {
-                foreach ($array as $key => $value) {
-                    $array[$key] = html_entity_decode($array[$key]);
-                }
-
-                //Validating details
-                if (empty(filter_input(INPUT_POST, "subject"))) {
-                    $error_message = "Please specify a subject";
-                } elseif (empty(filter_input(INPUT_POST, "comment"))) {
-                    $error_message = "Please add a description of the bug";
-                }
-
-                $ok = empty($error_message);
-            } else {
-                $ok = false;
-                $error_message = "Oops! Something went wrong, parameters are invalid.";
-            }
-
-            //Send bug report
-            if ($ok) {
-                try {
-                    $success = $user->reportBug($array);
-                    if ($success) {
-                        $array = "";
-                    } else {
-                        //Sending failed
-                        $error_message = "Oops! Something went wrong, please try again.";
-                    }
-                } catch (Exception $exc) {
-                    $success = FALSE;
-                    $error_message = $exc->getMessage();
-                }
-            } else {
-                $success = false;
-            }
-            $page = 5;
+        //Check if switch request
+        $switchRequest = filter_input(INPUT_GET, "p");
+        if (!empty($switchRequest)) {
+            //switch form
+            $page = $switchRequest;
         } else {
-            $isPasswordChangeRequest = filter_input(INPUT_POST, "changePasswordForm");
-            if ($isPasswordChangeRequest) {
-                //Handle request from "Change Password" page
-                $array = filter_input_array(INPUT_POST);
-                if ($array !== FALSE || $array !== null) {
-                    foreach ($array as $key => $value) {
-                        $array[$key] = html_entity_decode($array[$key]);
-                    }
-
-                    //Validating details
-                    $error_message = UserUtility::getInvalidParameters($array);
-                    $ok = empty($error_message);
-                } else {
-                    $ok = false;
-                    $error_message = "Oops! Something went wrong, parameters are invalid.";
-                }
-
-                //Change password
-                if ($ok) {
-                    try {
-                        $success = $user->changePassword($array['password'], $array['password2']);
-                        if (!$success) {
-                            //Updates failed
-                            $error_message = "Oops! Something went wrong, please try again.";
-                        }
-                    } catch (Exception $exc) {
-                        $success = false;
-                        $error_message = $exc->getMessage();
-                    }
-                } else {
-                    $success = false;
-                }
-                $page = 6;
-            } else {
-                //Check if switch request
-                $switchRequest = filter_input(INPUT_GET, "p");
-                if (!empty($switchRequest)) {
-                    //switch form
-                    $page = $switchRequest;
-                } else {
-                    //show page 1 (profile page)
-                    $page = 1;
-                }
-            }
+            //show page 1 (profile page)
+            $page = 1;
         }
     }
 } else {
+
     header("Location: login.php");
 }
 ?>

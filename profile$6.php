@@ -18,12 +18,14 @@
 <div>
     <h2>Change Password</h2>
     <div class="padding5">
-        <?php if ($isPasswordChangeRequest) {
-            if ($success) { ?>
+        <?php if (isset($array["changePasswordForm"])) {
+            if ($success) {
+                ?>
                 <p class="fg-NACOSS-UNN">Password changed</p>
             <?php } else { ?>
                 <p class="fg-red"><?= $error_message ?></p>
-            <?php }
+            <?php
+            }
         }
         ?>
         <form method="post" action="profile.php?p=6">

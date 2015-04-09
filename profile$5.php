@@ -14,11 +14,42 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
+if (isset($array["reportBugForm"])) {
+    //Handle request from "Report a Bug" page
+    //Validating details
+    if (empty($array["subject"])) {
+        $error_message = "Please specify a subject";
+    } elseif (empty($array["comment"])) {
+        $error_message = "Please add a description of the bug";
+    }
+
+    $ok = empty($error_message);
+
+    //Send bug report
+    if ($ok) {
+        try {
+            $success = $user->reportBug($array);
+            if ($success) {
+                $array = "";
+            } else {
+                //Sending failed
+                $error_message = "Oops! Something went wrong, please try again.";
+            }
+        } catch (Exception $exc) {
+            $success = FALSE;
+            $error_message = $exc->getMessage();
+        }
+    } else {
+        $success = false;
+    }
+}
 ?>
+
 <div>
     <h2>Report a Bug</h2>
     <div class="padding5">
-        <?php if ($isreportBugRequest) { ?>
+        <?php if (isset($success)) { ?>
             <div class="row container">
                 <div class="label">
                     <?php if ($success) { ?>

@@ -25,13 +25,10 @@ class UserUtility {
         if ($result) {
             $row = mysqli_fetch_array($result);
             return $row['value'];
-        } else {
-            //Log error
-            $error = mysqli_error($link);
-            if (!empty($error)) {
-                UserUtility::writeToLog(new Exception($error));
-            }
         }
+        //Log error
+        UserUtility::logMySQLError($link);
+
         return "";
     }
 
@@ -42,13 +39,10 @@ class UserUtility {
         if ($result) {
             $row = mysqli_fetch_array($result);
             return empty($row['value']) ? array() : explode(",", $row['value']);
-        } else {
-            //Log error
-            $error = mysqli_error($link);
-            if (!empty($error)) {
-                UserUtility::writeToLog(new Exception($error));
-            }
         }
+        //Log error
+        UserUtility::logMySQLError($link);
+
         return array();
     }
 
@@ -61,13 +55,10 @@ class UserUtility {
             while ($row = mysqli_fetch_array($result)) {
                 array_push($array, $row);
             }
-        } else {
-            //Log error
-            $error = mysqli_error($link);
-            if (!empty($error)) {
-                UserUtility::writeToLog(new Exception($error));
-            }
         }
+        //Log error
+        UserUtility::logMySQLError($link);
+
         return $array;
     }
 
@@ -80,13 +71,10 @@ class UserUtility {
             while ($row = mysqli_fetch_array($result)) {
                 array_push($array, $row);
             }
-        } else {
-            //Log error
-            $error = mysqli_error($link);
-            if (!empty($error)) {
-                UserUtility::writeToLog(new Exception($error));
-            }
         }
+        //Log error
+        UserUtility::logMySQLError($link);
+
         return $array;
     }
 
@@ -99,13 +87,10 @@ class UserUtility {
             while ($row = mysqli_fetch_array($result)) {
                 array_push($array, $row);
             }
-        } else {
-            //Log error
-            $error = mysqli_error($link);
-            if (!empty($error)) {
-                UserUtility::writeToLog(new Exception($error));
-            }
         }
+        //Log error
+        UserUtility::logMySQLError($link);
+
         return $array;
     }
 
@@ -118,13 +103,10 @@ class UserUtility {
             while ($row = mysqli_fetch_array($result)) {
                 array_push($array, $row);
             }
-        } else {
-            //Log error
-            $error = mysqli_error($link);
-            if (!empty($error)) {
-                UserUtility::writeToLog(new Exception($error));
-            }
         }
+        //Log error
+        UserUtility::logMySQLError($link);
+
         return $array;
     }
 
@@ -136,13 +118,10 @@ class UserUtility {
         if ($result) {
             $row = mysqli_fetch_array($result);
             $entry_year = $row['entry_year'];
-        } else {
-            //Log error
-            $error = mysqli_error($link);
-            if (!empty($error)) {
-                UserUtility::writeToLog(new Exception($error));
-            }
         }
+        //Log error
+        UserUtility::logMySQLError($link);
+
 
         if (isset($entry_year)) {
             $query = "select * from results where entry_year='$entry_year' order by year,semester,course_code DESC";
@@ -151,71 +130,11 @@ class UserUtility {
                 while ($row = mysqli_fetch_array($result)) {
                     array_push($array, $row);
                 }
-            } else {
-                //Log error
-                $error = mysqli_error($link);
-                if (!empty($error)) {
-                    UserUtility::writeToLog(new Exception($error));
-                }
             }
+            //Log error
+            UserUtility::logMySQLError($link);
         }
         return $array;
-    }
-
-    /**
-     * Returns error messages for parameters with invalid values (from profile or registration form)
-     * @param type $array array of fields mapped to values
-     * @return string error message in respect to any invalid parameter found, else an empty string
-     */
-    public static function getInvalidParameters($array) {
-        foreach ($array as $key => $value) {
-            switch (strtolower($key)) {
-                case 'regno':
-                    $chunks = explode("/", $value);
-                    if (strlen($chunks[0]) != 4 || strlen($chunks[1]) != 6) {
-                        return "Invalid registration number";
-                    }
-                    break;
-                case 'first_name':
-                    if (strlen($value) < 2) {
-                        return "first name must contain atleast 2 characters";
-                    }
-                    break;
-                case 'last_name':
-                    if (strlen($value) < 2) {
-                        return "last name must contain atleast 2 characters";
-                    }
-                    break;
-                case 'password': //For time passwords
-                    if (strlen($value) < 8) {
-                        return "Password must contain atleast 8 characters";
-                    }
-                    break;
-                case 'password1': //For passwords with confirmations
-                    if (strlen($value) < 8) {
-                        return "Password must contain atleast 8 characters";
-                    }
-                    break;
-                case 'password2': //confirmation passwords
-                    if (strcmp($value, $array["password1"]) !== 0) {
-                        return "Passwords do not match";
-                    }
-                    break;
-                case 'email':
-                    if (filter_var($value, FILTER_VALIDATE_EMAIL) === FALSE) {
-                        return "Check email address";
-                    }
-                    break;
-                case 'dob':
-                    break;
-                case 'phone':
-                    break;
-                //Add more parameter cases as needed
-                default :
-                    break;
-            }
-        }
-        return "";
     }
 
     public static function getVerificationMessage($ID, $password) {
@@ -236,7 +155,7 @@ class UserUtility {
     public static function getDefaultDBConnection() {
         $link = UserUtility::getConnection();
         if ($link) {
-            $successful = mysqli_select_db($link, $GLOBALS['default_db_name']);
+            $successful = mysqli_select_db($link, DEFAULT_DB_NAME);
             if (!$successful) {
                 die('Unable to select database: ' . mysql_error());
             }
@@ -252,7 +171,7 @@ class UserUtility {
      */
     private static function getConnection() {
         require_once './constants.php';
-        $link = mysqli_connect($GLOBALS['db_hostname'], $GLOBALS['db_username'], $GLOBALS['db_password']);
+        $link = mysqli_connect(DB_HOSTNAME, DB_USERNAME, DB_PASSWORD);
         return $link;
     }
 
@@ -270,13 +189,10 @@ class UserUtility {
         $result = mysqli_query($link, $query);
         if ($result) {
             $row = mysqli_fetch_array($result);
-        } else {
-            //Log error
-            $error = mysqli_error($link);
-            if (!empty($error)) {
-                UserUtility::writeToLog(new Exception($error));
-            }
         }
+        //Log error
+        UserUtility::logMySQLError($link);
+
 
         //If previously logged, update time and set is-fixed = 0 else insert new log
         if ($result && $row) {
@@ -285,6 +201,31 @@ class UserUtility {
             $query = "insert into error_log set message = '$message', file='$file', line='$line', time_of_error = now()";
         }
         return mysqli_query($link, $query);
+    }
+
+    public static function getHashCost() {
+        $query = "select value from settings where name = 'hash_algo_cost'";
+        $link = UserUtility::getDefaultDBConnection();
+        $result = mysqli_query($link, $query);
+        if ($result) {
+            $row = mysqli_fetch_array($result);
+            return $row['value'];
+        }
+        //Log error
+        UserUtility::logMySQLError($link);
+
+        return 10;
+    }
+
+    /**
+     * Log database error
+     * @param type $link
+     */
+    public static function logMySQLError($link) {
+        $error = mysqli_error($link);
+        if (!empty($error)) {
+            UserUtility::writeToLog(new Exception($error));
+        }
     }
 
 }
