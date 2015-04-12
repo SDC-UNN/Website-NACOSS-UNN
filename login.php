@@ -1,6 +1,8 @@
 <?php
-require_once './functions.php';
-if (isLoggedIn()) {
+require_once './class_lib.php';
+$user = new User();
+
+if ($user->isLoggedIn()) {
     header("location: profile.php");
 } else {
     $isFormRequest = filter_input(INPUT_POST, "submit");
@@ -12,29 +14,32 @@ if (isLoggedIn()) {
             //handle request from registration form
             $showLoginPage = false;
 
-            $first_name = html_entity_decode(filter_input(INPUT_POST, "first_name"));
-            $last_name = html_entity_decode(filter_input(INPUT_POST, "last_name"));
-            $regno = html_entity_decode(filter_input(INPUT_POST, "regno"));
-            $password1 = html_entity_decode(filter_input(INPUT_POST, "password1"));
-            $password2 = html_entity_decode(filter_input(INPUT_POST, "password2"));
-            $phone = html_entity_decode(filter_input(INPUT_POST, "phone"));
-            $email = html_entity_decode(filter_input(INPUT_POST, "email"));
-
-            //Validating details
-            $error_message = getInvalidParameters($regno, $password1, $password2, $email, $first_name, $last_name, $phone);
-            $ok = empty($error_message);
-
+            $array = filter_input_array(INPUT_POST);
+            if ($array !== FALSE && $array !== null) {
+                foreach ($array as $key => $value) {
+                    $array[$key] = html_entity_decode($array[$key]);
+                }
+            } else {
+                $ok = false;
+                $error_message = "Oops! Something went wrong, parameters are invalid.";
+            }
             //register user
             if ($ok) {
-                $success = registerUser($regno, $password1, $email, $first_name, $last_name, $phone);
-                if ($success) {
-                    header("location: profile.php");
-                } else {
+                try {
+                    $success = $user->
+                            registerUser($array['regno'], $array['password1'], $array['password2'], $array['email'], $array['first_name'], $array['last_name'], $array['phone']);
+                    if ($success and $user->loginUser($array['regno'], $array['password1'])) {                        
+                        header("location: profile.php");
+                    } else {
+                        $success = FALSE;
+                        $error_message = "Oops! Something went wrong, please try again.";
+                    }
+                } catch (Exception $exc) {
                     //login unsuccessful
-                    $error_message = "Oops! Something went wrong, please try again.";
+                    $success = FALSE;
+                    $error_message = $exc->getMessage();
                 }
-            }
-            else{
+            } else {
                 $success = false;
             }
         } else {
@@ -43,12 +48,12 @@ if (isLoggedIn()) {
             $error_message = "";
             $id = html_entity_decode(filter_input(INPUT_POST, "id"));
             $password = html_entity_decode(filter_input(INPUT_POST, "password"));
-            $success = loginUser($id, $password);
+            $success = $user->loginUser($id, $password);
             if ($success) {
                 header("location: profile.php");
             } else {
                 //login unsuccessful
-                $error_message = "Wrong reg. number or password";
+                $error_message = "Wrong ID or password";
             }
         }
     } else {
@@ -152,7 +157,7 @@ limitations under the License.
                                                 <div class="panel span5 no-border text-center" style="background-color: rgba(0,0,0,0.35)">
                                                     <div class="panel-content">
                                                         <h2 class="fg-white text-left">Scientists with a difference</h2>
-                                                        <a href="<?= $GLOBALS["ndg_homepage"] ?>" target="_blank" 
+                                                        <a href="<?= NDG_HOMEPAGE ?>" target="_blank" 
                                                            class="button large bg-lightOlive bg-hover-dark fg-white">join NDG today</a>
                                                     </div>
                                                 </div>
@@ -174,7 +179,9 @@ limitations under the License.
                             </div>
                         </div>
                         <div class="span7 panel shadow">
-                            <h2 class="panel-header bg-grayDark fg-white"><?= $showLoginPage ? "Login" : "Register" ?></h2>
+                            <h2 class="panel-header bg-grayDark fg-white">
+                                <?= $showLoginPage ? "Login" : "Register" ?>
+                            </h2>
                             <?php if ($isFormRequest && !$success) { ?>
                                 <div class="panel-content">
                                     <p class="fg-red"><?= $error_message ?></p>
@@ -187,7 +194,7 @@ limitations under the License.
                                         <div class="grid">
                                             <input name="type" value="1" hidden=""/>
                                             <div class="row ntm">
-                                                <label class="span1">ID</label>
+                                                <label class="span1">ID <i title="Registration number" class="icon-help fg-blue"></i></label>
                                                 <div class="span4">
                                                     <input class="text" name='id' maxlength="11" style="width: inherit" required type='text' 
                                                            <?= $isFormRequest ? "value='$id'" : ""; ?> tabindex='1' />
@@ -199,15 +206,19 @@ limitations under the License.
                                                     <input class="password" name='password' style="width: inherit" type='password' tabindex='2' />
                                                 </div>
                                             </div>
-                                            <div class="no-phone offset1">
-                                                <input class="button default bg-NACOSS-UNN bg-hover-dark" type='submit'
+                                            <div class="no-phone" style="padding-left: 80px">
+                                                <input class="button default bg-NACOSS-UNN bg-hover-dark" style="width: 300px" type='submit'
                                                        name='submit' value='Login' tabindex='3'/>
+                                                <br/>
                                                 <a href="login.php?s=2" class=""> &nbsp;&nbsp;create account?</a>
+                                                <a href="resetPassword.php" class=""> &nbsp;&nbsp;forgot password?</a>
                                             </div>
                                             <div class="on-phone no-tablet no-desktop padding20 ntp nbp">
                                                 <input class="button default bg-NACOSS-UNN bg-hover-dark" type='submit'
                                                        name='submit' value='Login' tabindex='3'/>
-                                                <a href="login.php?s=2" class=""> &nbsp;&nbsp;create account?</a>
+                                                <br/>
+                                                <a href="login.php?s=2" class="">create account?</a>
+                                                <a href="resetPassword.php" class=""> &nbsp;&nbsp;forgot password?</a>
                                             </div>
                                         </div>
                                     <?php } else { ?>
@@ -218,23 +229,16 @@ limitations under the License.
                                                 <label class="span2">Name<span class="fg-red">*</span></label>
                                                 <div class="span4">
                                                     <input type='text' required maxlength="30" placeholder="Last name" name='last_name'
-                                                           <?= $isFormRequest ? "value='$last_name'" : ""; ?> tabindex='3' />
+                                                           <?= $isFormRequest && isset($array['last_name']) ? "value='" . $array['last_name'] . "'" : ""; ?> tabindex='3' />
                                                     <input type='text' required maxlength="30" placeholder="First name" name='first_name'
-                                                           <?= $isFormRequest ? "value='$first_name'" : ""; ?> tabindex='4' />
+                                                           <?= $isFormRequest && isset($array['first_name']) ? "value='" . $array['first_name'] . "'" : ""; ?> tabindex='4' />
                                                 </div>
                                             </div>
-                                            <!--                                            <div class="row" >
-                                                                                            <label class="span2">Other names</label>
-                                                                                            <div class="span4">
-                                                                                                <input type='text' maxlength="30" style="width: inherit" name='other_names'
-                                            <?= $isFormRequest ? "value='$other_names'" : ""; ?> tabindex='5'   />
-                                                                                            </div>
-                                                                                        </div>-->
                                             <div class="row" >
                                                 <label class="span2">Reg. Number<span class="fg-red">*</span></label>
                                                 <div class="span4">
                                                     <input name='regno' style="width: inherit" maxlength="11" type='text' 
-                                                           <?= $isFormRequest ? "value='$regno'" : ""; ?>  tabindex='6'  />
+                                                           <?= $isFormRequest && isset($array['regno']) ? "value='" . $array['regno'] . "'" : ""; ?>  tabindex='6'  />
                                                 </div>
                                             </div>
                                             <div class="row" >
@@ -253,7 +257,7 @@ limitations under the License.
                                                 <label class="span2">Phone<span class="fg-red">*</span></label>
                                                 <div class="span4">
                                                     <input name='phone' style="width: inherit" type='tel' 
-                                                           <?= $isFormRequest ? "value='$phone'" : ""; ?> tabindex='6'  />
+                                                           <?= $isFormRequest && isset($array['phone']) ? "value='" . $array['phone'] . "'" : ""; ?> tabindex='6'/>
                                                 </div>
                                             </div>
                                             <div class="row" >
@@ -261,7 +265,7 @@ limitations under the License.
                                                 </label>
                                                 <div class="span4">
                                                     <input name='email' style="width: inherit" required type='email' 
-                                                           <?= $isFormRequest ? "value='$email'" : ""; ?>  tabindex='7'   />
+                                                           <?= $isFormRequest && isset($array['email']) ? "value='" . $array['email'] . "'" : ""; ?>  tabindex='7'   />
                                                 </div>
                                             </div>
                                             <div class="no-phone offset2">

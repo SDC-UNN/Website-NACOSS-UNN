@@ -1,6 +1,5 @@
 <?php
-
-/* 
+/*
  * Copyright 2015 NACOSS UNN Developers Group (NDG).
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -16,8 +15,46 @@
  * limitations under the License.
  */
 
-require_once './functions.php';
+$array = UserUtility::getPayments($user->getUserID());
+
 ?>
 <div>
-   <h2>Payments</h2>
+    <h2>Payments</h2>
+    <div class="row">
+        <a class="place-right button default bg-NACOSS-UNN bg-hover-dark fg-hover-white" href="pay.php">
+            Pay
+        </a>
+    </div>
+    <div class="row bg-grayLighter">
+        <div class="padding5">
+            <?php if (empty($array)) { ?>
+                <h3>No payments have been made.</h3>
+                <?php
+            } else {
+                ?>
+                <table class="striped bordered hovered">
+                    <thead>
+                        <tr>
+                            <th class="text-left">Payment ID</th>
+                            <th class="text-left">description</th>
+                            <th class="text-left">Date of Payment</th>
+                            <th class="text-left"></th>
+                        </tr>
+                    </thead>
+                    <?php
+                    foreach ($array as $result) {
+                        echo '<tr>';
+                        echo '<td>' . $result['id'] . '</td>';
+                        echo '<td>' . $result['description'] . '</td>';
+                        echo '<td>' . $result['time_of_payment'] . '</td>';
+                        echo '<td><a href="printReciept.php?id=' . $result['id'] . '">print</a></td>';
+                        echo '</tr>';
+                    }
+                    ?>                    
+                </table>
+                <?php
+            }
+            ?>
+        </div>
+    </div>
 </div>

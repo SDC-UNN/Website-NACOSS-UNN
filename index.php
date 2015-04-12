@@ -1,3 +1,8 @@
+<?php
+require_once './class_lib.php';
+$array = NewsFeeds::getHomePageSliderImages();
+?>
+
 <!DOCTYPE html>
 <!--
 Copyright 2015 NACOSS UNN Developers Group (NDG).
@@ -24,7 +29,7 @@ limitations under the License.
         <meta name="keywords" content=" metro ui, NDG, NACOSS UNN">
         <link rel="icon" href="favicon.ico" type="image/x-icon" />
         <link rel="shortcut icon" href="favicon.ico" type="image/x-icon" />
-        
+
         <link href="css/metro-bootstrap.css" rel="stylesheet">
         <link href="css/metro-bootstrap-responsive.css" rel="stylesheet">
         <link href="css/iconFont.css" rel="stylesheet">
@@ -44,19 +49,95 @@ limitations under the License.
         <!-- Local JavaScript -->
         <script src="js/docs.js"></script>
         <script src="js/github.info.js"></script>
-        
+
         <!-- Page Title -->
         <title>NACOSS UNN : Home</title>        
     </head>
     <body class="metro" style="background-image: url(img/bg.jpg); background-repeat: repeat;">
         <div class="container bg-white">            
-            <?php require_once './header.php';?>
+            <?php require_once './header.php'; ?>
+            <div class=" bg-dark" style="height: 400px">
+
+                <div class="on-phone no-desktop no-tablet" style="background: url(img/b5.jpg) top left no-repeat; background-size: cover; height: 400px;">
+                    <div class="container" style="padding: 50px 20px">
+                        <div class="panel no-border" style="background-color: rgba(0,0,0,0.7)">
+                            <div class="panel-content">
+                                <?php
+                                foreach ($array as $value) {
+                                    ?>
+                                    <h2 class="fg-white">
+                                        <i class="icon-arrow-right-5"></i>
+                                        <a class="fg-white fg-hover-NACOSS-UNN" href="<?= $value['link'] ?>">
+                                            <?= $value['caption'] ?>
+                                        </a>
+                                    </h2>
+                                    <?php
+                                }
+                                ?> 
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-dark no-phone" style="height: 400px">
+                    <div class="carousel">
+                        <div class="bg-transparent no-overflow" id="carousel">
+                            <?php
+                            foreach ($array as $value) {
+                                ?>
+                                <a class="slide image-container" target="_blank" href="<?= $value['link'] ?>">
+                                    <img src="<?= $value['img_url'] ?>" alt="" class="image"/>
+                                    <div class="overlay">
+                                        <h2 class="fg-white">
+                                            <?= $value['caption'] ?> 
+                                        </h2>
+                                    </div>
+                                </a>
+                                <?php
+                            }
+                            ?> 
+                            <a class="controls left fg-white"><i class="icon-arrow-left-5"></i></a>
+                            <a class="controls right  fg-white"><i class="icon-arrow-right-5"></i></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <script>
+                $(function () {
+                    $("#carousel").carousel({
+                        period: 5000,
+                        duration: 1000,
+                        effect: 'fade',
+                        height: 400,
+                        controls: true,
+                        markers: {
+                            show: true,
+                            type: "default",
+                            position: "bottom-right"
+                        }
+                    });
+                });
+            </script>
             <br/>
-            
+
             <!--Your code goes here-->
-            
+
             <br/>
-            <?php require_once './footer.php';?>
+            <div class="bg-grayLighter">
+                <div class="padding5 grid">
+                    <div class="row">
+                        <small class="span1" style="padding-top: 15px">sponsors</small>
+                        <div class="span11">
+                            <div class="">
+                                <a href="http://unn.edu.ng">
+                                    <img src="img/sponsors/UNN_Logo.png" alt="" style="height: 50px; width: 50px"/>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <?php require_once './footer.php'; ?>
+            </div>
         </div>
     </body>
 </html>

@@ -1,6 +1,5 @@
 <?php
-
-/* 
+/*
  * Copyright 2015 NACOSS UNN Developers Group (NDG).
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -16,8 +15,43 @@
  * limitations under the License.
  */
 
-require_once './functions.php';
+$array = UserUtility::getResults($user->getUserID());
+
 ?>
 <div>
     <h2>Results</h2>
+    <div class="row bg-grayLighter">
+        <div class="padding5 grid">
+            <?php if (empty($array)) { ?>
+                <h3>No results available.</h3>
+                <?php
+            } else {
+                $course = "";
+                foreach ($array as $result) {
+                    if (strcasecmp($course, $array['course_code']) !== 0) {
+                        if (!empty($course)) {
+                            //If not the first course dispayed, close a div
+                            echo '</div>';
+                        }
+                        //Display header
+                        echo '<h3>' . $array['course_code'] . ', '
+                        . 'Semester: ' . $array['semester'] . ', '
+                        . 'Year: ' . $array['year'] . '</h3>';
+                        //Open a row for images
+                        echo '<div class="row">';
+                        $course = $array['course_code'];
+                    }
+                    ?>
+                    <!--Display Image-->
+                    <div class="image-container">
+                        <img class="image span4" src="<?= $array['img_url'] ?>" alt=""/>
+                        <div class="overlay-fluid">page <?= $array['page_no'] ?></div>
+                    </div>
+                    <?php
+                }
+                echo '</div>';
+            }
+            ?>
+        </div>
+    </div>
 </div>

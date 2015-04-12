@@ -55,6 +55,8 @@ limitations under the License.
             <div class="padding20">
             
             <!--Your code goes here-->
+            <h2>Sorry, this service is not available at the moment.</h2>
+            <a href="profile.php?p=4" class="link">back to profile</a>
             
             </div>
             <br/>
