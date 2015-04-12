@@ -16,8 +16,6 @@
  * limitations under the License.
  * 
  */
-
-
 //Modify this constant values to suit your settings
 //Do not commit this file afterwards
 
@@ -26,4 +24,4 @@ define("DB_HOSTNAME", "localhost"); //Database hostname
 define("DB_USERNAME", "root"); //Database username
 define("DB_PASSWORD", ""); //Database password
 define("HOSTNAME", "http://localhost/Website-NACOSS-UNN/"); //Location of this project in your computer (relative to localhost)
-define("NDG_HOMEPAGE", "http://localhost/ndg/"); //NDG Homepage
+define("NDG_HOMEPAGE", HOSTNAME . "ndg/"); //NDG Homepage

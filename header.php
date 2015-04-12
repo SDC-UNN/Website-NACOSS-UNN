@@ -33,7 +33,7 @@ $user = new User();
                         <a class="bg-hover-dark" href="news.php">News</a>
                     </li>
                     <li>
-                        <a class="bg-hover-dark" target="_blank" href="#">Alumni</a>
+                        <a class="bg-hover-dark" target="_blank" href="alumni/">Alumni</a>
                     </li>
                     <li>
                         <a class="bg-hover-dark" href="contact.php">Contact</a>
