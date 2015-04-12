@@ -1,5 +1,4 @@
 <?php
-
 /*
  * Copyright 2015 NACOSS UNN Developers Group (NDG).
  *
@@ -16,12 +15,20 @@
  * limitations under the License.
  */
 
-require_once './class_lib.php';
+require_once '../class_lib.php';
+require_once './WebsiteAdmin.php';
+require_once './functions.php';
 
-$admin = new Admin();
-$loggedOut = $admin->logoutAdmin();
-if ($loggedOut) {
-    header("location: index.php");
+$admin = new WebsiteAdmin();
+$max_hash_time = $admin->getMaxHashTime();
+$cost = getOptimalCryptCostParameter($max_hash_time);
+$ok = $admin->setHashCost($cost);
+if ($ok) {
+    header("location: index.php?p=7");
 } else {
-    echo '<h1>Server error<h1>';
+    ?>
+    <div>
+        <h2>Something went wrong!</h2>
+    </div>
+    <?php
 }

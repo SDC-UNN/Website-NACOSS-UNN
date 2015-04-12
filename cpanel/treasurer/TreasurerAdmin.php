@@ -1,6 +1,6 @@
 <?php
 
-/*
+/* 
  * Copyright 2015 NACOSS UNN Developers Group (NDG).
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -16,12 +16,6 @@
  * limitations under the License.
  */
 
-require_once './class_lib.php';
-
-$admin = new Admin();
-$loggedOut = $admin->logoutAdmin();
-if ($loggedOut) {
-    header("location: index.php");
-} else {
-    echo '<h1>Server error<h1>';
+class TreasurerAdmin extends Admin{
+    
 }

@@ -18,12 +18,13 @@
  */
 
 
-//Modify this array values to suit your settings
+//Modify this constant values to suit your settings
 //Do not commit this file afterwards
 
-$GLOBALS['default_db_name'] = "nacoss_db"; //Default database name (Assuming there might be need for multiple databases)
-$GLOBALS['db_username'] = "root"; //Database username
-$GLOBALS['db_password'] = ""; //Database password
-$GLOBALS['hostname'] = "http://localhost/Website-NACOSS-UNN/cpanel/"; //Location of this project in your computer (relative to localhost)
-$GLOBALS['db_hostname'] = "localhost"; //Database hostname
-$GLOBALS['ndg_homepage'] = "http://localhost/ndg/"; //NDG Homepage
+define("DEFAULT_DB_NAME", "nacoss_db"); //Default database name (Assuming there might be need for multiple databases)
+define("DB_HOSTNAME", "localhost"); //Database hostname
+define("DB_USERNAME", "root"); //Database username
+define("DB_PASSWORD", ""); //Database password
+define("HOSTNAME", "http://localhost/Website-NACOSS-UNN/"); //Location of this project in your computer (relative to localhost)
+define("CPANEL_URL", "http://localhost/Website-NACOSS-UNN/cpanel/"); //Location of cpanel in your computer (relative to localhost)
+define("NDG_HOMEPAGE", "http://localhost/ndg/"); //NDG Homepage

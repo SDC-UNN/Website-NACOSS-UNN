@@ -20,6 +20,6 @@ require_once 'constants.php';
 ?>
 <div class="bg-dark">
     <div class="container tertiary-text bg-dark fg-white" style="padding: 10px">
-        Powered by <a href="<?=$GLOBALS["ndg_homepage"]?>" class="fg-white fg-hover-yellow fg-active-amber">NACOSS UNN Developers Group (NDG)</a>        
+        Powered by <a href="<?= NDG_HOMEPAGE?>" class="fg-white fg-hover-yellow fg-active-amber">NACOSS UNN Developers Group (NDG)</a>        
     </div>
 </div>

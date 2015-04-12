@@ -16,12 +16,4 @@
  * limitations under the License.
  */
 
-require_once './class_lib.php';
 
-$admin = new Admin();
-$loggedOut = $admin->logoutAdmin();
-if ($loggedOut) {
-    header("location: index.php");
-} else {
-    echo '<h1>Server error<h1>';
-}

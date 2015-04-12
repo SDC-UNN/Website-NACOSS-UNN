@@ -1,27 +1,66 @@
 <?php
-require_once './Adminfunctions.php';
+require_once './class_lib.php';
+
+$admin = new Admin();
 $isFormRequest = filter_input(INPUT_POST, "submit");
-if ($isFormRequest) {
-    $type = filter_input(INPUT_POST, "type");
-    $id = filter_input(INPUT_POST, "id");
-    $password = filter_input(INPUT_POST, "password");
-    
-    
-    $success = false;
-    $error_message = "";
-} elseif (activateLogin()) { //If session still active
-    switch (getAdminType()) {
-        case "WEBMASTER":
-            header("location: webmaster.php");
+if (isset($isFormRequest)) {
+    $type = html_entity_decode(filter_input(INPUT_POST, "admin_type"));
+    $id = html_entity_decode(filter_input(INPUT_POST, "id"));
+    $password = html_entity_decode(filter_input(INPUT_POST, "password"));
+
+    //Login
+    try {
+        $success = $admin->loginAdmin($id, $password, $type);
+        if ($success) {
+            switch ($type) {
+                case Admin::WEBMASTER:
+                    header("location: webmaster/");
+                    break;
+                case Admin::TREASURER:
+                    header("location: treasurer/");
+                    break;
+                case Admin::PRO:
+                    header("location: pro/");
+                    break;
+                case Admin::LIBRARIAN:
+                    header("location: librarian/");
+                    break;
+                case Admin::CLASS_REP:
+                    header("location: class_rep/");
+                    break;
+                default:
+                    $admin->logoutAdmin();
+                    break;
+            }
+        } else {
+            $error_message = "Error occurred while trying to login, please try again";
+        }
+    } catch (Exception $exc) {
+        $success = false;
+        $error_message = $exc->getMessage();
+    }
+}
+
+if ($admin->isLoggedIn()) {
+//If session still active
+    switch ($admin->getAdminType()) {
+        case Admin::WEBMASTER:
+            header("location: webmaster/");
             break;
-        case "PRO":
-            header("location: news.php");
+        case Admin::TREASURER:
+            header("location: treasurer/");
             break;
-        case "LIBRARIAN":
-            header("location: library.php");
+        case Admin::PRO:
+            header("location: pro/");
+            break;
+        case Admin::LIBRARIAN:
+            header("location: librarian/");
+            break;
+        case Admin::CLASS_REP:
+            header("location: class_rep/");
             break;
         default:
-            clearAdminCookies();
+            $admin->logoutAdmin();
             break;
     }
 }
@@ -78,7 +117,7 @@ limitations under the License.
         <div class="ribbed-darkGreen">
             <div class="container bg-white">            
                 <?php require_once './header.php'; ?>
-                <div class="padding20">
+                <div class="padding20 row">
                     <br/>
                     <br/>
                     <br/>
@@ -98,14 +137,15 @@ limitations under the License.
                                 <!--Login form-->
                                 <div class="grid">
                                     <div class="text-center">
-                                        <input type="radio" name="type" value="WEBMASTER" /> Web Master&nbsp;
-                                        <input type="radio" name="type" value="PRO"/> PRO &nbsp;
-                                        <input type="radio" name="type" value="LIBRARIANS"/> Librarian
+                                        <input type="radio" <?= isset($type) ? ($type === Admin::WEBMASTER ? "checked" : "") : "checked" ?> name="admin_type" required value="<?= Admin::WEBMASTER ?>" /> Web Master&nbsp;
+                                        <input type="radio" <?= isset($type) ? ($type === Admin::CLASS_REP ? "checked" : "") : "" ?> name="admin_type" required value="<?= Admin::TREASURER ?>"/> Treasurer&nbsp;
+                                        <input type="radio" <?= isset($type) ? ($type === Admin::PRO ? "checked" : "") : "" ?> name="admin_type" required value="<?= Admin::PRO ?>"/> PRO &nbsp;
+                                        <input type="radio" <?= isset($type) ? ($type === Admin::LIBRARIAN ? "checked" : "") : "" ?> name="admin_type" required value="<?= Admin::LIBRARIAN ?>"/> Librarian&nbsp;
+                                        <input type="radio" <?= isset($type) ? ($type === Admin::CLASS_REP ? "checked" : "") : "" ?> name="admin_type" required value="<?= Admin::CLASS_REP ?>"/> Class Rep.
                                     </div>
                                     <br/>
-                                    <input name="type" value="1" hidden=""/>
                                     <div class="row ntm">
-                                        <label class="span1">Username</label>
+                                        <label class="span1">ID</label>
                                         <div class="span4">
                                             <input class="text" name='id' maxlength="11" style="width: inherit" required type='text' 
                                                    <?= $isFormRequest ? "value='$id'" : ""; ?> tabindex='1' />
@@ -114,7 +154,7 @@ limitations under the License.
                                     <div class="row" >
                                         <label class="span1">Password</label>
                                         <div class="span4">
-                                            <input class="password" name='password' style="width: inherit" type='password' tabindex='2' />
+                                            <input class="password" required name='password' style="width: inherit" type='password' tabindex='2' />
                                         </div>
                                     </div>
                                     <div class="no-phone" style="padding-left: 80px">
