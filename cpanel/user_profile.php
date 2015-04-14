@@ -18,17 +18,13 @@
 $id = filter_input(INPUT_GET, "id");
 //URL for back link
 $url = filter_input(INPUT_GET, "url");
-//last search query, sort type and sort order (if any)
-$searchQuery = urldecode(filter_input(INPUT_GET, "search"));
-$sort_type = urldecode(filter_input(INPUT_GET, "sort_type"));
-$order = urldecode(filter_input(INPUT_GET, "sort_order"));
 
 $array = getUserInfo($id);
 
 if (empty($array)) {
     ?>
     <p>User information is not available</p>
-    <a href="<?= $url ?>&q=<?= $searchQuery ?>&s=<?= $sort_type ?>&o=<?= $order ?>">
+    <a href="<?= $url ?>">
         <i class="icon-arrow-left-2"></i> Back
     </a>
     <?php
@@ -37,7 +33,7 @@ if (empty($array)) {
     <div>
         <h2><?= $array['last_name'] . " " . $array['first_name'] ?>'s Profile</h2>
         <div class="row">
-            <a href="<?= $url ?>&q=<?= $searchQuery ?>&s=<?= $sort_type ?>&o=<?= $order ?>">
+            <a href="<?= $url ?>">
                 <i class="icon-arrow-left-2"></i> Back
             </a>
         </div>

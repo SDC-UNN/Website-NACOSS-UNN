@@ -30,12 +30,13 @@ if (!isset($admin)) {
                     <li>
                         <a class="" href="<?= HOSTNAME ?>" >Visit site</a>
                     </li>
-                    <?php if ($admin->getAdminType() === Admin::WEBMASTER) { ?>
+                    <?php if ($admin->getAdminType() === Admin::WEBMASTER) { ?>                        
                         <li>
-                            <a class="" href="<?= CPANEL_URL ?>pro" >View As PRO</a>
-                        </li>
-                        <li>
-                            <a class="" href="<?= CPANEL_URL ?>librarian" >View as Librarian</a>
+                            <a href="#" class="dropdown-toggle">View As</a>
+                            <ul class="dropdown-menu dark" data-role="dropdown">
+                                <li><a href="<?= CPANEL_URL ?>pro">PRO</a></li>
+                                <li><a href="<?= CPANEL_URL ?>librarian">Librarian</a></li>
+                            </ul>
                         </li>
                     <?php } ?>
                 </ul>

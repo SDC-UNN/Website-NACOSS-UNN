@@ -103,7 +103,7 @@ limitations under the License.
         <script src="../js/prettify/prettify.js"></script>
 
         <!-- Metro UI CSS JavaScript plugins -->
-        <script src="../js/load-metro.js"></script>
+        <script src="../js/metro.min.js"></script>
 
         <!-- Local JavaScript -->
         <script src="../js/docs.js"></script>

@@ -128,7 +128,7 @@ class Admin {
             AdminUtility::logMySQLError($link);
 
             //Not found or no match
-            throw new Exception("Wrong username or password");
+            throw new Exception("Wrong username, password or type");
         } else {
             throw new Exception("Some fields are empty");
         }

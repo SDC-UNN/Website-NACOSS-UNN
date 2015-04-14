@@ -124,7 +124,9 @@ class AdminUtility {
         if ($result && $row) {
             $query = "update error_log set time_of_error = now(), is_fixed = 0 where id = '" . $row['id'] . "'";
         } else {
-            $query = "insert into error_log set message = '$message', file='$file', trace='$trace', line='$line', time_of_error = now()";
+            $query = "insert into error_log set message = '" . mysqli_escape_string($link, $message) . "', "
+                    . "file='" . mysqli_escape_string($link, $file) . "', "
+                    . "trace='" . mysqli_escape_string($link, $trace) . "', line='$line', time_of_error = now()";
         }
         //Log error
         AdminUtility::logMySQLError($link);
