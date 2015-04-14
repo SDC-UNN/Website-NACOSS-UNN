@@ -229,28 +229,28 @@ limitations under the License.
                                                 <label class="span2">Name<span class="fg-red">*</span></label>
                                                 <div class="span4">
                                                     <input type='text' required maxlength="30" placeholder="Last name" name='last_name'
-                                                           <?= $isFormRequest && isset($array['last_name']) ? "value='" . $array['last_name'] . "'" : ""; ?> tabindex='3' />
+                                                           <?= $isFormRequest && isset($array['last_name']) ? "value='" . $array['last_name'] . "'" : ""; ?> tabindex='1' />
                                                     <input type='text' required maxlength="30" placeholder="First name" name='first_name'
-                                                           <?= $isFormRequest && isset($array['first_name']) ? "value='" . $array['first_name'] . "'" : ""; ?> tabindex='4' />
+                                                           <?= $isFormRequest && isset($array['first_name']) ? "value='" . $array['first_name'] . "'" : ""; ?> tabindex='2' />
                                                 </div>
                                             </div>
                                             <div class="row" >
                                                 <label class="span2">Reg. Number<span class="fg-red">*</span></label>
                                                 <div class="span4">
                                                     <input name='regno' style="width: inherit" maxlength="11" type='text' 
-                                                           <?= $isFormRequest && isset($array['regno']) ? "value='" . $array['regno'] . "'" : ""; ?>  tabindex='6'  />
+                                                           <?= $isFormRequest && isset($array['regno']) ? "value='" . $array['regno'] . "'" : ""; ?>  tabindex='3'  />
                                                 </div>
                                             </div>
                                             <div class="row" >
                                                 <label class="span2">Password<span class="fg-red">*</span></label>
                                                 <div class="span4">
-                                                    <input class="password" name='password1' style="width: inherit" type='password' tabindex='2' />
+                                                    <input class="password" name='password1' style="width: inherit" type='password' tabindex='4' />
                                                 </div>
                                             </div>
                                             <div class="row" >
                                                 <label class="span2">Confirm Password<span class="fg-red">*</span></label>
                                                 <div class="span4">
-                                                    <input class="password" name='password2' style="width: inherit" type='password' tabindex='2' />
+                                                    <input class="password" name='password2' style="width: inherit" type='password' tabindex='5' />
                                                 </div>
                                             </div>
                                             <div class="row" >

@@ -33,9 +33,25 @@ class NewsFeeds {
         return array();
     }
 
-    public static function getHomePageSliderImages() {
+    public static function getLargeHomePageImages() {
         $array = array();
-        $query = "select * from home_page_slider limit 10";
+        $query = "select * from home_page_images where size = 'LARGE' limit 10";
+        $link = UserUtility::getDefaultDBConnection();
+        $result = mysqli_query($link, $query);
+        if ($result) {
+            while ($row = mysqli_fetch_array($result)) {
+                array_push($array, $row);
+            }
+        } else {
+            //Log error            
+            UserUtility::logMySQLError($link);
+        }
+        return $array;
+    }
+
+    public static function getSmallHomePageImages() {
+        $array = array();
+        $query = "select * from home_page_images where size = 'SMALL' limit 10";
         $link = UserUtility::getDefaultDBConnection();
         $result = mysqli_query($link, $query);
         if ($result) {

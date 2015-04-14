@@ -70,7 +70,7 @@ limitations under the License.
                             </a>
                             <div class="group-content">
                                 <a href="news_post.php?id=<?= $array[$index]['id'] ?>" class="list">
-                                    <div class="list-content"><?= "Headline: " . $array[$index]['headline'] ?></div>
+                                    <div class="list-content"><?= "Headline: " . $array[$index]['title'] ?></div>
                                 </a>
                             </div>
                         </div>
