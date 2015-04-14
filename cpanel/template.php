@@ -25,25 +25,25 @@ limitations under the License.
         <link rel="icon" href="favicon.ico" type="image/x-icon" />
         <link rel="shortcut icon" href="favicon.ico" type="image/x-icon" />
 
-        <link href="css/metro-bootstrap.css" rel="stylesheet">
-        <link href="css/metro-bootstrap-responsive.css" rel="stylesheet">
-        <link href="css/iconFont.css" rel="stylesheet">
-        <link href="js/prettify/prettify.css" rel="stylesheet">
+        <link href="<?= HOSTNAME ?>css/metro-bootstrap.css" rel="stylesheet">
+        <link href="<?= HOSTNAME ?>css/metro-bootstrap-responsive.css" rel="stylesheet">
+        <link href="<?= HOSTNAME ?>css/iconFont.css" rel="stylesheet">
+        <link href="<?= HOSTNAME ?>js/prettify/prettify.css" rel="stylesheet">
 
-        <script src="js/metro/metro.min.js"></script>
+        <script src="<?= HOSTNAME ?>js/metro/metro.min.js"></script>
 
         <!-- Load JavaScript Libraries -->
-        <script src="js/jquery/jquery.min.js"></script>
-        <script src="js/jquery/jquery.widget.min.js"></script>
-        <script src="js/jquery/jquery.mousewheel.js"></script>
-        <script src="js/prettify/prettify.js"></script>
+        <script src="<?= HOSTNAME ?>js/jquery/jquery.min.js"></script>
+        <script src="<?= HOSTNAME ?>js/jquery/jquery.widget.min.js"></script>
+        <script src="<?= HOSTNAME ?>js/jquery/jquery.mousewheel.js"></script>
+        <script src="<?= HOSTNAME ?>js/prettify/prettify.js"></script>
 
         <!-- Metro UI CSS JavaScript plugins -->
-        <script src="js/load-metro.js"></script>
+        <script src="<?= HOSTNAME ?>js/metro.min.js"></script>
 
         <!-- Local JavaScript -->
-        <script src="js/docs.js"></script>
-        <script src="js/github.info.js"></script>
+        <script src="<?= HOSTNAME ?>js/docs.js"></script>
+        <script src="<?= HOSTNAME ?>js/github.info.js"></script>
 
         <!-- Page Title -->
         <title>NACOSS UNN : Title</title>        
