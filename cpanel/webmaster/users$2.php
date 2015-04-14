@@ -17,7 +17,7 @@ if (isset($array['search_button']) || //$array from index.php
     $order = html_entity_decode(filter_input(INPUT_POST, "sort_order"));
 
     try {
-        if (isset($array['activate_button'])) {
+        if (isset($array['activate_button']) && isset($array['checkbox'])) {
             $actionPerformed = true;
             activateUsers($array['checkbox']);
         }
@@ -65,7 +65,7 @@ limitations under the License.
 <script>
     function warn() {
         var ok = confirm("Are you sure?");
-        if(ok === false){
+        if (ok === false) {
             //Cancel request
             window.stop();
         }
@@ -82,7 +82,7 @@ limitations under the License.
     </div>
     <div class="row">
         <?php
-        if (empty($users) and !isset($array['search_button']) ) {
+        if (empty($users) and ! isset($array['search_button'])) {
             echo '<p>No deleted user</p>';
         } else {
             ?>
@@ -184,7 +184,7 @@ limitations under the License.
                                         <td class="text-left"><?= $users[$index]['department'] ?></td>
                                         <td class="text-left"><?= $users[$index]['level'] ?></td>
                                         <td class="text-left">
-                                            <a href="index.php?p=13&url=<?= urlencode(CPANEL_URL . 'webmaster/?p=12&pg=' . $page) ?>&id=<?= $users[$index]['regno'] ?>&search=<?= urlencode($searchQuery) ?>&sort_type=<?= $sort_type ?>&sort_order=<?= $order ?>">
+                                            <a href="index.php?p=13&url=<?= urlencode(CPANEL_URL . 'webmaster/?p=12&pg=' . $page . '&q=' . urlencode($searchQuery) . '&s=' . $sort_type . '&o=' . $order) ?>&id=<?= $users[$index]['regno'] ?>">
                                                 preview
                                             </a>
                                         </td>
