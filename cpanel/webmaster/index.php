@@ -90,7 +90,7 @@ limitations under the License.
         <script src="<?= HOSTNAME ?>js/prettify/prettify.js"></script>
 
         <!-- Metro UI CSS JavaScript plugins -->
-        <script src="<?= HOSTNAME ?>js/load-metro.js"></script>
+        <script src="<?= HOSTNAME ?>js/metro.min.js"></script>
 
         <!-- Local JavaScript -->
         <script src="<?= HOSTNAME ?>js/docs.js"></script>
@@ -111,16 +111,16 @@ limitations under the License.
                             <div class="span3">
                                 <nav class="sidebar light">
                                     <ul class="">
-                                        <li class="<?= $page == 1 || $page == 11 || $page == 12 ? "stick bg-darkBlue active" : "" ?>">
+                                        <li class="<?= $page == 1 || $page == 11 || $page == 12 ? "stick bg-darkBlue" : "" ?>">
                                             <a href="?p=1">Users</a>
                                         </li>
-                                        <li class="<?= $page == 2 ? "stick bg-darkBlue active" : "" ?>">
+                                        <li class="<?= $page == 2 ? "stick bg-darkBlue" : "" ?>">
                                             <a href="?p=2">Class Representatives</a>
                                         </li>
-                                        <li class="<?= $page == 3 ? "stick bg-darkBlue active" : "" ?>">
+                                        <li class="<?= $page == 3 ? "stick bg-darkBlue" : "" ?>">
                                             <a href="?p=3">Results</a>
                                         </li>
-                                        <li class="<?= $page == 5 ? "stick bg-darkBlue active" : "" ?>">
+                                        <li class="<?= $page == 5 ? "stick bg-darkBlue" : "" ?>">
                                             <?php
                                             $numberOfUnseenErrorReports = getNumberOfUnseenErrorReports();
                                             if ($numberOfUnseenErrorReports > 0) {
@@ -138,7 +138,7 @@ limitations under the License.
                                             }
                                             ?>
                                         </li>
-                                        <li class="<?= $page == 6 ? "stick bg-darkBlue active" : "" ?>">
+                                        <li class="<?= $page == 6 ? "stick bg-darkBlue" : "" ?>">
                                             <?php
                                             $numberOfUnfixedError = getNumberOfUnfixedError();
                                             if ($numberOfUnfixedError > 0) {
@@ -156,7 +156,7 @@ limitations under the License.
                                             }
                                             ?>
                                         </li>
-                                        <li class="<?= $page == 7 || $page == 71 ? "stick bg-darkBlue active" : "" ?>">
+                                        <li class="<?= $page == 7 || $page == 71 ? "stick bg-darkBlue" : "" ?>">
                                             <a href="?p=7">Settings</a>
                                         </li>
                                     </ul>
