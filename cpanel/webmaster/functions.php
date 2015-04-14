@@ -332,8 +332,8 @@ function searchUsers($search_query, $is_deleted = false, $is_suspended = false, 
         while ($row = mysqli_fetch_array($result)) {
             array_push($users, $row);
         }
-        sortUser($users, $sort_type, $sort_order);
     }
+    sortUser($users, $sort_type, $sort_order);
     //Log error
     AdminUtility::logMySQLError($link);
 
@@ -341,7 +341,7 @@ function searchUsers($search_query, $is_deleted = false, $is_suspended = false, 
 }
 
 function sortUser(array &$users, $sort_type, $sort_order) {
-    if (empty($users)) {
+    if (empty($users) || empty($sort_type) || empty($sort_order)) {
         return;
     }
 
