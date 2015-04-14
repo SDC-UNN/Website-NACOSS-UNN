@@ -112,7 +112,7 @@ if (count($pending) > $max_view_length) {
                                 <?= $pending[$index]['message'] ?>
                             </td>
                             <td class="">
-                                <?= $fixed[$index]['trace'] ?>
+                                <?= nl2br($fixed[$index]['trace'],true) ?>
                             </td>
                             <td class="">
                                 <?= $pending[$index]['file'] ?> (Line <?= $pending[$index]['line'] ?>)
