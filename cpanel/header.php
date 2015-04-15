@@ -30,7 +30,7 @@ if (!isset($admin)) {
                     <li>
                         <a class="" href="<?= HOSTNAME ?>" >Visit site</a>
                     </li>
-                    <?php if ($admin->getAdminType() === Admin::WEBMASTER) { ?>                        
+                    <?php if (strcasecmp($admin->getAdminType(), Admin::WEBMASTER) === 0) { ?>                        
                         <li>
                             <a href="#" class="dropdown-toggle">View As</a>
                             <ul class="dropdown-menu dark" data-role="dropdown">
