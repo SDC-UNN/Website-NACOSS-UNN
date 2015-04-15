@@ -16,7 +16,7 @@
  * limitations under the License.
  */
 
-require_once './UserUtility.php';
+require_once 'UserUtility.php';
 
 class User {
 

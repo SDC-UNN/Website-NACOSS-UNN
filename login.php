@@ -196,7 +196,7 @@ limitations under the License.
                                             <div class="row ntm">
                                                 <label class="span1">ID <i title="Registration number" class="icon-help fg-blue"></i></label>
                                                 <div class="span4">
-                                                    <input class="text" name='id' maxlength="11" style="width: inherit" required type='text' 
+                                                    <input class="text" name='id' maxlength="20" style="width: inherit" required type='text' 
                                                            <?= $isFormRequest ? "value='$id'" : ""; ?> tabindex='1' />
                                                 </div>
                                             </div>

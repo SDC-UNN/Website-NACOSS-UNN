@@ -1,5 +1,4 @@
 <?php
-
 /* 
  * Copyright 2015 NACOSS UNN Developers Group (NDG).
  *
@@ -16,6 +15,11 @@
  * limitations under the License.
  */
 
+require_once('class.libraryItem.php');
 class LibraryAdmin extends Admin{
+	
+	public function addLibraryItem(){
+		
+	}
     
 }

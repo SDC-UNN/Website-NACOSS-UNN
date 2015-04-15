@@ -24,6 +24,30 @@ if ($admin->activateLogin()) {
             $admin->logoutAdmin();
             break;
     }
+
+
+    //Set page number
+    $page = filter_input(INPUT_GET, "p");
+    if (empty($page)) {
+        $page = 1;
+    }
+
+    //Check for post request
+    $array = filter_input_array(INPUT_POST);
+    if ($array !== FALSE && $array !== null) {
+        foreach ($array as $key => $value) {
+            if (is_array($array[$key])) {
+                foreach ($array[$key] as $subkey => $subvalue) {
+//                    $subvalue[$subkey] = html_entity_decode($subvalue[$subkey]);
+                    $array[$key][$subkey] = html_entity_decode($array[$key][$subkey]);
+                }
+            } else {
+                $array[$key] = html_entity_decode($array[$key]);
+            }
+        }
+        //Further processing is done in the page to which the request was directed to
+    }
+
 } else {
     header("location: ../index.php");
 }
@@ -87,17 +111,17 @@ limitations under the License.
                             <div class="span3">
                                 <nav class="sidebar light">
                                     <ul class="">
-                                        <li class="">
-                                            <a href="#">View eBooks</a>
+                                        <li class="<?= $page == 1 || $page == 11 || $page == 12 ? "stick bg-darkBlue active" : "" ?>">
+                                            <a href="?p=1">View Ebooks</a>
                                         </li>
-                                        <li class="">
-                                            <a href="#">View Videos</a>
+                                        <li class="<?= $page == 2 ? "stick bg-darkBlue active" : "" ?>">
+                                            <a href="?p=2">Video Gallery</a>
                                         </li>
-                                        <li class="">
-                                            <a href="#">Add New</a>
+                                        <li class="<?= $page == 3 ? "stick bg-darkBlue active" : "" ?>">
+                                            <a href="?p=3">New Library Entry&hellip;</a>
                                         </li>
-                                        <li class="">
-                                            <a href="#">Settings</a>
+                                        <li class="<?= $page == 4 ? "stick bg-darkBlue active" : "" ?>">
+                                            <a href="?p=4">Settings</a>
                                         </li>
                                     </ul>
                                     <br/>
@@ -105,20 +129,35 @@ limitations under the License.
                                         <div class="panel-header">Statistics</div>
                                         <div class="panel-content">
                                             <p>Total Books</p>
-                                            <p>0</p>
+                                            <p><?= getNumberOfLibraryItems('ebook'); ?></p>
                                             <p>Total Videos</p> 
-                                            <p>0</p>
-                                            <p>Total Video Downloads</p> 
-                                            <p>0</p>                                          
+                                            <p><?= getNumberOfLibraryItems('video'); ?></p>
+                                            <p>Total Video Downloads</p>
+                                            <p><?= getNumberOfLibraryItemsDownloaded('video'); ?></p>                                          
                                             <p>Total Books Downloads</p>
-                                            <p>0</p>                                           
+                                            <p><?= getNumberOfLibraryItemsDownloaded('ebook'); ?></p>                                          
                                         </div>
                                     </div>
                                 </nav>
                             </div>
 
                             <div class="span9">
-
+                                <?php
+                                switch ($page) {
+                                    case 1:
+                                        include_once('_viewEbooks.php');
+                                        break;
+                                    case 2:
+                                        include_once('_viewVideos.php');
+                                        break;
+                                    case 3:
+                                        include_once('_newItem.php');
+                                        break;
+                                    default :
+                                        include_once('_viewEbooks.php');
+                                        break;
+                                }
+                                ?>
                             </div>
                         </div>
                     </div>

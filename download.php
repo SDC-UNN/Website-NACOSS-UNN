@@ -24,14 +24,24 @@ $result = mysqli_query($link, $query);
 if ($result) {
     $row = mysqli_fetch_array($result);
     $link = $row['link'];
+	if(is_file($link)){
+		//Log download
+		$update_q ="update library set num_of_downloads += 1 where id = '$id'";
+    	//Redirect to download
+    	header("location: $link");
+	}else{
+		//Log Error: Stail link
+		$exe = new Exception("Stale Download Link: ".$link."; File ID: ".$id);
+		UserUtility::writeToLog($exe);
+	}
+}else{
+	//Log MySQL Error
+	UserUtility::logMySQLError($link);
 
-    //Redirect to download
-    header("location: $link");
 }
-//Log error
-UserUtility::logMySQLError($link);
 ?>
 <!--if not successful-->
 <div>
     <h2>Sorry, error occurred while fetching file</h2>
+    <p>This error have been noted and will be fixed soon</p>
 </div>

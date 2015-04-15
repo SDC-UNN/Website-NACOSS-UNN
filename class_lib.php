@@ -16,8 +16,8 @@
  * limitations under the License.
  */
 
-require_once './constants.php';
-require_once './UserUtility.php';
-require_once './User.php';
-require_once './Collections.php';
-require_once './NewsFeeds.php';
+require_once 'constants.php';
+require_once 'UserUtility.php';
+require_once 'User.php';
+require_once 'Collections.php';
+require_once 'NewsFeeds.php';

@@ -158,5 +158,33 @@ class AdminUtility {
             AdminUtility::writeToLog(new Exception($error));
         }
     }
-
+	
+	public static function uploadDocument(string $input_name, $output_file_name, string $upload_directory){
+		$file_url = "";
+		// implementation
+		
+		return $file_url;
+	}
+	
+	/*
+		to resize image and create with imageUploader():
+			set $resize = array('resize'=>true, 'width'=>200, 'height'=>400, 'jpeg_quality'=>90 );
+			set $thumb_nail = array('create_thumb_nail'=>true, 'width'=>120, 'height'=>120, 'jpeg_quality'=>90 );
+			call AdminUtility::uploadImage('input_name', 'output_name', 'upload_dir', $resize, $thumb_nail)
+	*/
+	public static function uploadImage(string $input_name, $output_file_name, string $upload_directory, 
+				array $resize=array('resize'=>false, 'width'=>0, 'height'=>0, 'jpeg_quality'=>90 ),
+				array $thumb_nail=array('create_thumb_nail'=>false, 'width'=>0, 'height'=>0, 'jpeg_quality'=>90 )
+				){
+		$file_url = "";
+		// implementation
+		return $file_url;
+	}
+	
+	public static function uploadVideo(string $input_name, $output_file_name, string $upload_directory){
+		$file_url = "";
+		// implementation
+		
+		return $file_url;
+	}
 }

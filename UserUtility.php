@@ -227,5 +227,4 @@ class UserUtility {
             UserUtility::writeToLog(new Exception($error));
         }
     }
-
 }
