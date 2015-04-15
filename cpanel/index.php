@@ -114,8 +114,8 @@ limitations under the License.
 
     </head>
     <body class="metro">
-        <div class="ribbed-darkGreen">
-            <div class="container bg-white">            
+        <div class="">
+            <div class="bg-white">            
                 <?php require_once './header.php'; ?>
                 <div class="padding20 row">
                     <br/>
@@ -123,7 +123,7 @@ limitations under the License.
                     <br/>
                     <br/>
                     <br/>
-                    <div class="offset3 span6 panel shadow">
+                    <div class="offset5 span6 panel shadow">
                         <h2 class="panel-header bg-grayDark fg-white">
                             NACOSS UNN CPanel
                         </h2>

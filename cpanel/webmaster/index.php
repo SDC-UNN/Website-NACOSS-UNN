@@ -101,8 +101,8 @@ limitations under the License.
 
     </head>
     <body class="metro">
-        <div class="ribbed-darkGreen">
-            <div class="container bg-white">            
+        <div class="">
+            <div class="bg-white">            
                 <?php require_once '../header.php'; ?>
                 <div class="padding20">
                     <h2>Web Master</h2>
@@ -175,7 +175,7 @@ limitations under the License.
                                 </nav>
                             </div>
 
-                            <div class="span9">
+                            <div class="span12">
                                 <?php
                                 switch ($page) {
                                     case 1:

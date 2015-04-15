@@ -69,7 +69,7 @@ limitations under the License.
         <script src="<?=HOSTNAME?>js/prettify/prettify.js"></script>
 
         <!-- Metro UI CSS JavaScript plugins -->
-        <script src="<?=HOSTNAME?>js/load-metro.js"></script>
+        <script src="<?=HOSTNAME?>js/metro.min.js"></script>
 
         <!-- Local JavaScript -->
         <script src="<?=HOSTNAME?>js/docs.js"></script>
@@ -79,8 +79,8 @@ limitations under the License.
         <title>CPanel</title>        
     </head>
     <body class="metro">
-        <div class="ribbed-darkGreen">
-            <div class="container bg-white">            
+        <div class="">
+            <div class="bg-white">            
                 <?php require_once '../header.php'; ?>
                 <div class="padding20">
                     <h2>Class Representatives</h2>
@@ -109,7 +109,7 @@ limitations under the License.
                                 </nav>
                             </div>
 
-                            <div class="span9">
+                            <div class="span12">
 
                             </div>
                         </div>

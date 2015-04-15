@@ -48,8 +48,8 @@ limitations under the License.
         <!-- Page Title -->
         <title>NACOSS UNN : Title</title>        
     </head>
-    <body class="metro" style="background-image: url(img/bg.jpg); background-repeat: repeat;">
-        <div class="container bg-white">            
+    <body class="metro">
+        <div class="bg-white">            
             <?php require_once './header.php'; ?>
             <br/>
             <div class="padding20">
