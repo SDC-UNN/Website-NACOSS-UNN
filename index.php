@@ -121,9 +121,43 @@ limitations under the License.
             <br/>
 
             <!--Your code goes here-->
+			
+				<div style = "margin:0% 10% 0% 10%; ">
+				
+					<div style = "float:left; clear:right; margin-right:10%">	
+						<div class="image-container shadow">
+							<img src="img/prosp.jpg">
+								<div class="overlay-fluid">
+									What do You Know about Your Department? View The NACOSS prospectus to stay informed.
+								</div>
+						</div>
+					</div>
+						
+					<div style = "float:left; clear:right; margin-right:10%">		
+						<div class="image-container shadow">
+							<img src="img/lib.jpg">
+								<div class="overlay-fluid">
+									The NACOSS online library is now available for you. View materials now, or help us grow by submitting e-books for archiving.
+								</div>
+						</div>
+					</div>
+					
+					<div style = "float:left; clear:right">			
+						<div class="image-container shadow">
+							<img src="img/ndg.jpg">
+								<div class="overlay-fluid">
+									Contribute to this and other future projects... <br> Join <a href = "#"> NDG </a> today.
+								</div>
+						</div>
+					</div>
+				
+				</div>
+				
+            <!--Your code goes here-->
+
 
             <br/>
-            <div class="bg-grayLighter">
+            <div class="bg-grayLighter style = "clear:left"> <!-- added clear left -->
                 <div class="padding5 grid">
                     <div class="row">
                         <small class="span1" style="padding-top: 15px">sponsors</small>
