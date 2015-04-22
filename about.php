@@ -60,6 +60,21 @@ limitations under the License.
                         <br/>
                         
                         <!--Write up goes here-->
+						
+								Nigerian Association of Computer Science Students (NACOSS) is the official student body of all computer 
+								science students nationwide, aimed at providing needs of her students welfare-wise and speaking and acting 
+								on behalf of her students, both within the universities and outside.
+								<br>
+								<br>
+								This site was developed solely by the NACOSS UNN developers’ group. 
+								<br>
+								<br>
+								NACOSS Developers Group (NDG) UNN is a group of programming-inclined NACOSSITES aimed at undertaking projects 
+								for and on behalf of NACOSS, to make the department better. To join NDG, NACOSSITES should simply submit 
+								a letter of request to the NACOSS president - the head of NDG, containing your information, contact details, 
+								and your possible contributions to the group, and your request will be duly considered. 
+							
+                        <!--Write up goes here-->
                         
                     </p>
                 </div >
