@@ -98,4 +98,49 @@ class WebsiteAdmin extends Admin {
         throw new Exception("Failed to remove $regno");
     }
 
+    function deleteUsers(array $regno) {
+        $link = AdminUtility::getDefaultDBConnection();
+        mysqli_autocommit($link, false);
+        foreach ($regno as $value) {
+            $query = "update users set is_deleted = 1, is_suspended = 0 where regno = '$value'";
+            $ok = mysqli_query($link, $query);
+            if (!$ok) {
+                //Log error
+                AdminUtility::logMySQLError($link);
+                return FALSE;
+            }
+        }
+        return mysqli_commit($link);
+    }
+
+    function suspendUsers(array $regno) {
+        $link = AdminUtility::getDefaultDBConnection();
+        mysqli_autocommit($link, false);
+        foreach ($regno as $value) {
+            $query = "update users set is_suspended = 1, is_deleted = 0 where regno = '$value'";
+            $ok = mysqli_query($link, $query);
+            if (!$ok) {
+                //Log error
+                AdminUtility::logMySQLError($link);
+                return FALSE;
+            }
+        }
+        return mysqli_commit($link);
+    }
+
+    function activateUsers(array $regno) {
+        $link = AdminUtility::getDefaultDBConnection();
+        mysqli_autocommit($link, false);
+        foreach ($regno as $value) {
+            $query = "update users set is_suspended = 0, is_deleted = 0  where regno = '$value'";
+            $ok = mysqli_query($link, $query);
+            if (!$ok) {
+                //Log error
+                AdminUtility::logMySQLError($link);
+                return FALSE;
+            }
+        }
+        return mysqli_commit($link);
+    }
+
 }

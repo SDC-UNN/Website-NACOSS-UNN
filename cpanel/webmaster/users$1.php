@@ -20,10 +20,10 @@ if (isset($array['search_button']) || //$array from index.php
     try {
         if (isset($array['delete_button']) && isset($array['checkbox'])) {
             $actionPerformed = true;
-            deleteUsers($array['checkbox']);
+            $admin->deleteUsers($array['checkbox']);
         } elseif (isset($array['activate_button']) && isset($array['checkbox'])) {
             $actionPerformed = true;
-            activateUsers($array['checkbox']);
+            $admin->activateUsers($array['checkbox']);
         }
         $success = true;
         $error_message = "";

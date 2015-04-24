@@ -63,6 +63,13 @@ class Admin {
         return ""; //Restrict access if record does not exist
     }
 
+    public function getAdminEmail() {
+        if (isset($this->adminInfo)) {
+            return $this->adminInfo['email'];
+        }
+        return ""; //Restrict access if record does not exist
+    }
+
     public function activateLogin() {
         if ($this->isLoggedIn()) {
             return $this->setAdminCookies($this->getAdminCookiesID(), $this->getAdminCookiesPassword(), $this->getAdminCookiesType());
@@ -146,7 +153,7 @@ class Admin {
     }
 
     public function changePassword($oldPassword, $newPassword1, $newPassword2) {
-        if (password_verify($oldPassword, $this->getAdminPassword)) {
+        if (password_verify($oldPassword, $this->getAdminPassword())) {
             //Check password
             $this->validatePassword($newPassword1);
             $ok = strcmp($newPassword1, $newPassword2) === 0;

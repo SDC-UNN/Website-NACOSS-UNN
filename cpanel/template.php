@@ -22,8 +22,8 @@ limitations under the License.
         <meta name="description" content="NACOSS UNN official website">
         <meta name="author" content="NACOSS UNN Developers">
         <meta name="keywords" content=" metro ui, NDG, NACOSS UNN">
-        <link rel="icon" href="favicon.ico" type="image/x-icon" />
-        <link rel="shortcut icon" href="favicon.ico" type="image/x-icon" />
+        <link rel="icon" href="<?= HOSTNAME ?>favicon.ico" type="image/x-icon" />
+        <link rel="shortcut icon" href="<?= HOSTNAME ?>favicon.ico" type="image/x-icon" />
 
         <link href="<?= HOSTNAME ?>css/metro-bootstrap.css" rel="stylesheet">
         <link href="<?= HOSTNAME ?>css/metro-bootstrap-responsive.css" rel="stylesheet">

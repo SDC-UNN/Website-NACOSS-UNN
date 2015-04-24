@@ -19,7 +19,7 @@ if (isset($array['search_button']) || //$array from index.php
     try {
         if (isset($array['activate_button']) && isset($array['checkbox'])) {
             $actionPerformed = true;
-            activateUsers($array['checkbox']);
+            $admin->activateUsers($array['checkbox']);
         }
         $success = true;
         $error_message = "";

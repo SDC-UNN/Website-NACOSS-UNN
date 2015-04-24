@@ -86,8 +86,8 @@ limitations under the License.
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-        <link rel="icon" href="favicon.ico" type="image/x-icon" />
-        <link rel="shortcut icon" href="favicon.ico" type="image/x-icon" />
+        <link rel="icon" href="../favicon.ico" type="image/x-icon" />
+        <link rel="shortcut icon" href="../favicon.ico" type="image/x-icon" />
 
         <link href="../css/metro-bootstrap.css" rel="stylesheet">
         <link href="../css/metro-bootstrap-responsive.css" rel="stylesheet">
@@ -138,10 +138,12 @@ limitations under the License.
                                 <div class="grid">
                                     <div class="text-center">
                                         <input type="radio" <?= isset($type) ? ($type === Admin::WEBMASTER ? "checked" : "") : "checked" ?> name="admin_type" required value="<?= Admin::WEBMASTER ?>" /> Web Master&nbsp;
-                                        <input type="radio" <?= isset($type) ? ($type === Admin::CLASS_REP ? "checked" : "") : "" ?> name="admin_type" required value="<?= Admin::TREASURER ?>"/> Treasurer&nbsp;
                                         <input type="radio" <?= isset($type) ? ($type === Admin::PRO ? "checked" : "") : "" ?> name="admin_type" required value="<?= Admin::PRO ?>"/> PRO &nbsp;
                                         <input type="radio" <?= isset($type) ? ($type === Admin::LIBRARIAN ? "checked" : "") : "" ?> name="admin_type" required value="<?= Admin::LIBRARIAN ?>"/> Librarian&nbsp;
-                                        <input type="radio" <?= isset($type) ? ($type === Admin::CLASS_REP ? "checked" : "") : "" ?> name="admin_type" required value="<?= Admin::CLASS_REP ?>"/> Class Rep.
+                                        
+                                        <!--Temporary disabled-->
+                                        <!--<input type="radio" <?= isset($type) ? ($type === Admin::TREASURER ? "checked" : "") : "" ?> name="admin_type" required value="<?= Admin::TREASURER ?>"/> Treasurer&nbsp;-->
+                                        <!--<input type="radio" <?= isset($type) ? ($type === Admin::CLASS_REP ? "checked" : "") : "" ?> name="admin_type" required value="<?= Admin::CLASS_REP ?>"/> Class Rep.-->
                                     </div>
                                     <br/>
                                     <div class="row ntm">
@@ -161,7 +163,7 @@ limitations under the License.
                                         <input class="button default bg-NACOSS-UNN bg-hover-dark" style="width: 300px" type='submit'
                                                name='submit' value='Login' tabindex='3'/>
                                         <br/>
-                                        <a href="resetPassword.php" class=""> &nbsp;&nbsp;forgot password?</a>
+                                        <a href="<?= HOSTNAME ?>reset_password.php" class=""> &nbsp;&nbsp;forgot password?</a>
                                     </div>
                                 </div>
                             </form>
