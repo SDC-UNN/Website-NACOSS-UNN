@@ -1,0 +1,533 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+	<head>
+		<title>Cute Editor Menus and Toolbars
+		    &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 
+		    &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 
+		    &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 
+		    &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 
+		    &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 
+		    &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 
+		    &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 
+		    &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 
+		</title>
+		<meta name="KEYWORDS" content="ASP.NET, HTML, WYSIWYG, Editor, richtextbox, HTML Editor, ASP.NET Content Management,ASP.NET WYSIWYG" />
+		<meta name="DESCRIPTION" content="Menus and Toolbars" />
+		<style type="text/css">
+	        body{margin:2px;}
+	        table.Grid
+            {
+	            border-width: 5px;
+	            border-style: none;
+	            background-color: White;
+	            border-color: #dddddd;
+            }
+
+            table.Grid TD, table.Grid TH
+            {
+	            padding: 4px 6px 4px 6px;
+	            border: solid 1px #dddddd;
+	            vertical-align: top;
+	            font-size:11px;
+	            font-family:segoe ui, arial,verdana,helvetica,sans-serif;
+            }
+
+            table.Grid TH
+            {
+	            background-color: #f0f0f0;
+	            font-weight: normal;
+	            color: #505050;
+            }
+            td
+            {
+	            vertical-align:top;	
+            }
+            img
+            {
+	            border:0;
+	            vertical-align:middle;
+            }
+	    </style>
+	</head>
+	<body>
+		<div><img alt="" src="../Images/standardtoolbar.gif" /></div>
+		<table style="border-collapse: collapse; margin-top:5px;" class="Grid" width="780" border="0" cellspacing="0" cellpadding="3">		                
+            <tr bgcolor="#efefef">
+                <td><b>Menu/Button</b></td>
+                <td><b>Function Description</b></td>
+            </tr>
+			<tr>
+				<td><img alt="" src="../Themes/Office2007/Images/save.gif" />&nbsp;<b>Save</b></td>
+				<td>save the active content in the editor's content area</td>
+			</tr>
+			<tr>
+				<td><img alt="" src="../Themes/Office2007/Images/print.gif" />&nbsp;<b>Print</b></td>
+				<td>print the current page</td>
+			</tr>
+			<tr>
+				<td><img alt="" src="../Themes/Office2007/Images/bspreview.gif" />&nbsp;<b>Preview</b></td>
+				<td>preview the current page</td>
+			</tr>
+			<tr>
+				<td><img alt="" src="../Themes/Office2007/Images/find.gif" />&nbsp;<b>Find and replace</b></td>
+				<td>find and replace the text in the editor's content area</td>
+			</tr>
+			<tr>
+				<td><b><img alt="" src="../Themes/Office2007/Images/fit.gif" />&nbsp;Full-Screen</b></td>
+				<td>edit in full screen mode, maximizing your available space</td>
+			</tr>
+			<tr>
+				<td><img alt="" src="../Themes/Office2007/Images/cleanup.gif" />&nbsp;<b>Code Cleaner</b></td>
+				<td>clean up all "garbage" HTML-tags</td>
+			</tr>
+			<tr>
+				<td><img alt="" src="../Themes/Office2007/Images/spell.gif" />&nbsp;<b>Spell</b></td>
+				<td>launch the spell checker</td>
+			</tr>
+			<tr>
+				<td><img alt="" src="../Themes/Office2007/Images/cut.gif" />&nbsp;<b>Cut</b></td>
+				<td>perform normal function of cutting</td>
+			</tr>
+			<tr>
+				<td><img alt="" src="../Themes/Office2007/Images/copy.gif" />&nbsp;<b>Copy</b></td>
+				<td>copy the current selection and store it in the clipboard</td>
+			</tr>
+			<tr>
+				<td><img alt="" src="../Themes/Office2007/Images/paste.gif" />&nbsp;<b>Paste</b></td>
+				<td>insert content from the clipboard into the editor at the selected 
+					position</td>
+			</tr>
+			<tr>
+				<td><img alt="" src="../Themes/Office2007/Images/pastetext.gif" />&nbsp;<b>Paste Plain Text</b></td>
+				<td>paste the plain text (no formatting) into the editor</td>
+			</tr>
+			<tr>
+				<td><img alt="" src="../Themes/Office2007/Images/pasteword.gif" />&nbsp;<b>Paste from word</b></td>
+				<td>paste the content copied form the microsoft word and remove the web-unfriendly tags</td>
+			</tr>
+			<tr>
+				<td><img alt="" src="../Themes/Office2007/Images/delete.gif" />&nbsp;<b>Delete</b></td>
+				<td>delete the current selection</td>
+			</tr>
+			<tr>
+				<td><img alt="" src="../Themes/Office2007/Images/undo.gif" />&nbsp;<b>Undo</b></td>
+				<td>undo the last operation in the editor</td>
+			</tr>
+			<tr>
+				<td><img alt="" src="../Themes/Office2007/Images/redo.gif" />&nbsp;<b>Redo</b></td>
+				<td>redo the last operation in the editor</td>
+			</tr>
+			<tr>
+				<td><img alt="" src="../Themes/Office2007/Images/break.gif" />&nbsp;<b>Break</b></td>
+				<td>insert the line break</td>
+			</tr>
+			<tr>
+				<td><img alt="" src="../Themes/Office2007/Images/paragraph.gif" />&nbsp;<b>Paragraph</b></td>
+				<td>Insert a paragraph</td>
+			</tr>
+			<tr>
+				<td><img alt="" src="../Themes/Office2007/Images/InsertPageBreak.gif" />&nbsp;<b>Insert Page Break</b></td>
+				<td>Insert the print page break</td>
+			</tr>
+			<tr>
+				<td><img alt="" src="../Themes/Office2007/Images/insertDate.gif" />&nbsp;<b>Insert the current date</b></td>
+				<td>Insert the current date. The date format used is the date format 
+					configured on the clients machine</td>
+			</tr>
+			<tr>
+				<td><img alt="" src="../Themes/Office2007/Images/timer.gif" />&nbsp;<b>Insert the current time</b></td>
+				<td>Insert the current time. The time format used is the time format 
+					configured on the clients machine</td>
+			</tr>
+			<tr>
+				<td><img alt="" src="../Themes/Office2007/Images/borders.gif" />&nbsp;<b>Visible Borders</b></td>
+				<td>make table borders visible, which can make editing easier</td>
+			</tr>
+			<tr>
+				<td><img alt="" src="../Themes/Office2007/Images/specialchar.gif" />&nbsp;<b>Special Chars</b></td>
+				<td>insert a special character from a predefined list</td>
+			</tr>
+			<tr>
+				<td><img alt="" src="../Themes/Office2007/Images/emotion.gif" />&nbsp;<b>Insert Emotion</b></td>
+				<td>insert an emotion image at the selected position in the editor</td>
+			</tr>
+			<tr>
+				<td><img alt="" src="../Themes/Office2007/Images/text.gif" />&nbsp;<b>Text Frame</b></td>
+				<td>allows you to insert, edit, or reposition text regions</td>
+			</tr>
+			<tr>
+				<td><img alt="" src="../Themes/Office2007/Images/keyboard.gif" />&nbsp;<b>Universal Keyboard</b></td>
+				<td>Universal Online Keyboard</td>
+			</tr>
+			<tr>
+				<td><b><img alt="" src="../Themes/Office2007/Images/layer.gif" />&nbsp;<b>insert a layer </b>
+				</td>
+				<td>allows you to insert a layer(absolutely-positioned div)
+				</td>
+			</tr>
+			<tr>
+				<td><b><img alt="" src="../Themes/Office2007/Images/groupbox.gif" />&nbsp;<b>GroupBox</b></td>
+				<td>allows you to a group box (FieldSet) at the selected position in 
+					the editor</td>
+			</tr>
+			<tr>
+				<td><b><img alt="" src="../Themes/Office2007/Images/image.gif" />&nbsp;Insert Image </b>
+				</td>
+				<td>insert a local image from the image gallery folder; thumbnail 
+					Images are dynamically created; Supports upload new Images</td>
+			</tr>
+			<tr>
+				<td><b><img alt="" src="../Themes/Office2007/Images/eximage.gif" />&nbsp;Insert Image</b>
+				</td>
+				<td>insert an image at the selected position in the editor and let you 
+					set its properties</td>
+			</tr>
+			<tr>
+				<td><b><img alt="" src="../Themes/Office2007/Images/flash.gif" />&nbsp;Insert Flash</b></td>
+				<td>insert a flash animation at the selected position and let you set 
+					its properties</td>
+			</tr>
+			<tr>
+				<td><b><img alt="" src="../Themes/Office2007/Images/media.gif" />&nbsp;Insert Media</b></td>
+				<td>insert awindows media objectat the selected position and let you 
+					set its properties</td>
+			</tr>
+			<tr>
+				<td><b><img alt="" src="../Themes/Office2007/Images/document.gif" />&nbsp;Insert Document</b></td>
+				<td>insert a link to a document on the server (PDF,DOC, ZIP,etc.) at 
+					the selected position
+				</td>
+			</tr>
+			<tr>
+				<td><b><img alt="" src="../Themes/Office2007/Images/template.gif" />&nbsp;Insert Template</b></td>
+				<td>Load thepredefined templates on the current selection.
+				</td>
+			</tr>
+			<tr>
+				<td><img alt="" src="../Themes/Office2007/Images/instable.gif" />&nbsp;<b>Insert Table</b></td>
+				<td>insert a table into your web page</td>
+			</tr>
+			<tr>
+				<td><img alt="" src="../Themes/Office2007/Images/insrow_t.gif" />&nbsp;<b>Insert Rows</b></td>
+				<td>insert a row above the selected row</td>
+			</tr>
+			<tr>
+				<td><img alt="" src="../Themes/Office2007/Images/insrow_b.gif" />&nbsp;<b>Insert Row Below</b></td>
+				<td>insert a row below the selected row</td>
+			</tr>
+			<tr>
+				<td><img alt="" src="../Themes/Office2007/Images/delrow.gif" />&nbsp;<b>Delete Rows</b></td>
+				<td>delete the selected row</td>
+			</tr>
+			<tr>
+				<td><img alt="" src="../Themes/Office2007/Images/inscol_l.gif" />&nbsp;<b>Insert Column to the Left</b></td>
+				<td>insert a column to the left of the selected cell</td>
+			</tr>
+			<tr>
+				<td><img alt="" src="../Themes/Office2007/Images/inscol_r.gif" />&nbsp;<b>Insert Column to the Right</b></td>
+				<td>insert a column to the right of the selected cell</td>
+			</tr>
+			<tr>
+				<td><img alt="" src="../Themes/Office2007/Images/delcol.gif" />&nbsp;<b>Delete columns</b></td>
+				<td>delete the selected column</td>
+			</tr>
+			<tr>
+				<td><img alt="" src="../Themes/Office2007/Images/inscell.gif" />&nbsp;<b>Insert cells</b></td>
+				<td>insert cells into the selected row.
+				</td>
+			</tr>
+			<tr>
+				<td><img alt="" src="../Themes/Office2007/Images/delcell.gif" />&nbsp;<b>Delete cells</b></td>
+				<td>delete the selected cell</td>
+			</tr>
+			<tr>
+				<td><img alt="" src="../Themes/Office2007/Images/row.gif" />&nbsp;<b>Row properties</b></td>
+				<td>edit row properties</td>
+			</tr>
+			<tr>
+				<td><img alt="" src="../Themes/Office2007/Images/cell.gif" />&nbsp;<b>Cell properties</b></td>
+				<td>edit cell properties</td>
+			</tr>
+			<tr>
+				<td><img alt="" src="../Themes/Office2007/Images/mrgcell_r.gif" />&nbsp;<b>Merge right</b></td>
+				<td>merge the current cell with the one to its right</td>
+			</tr>
+			<tr>
+				<td><img alt="" src="../Themes/Office2007/Images/mrgcell_b.gif" />&nbsp;<b>Mergebelow</b></td>
+				<td>merge the current cell with the one below it</td>
+			</tr>
+			<tr>
+				<td><img alt="" src="../Themes/Office2007/Images/spltcell_r.gif" />&nbsp;<b>Horizontal split </b></td>
+				<td>split a cell into columns</td>
+			</tr>
+			<tr>
+				<td><img alt="" src="../Themes/Office2007/Images/spltcell_b.gif" />&nbsp;<b>Vertical split</b></td>
+				<td>Split a cell intorows</td>
+			</tr>
+			<tr>
+				<td><img alt="" src="../Themes/Office2007/Images/Form.gif" />&nbsp;<b>Form</b></td>
+				<td>insert a form at the selected position
+				</td>
+			</tr>
+			<tr>
+				<td><img alt="" src="../Themes/Office2007/Images/textarea.gif" />&nbsp;<b>TextArea</b></td>
+				<td>insert atextarea at the selected position
+				</td>
+			</tr>
+			<tr>
+				<td><img alt="" src="../Themes/Office2007/Images/textbox.gif" />&nbsp;<b>Input Text Box</b></td>
+				<td>insert ainput text box at the selected position
+				</td>
+			</tr>
+			<tr>
+				<td><img alt="" src="../Themes/Office2007/Images/passwordfield.gif" />&nbsp;<b>Password field </b>
+				</td>
+				<td>insert a password field at the selected position
+				</td>
+			</tr>
+			<tr>
+				<td><img alt="" src="../Themes/Office2007/Images/hiddenfield.gif" />&nbsp;<b>Hidden field </b>
+				</td>
+				<td>insert a hidden field at the selected position
+				</td>
+			</tr>
+			<tr>
+				<td><img alt="" src="../Themes/Office2007/Images/listbox.gif" />&nbsp;<b>ListBox</b></td>
+				<td>insert a list box at the selected position</td>
+			</tr>
+			<tr>
+				<td><img alt="" src="../Themes/Office2007/Images/dropdownbox.gif" />&nbsp;<b>Dropdown Box</b></td>
+				<td>insert a dropdown box at the selected position</td>
+			</tr>
+			<tr>
+				<td><img alt="" src="../Themes/Office2007/Images/optionbutton.gif" />&nbsp;<b>Radio Button</b></td>
+				<td>insert a radio button at the selected position</td>
+			</tr>
+			<tr>
+				<td><img alt="" src="../Themes/Office2007/Images/checkbox.gif" />&nbsp;<b>Checkbox</b></td>
+				<td>insert a checkbox at the selected position</td>
+			</tr>
+			<tr>
+				<td><img alt="" src="../Themes/Office2007/Images/imagebutton.gif" />&nbsp;<b>Image Button</b></td>
+				<td>insert an image button at the selected position</td>
+			</tr>
+			<tr>
+				<td><img alt="" src="../Themes/Office2007/Images/submit.gif" />&nbsp;<b>Submit Button</b></td>
+				<td>insert a submit button at the selected position</td>
+			</tr>
+			<tr>
+				<td><img alt="" src="../Themes/Office2007/Images/reset.gif" />&nbsp;<b>Reset Button</b></td>
+				<td>insert a reset button at the selected position</td>
+			</tr>
+			<tr>
+				<td><img alt="" src="../Themes/Office2007/Images/pushbutton.gif" />&nbsp;<b>Input 
+						Button</b></td>
+				<td>insert a input button at the selected position</td>
+			</tr>
+			<tr>
+				<td><img alt="" src="../Themes/Office2007/Images/left_to_right.gif" />&nbsp;<b>Direction 
+						left to right</b></td>
+				<td>Direction left to right</td>
+			</tr>
+			<tr>
+				<td><img alt="" src="../Themes/Office2007/Images/right_to_left.gif" />&nbsp;<b>Direction 
+						right to left</b></td>
+				<td>Direction right to left</td>
+			</tr>
+			<tr>
+				<td><img alt="" src="../Themes/Office2007/Images/box.gif" />&nbsp;<b>Box 
+						Formatting</b></td>
+				<td>Box Formatting</td>
+			</tr>
+			<tr>
+				<td><img alt="" src="../Themes/Office2007/Images/bold.gif" />&nbsp;<b>Bold</b></td>
+				<td>bold the selected text</td>
+			</tr>
+			<tr>
+				<td><img alt="" src="../Themes/Office2007/Images/italic.gif" />&nbsp;<b>Italicize</b></td>
+				<td>italicize the selected text</td>
+			</tr>
+			<tr>
+				<td><img alt="" src="../Themes/Office2007/Images/under.gif" />&nbsp;<b>Underline</b></td>
+				<td>underline the selected text</td>
+			</tr>
+			<tr>
+				<td><img alt="" src="../Themes/Office2007/Images/left.gif" />&nbsp;<b>Left Justify</b></td>
+				<td>align the selected content to the left</td>
+			</tr>
+			<tr>
+				<td><img alt="" src="../Themes/Office2007/Images/center.gif" />&nbsp;<b>Center</b></td>
+				<td>center the selected content</td>
+			</tr>
+			<tr>
+				<td><img alt="" src="../Themes/Office2007/Images/right.gif" />&nbsp;<b>Right Justify</b></td>
+				<td>align the selected content to the right</td>
+			</tr>
+			<tr>
+				<td><img alt="" src="../Themes/Office2007/Images/justifyfull.gif" />&nbsp;<b>Justify None</b></td>
+				<td>Justify Full</td>
+			</tr>
+			<tr>
+				<td><img alt="" src="../Themes/Office2007/Images/justifynone.gif" />&nbsp;<b>Justify None</b></td>
+				<td>Justify None</td>
+			</tr>
+			<tr>
+				<td><img alt="" src="../Themes/Office2007/Images/unformat.gif" />&nbsp;<b>Remove Format</b></td>
+				<td>remove format of the selected text</td>
+			</tr>
+			<tr>
+				<td><span style="BACKGROUND-COLOR: red"><img alt="" src="../Themes/Office2007/Images/fontcolor.gif" />&nbsp;</span>
+					<img alt="" src="../Themes/Office2007/Images/tbdown.gif" />&nbsp;
+					<b>Font Color</b></td>
+				<td>change color of the selected text
+				</td>
+			</tr>
+			<tr>
+				<td><span style="BACKGROUND-COLOR: yellow"><img alt="" src="../Themes/Office2007/Images/colorpen.gif" />&nbsp;</span>
+					<img alt="" src="../Themes/Office2007/Images/tbdown.gif" />&nbsp;
+					<b>Highlight</b></td>
+				<td>highlight the selected text</td>
+			</tr>
+			<tr>
+				<td><img alt="" src="../Themes/Office2007/Images/numlist.gif" />&nbsp;
+					<b>Ordered List</b></td>
+				<td>insert an ordered list</td>
+			</tr>
+			<tr>
+				<td><img alt="" src="../Themes/Office2007/Images/bullist.gif" />&nbsp;
+					<b>Unordered List</b></td>
+				<td>Insert an unordered list</td>
+			</tr>
+			<tr>
+				<td><img alt="" src="../Themes/Office2007/Images/indent.gif" />&nbsp;
+					<b>Indent</b></td>
+				<td>indent the selected content</td>
+			</tr>
+			<tr>
+				<td><img alt="" src="../Themes/Office2007/Images/outdent.gif" />&nbsp;
+					<b>Outdent</b></td>
+				<td>outdent the selected content</td>
+			</tr>
+			<tr>
+				<td><img alt="" src="../Themes/Office2007/Images/subscript.gif" />&nbsp;
+					<b>Subscript</b></td>
+				<td>change the selected text to subscript</td>
+			</tr>
+			<tr>
+				<td><img alt="" src="../Themes/Office2007/Images/superscript.gif" />&nbsp;
+					<b>Superscript</b></td>
+				<td>change the selected text to superscript</td>
+			</tr>
+			<tr>
+				<td><img alt="" src="../Themes/Office2007/Images/strike.gif" />&nbsp;
+					<b>Strike Through</b></td>
+				<td>strike through the selected text</td>
+			</tr>
+			<tr>
+				<td><img alt="" src="../Themes/Office2007/Images/ucase.gif" />&nbsp;<b>Upper Case</b></td>
+				<td>convert the selected text to upper case</td>
+			</tr>
+			<tr>
+				<td><img alt="" src="../Themes/Office2007/Images/lcase.gif" />&nbsp;<b>Lower Case</b></td>
+				<td>convert the selected text to lower case</td>
+			</tr>
+			<tr>
+				<td><img alt="" src="../Themes/Office2007/Images/rule.gif" />&nbsp<b>Insert Rule</b>
+				</td>
+				<td>insert a horizontal rule at the selected position in the editor</td>
+			</tr>
+			<tr>
+				<td><img alt="" src="../Themes/Office2007/Images/link.gif" />&nbsp;<b>Insert Link</b></td>
+				<td>add a link to the text on your page</td>
+			</tr>
+			<tr>
+				<td><img alt="" src="../Themes/Office2007/Images/ImageMap.gif" />&nbsp;<b>Add image map</b></td>
+				<td>Add image map</td>
+			</tr>
+			<tr>
+				<td><img alt="" src="../Themes/Office2007/Images/unlink.gif" />&nbsp;<b>Remove Link</b></td>
+				<td>remove the hyperlink from the selected content</td>
+			</tr>
+			<tr>
+				<td><img alt="" src="../Themes/Office2007/Images/anchor.gif" />&nbsp;<b>Insert Anchor</b></td>
+				<td>add an anchor to the text on your page</td>
+			</tr>
+			<tr>
+				<td><img alt="" src="../Themes/Office2007/Images/selectall.gif" />&nbsp;<b>Select All</b></td>
+				<td>select all content</td>
+			</tr>
+			<tr>
+				<td><img alt="" src="../Themes/Office2007/Images/selectnone.gif" />&nbsp;<b>Select None</b></td>
+				<td>selectnone</td>
+			</tr>
+			<tr>
+				<td><img alt="" src="../Themes/Office2007/Images/code.gif" />&nbsp;<b>Syntax Highlighter</b></td>
+				<td>Syntax highlighter that can format the codes & color them appropriately according to the languages used.</td>
+			</tr>
+			<tr>
+				<td><img alt="" src="../Themes/Office2007/Images/abspos.gif" />&nbsp;<b>Absolute Position</b></td>
+				<td>fly text, pictures, tables... any element anywhere you want</td>
+			</tr>
+			<tr>
+				<td><img alt="" src="../Themes/Office2007/Images/forward.gif" />&nbsp;<b>Bring Forward</b></td>
+				<td>bring an item one position forward at a time</td>
+			</tr>
+			<tr>
+				<td><img alt="" src="../Themes/Office2007/Images/backward.gif" />&nbsp;<b>Send Backward</b></td>
+				<td>send an item one position back at a time</td>
+			</tr>
+			<tr>
+				<td><img alt="" src="../Themes/Office2007/Images/borders.gif" />&nbsp;<b>Toggle Border</b></td>
+				<td>toggle the visibility of borders</td>
+			</tr>
+			<tr>
+				<td><img alt="" src="../Themes/Office2007/Images/page.gif" />&nbsp;<b>Page Properties</b></td>
+				<td>allow you modify the page properties</td>
+			</tr>
+			<tr>
+				<td><img alt="" src="../Themes/Office2007/Images/help.gif" />&nbsp;<b>Help</b>
+				</td>
+				<td>Returns a help Toolbar Button. The help page URL is set by the HelpUrl Property</td>
+			</tr>
+			<tr>
+				<td><img alt="" src="../Images/cssclass.gif" />&nbsp;</td>
+				<td>classdrop-down changes the CSS class of the selected text</td>
+			</tr>
+			<tr>
+				<td><img alt="" src="../Images/cssstyle.gif" />&nbsp;</td>
+				<td>inline style drop-down changes the CSS style of the selected text</td>
+			</tr>
+			<tr>
+				<td><img alt="" src="../Images/paragraphdropdown.gif" />&nbsp;</td>
+				<td>paragraph drop-down changes the paragraph style of the selected 
+					text</td>
+			</tr>
+			<tr>
+				<td><img alt="" src="../Images/fontdropdown.gif" />&nbsp;</td>
+				<td>font drop-down set the font face. If a selection is active, the 
+					font will be applied to it</td>
+			</tr>
+			<tr>
+				<td><img alt="" src="../Images/sizedropdown.gif" />&nbsp;</td>
+				<td>size drop down set the font size. If a selection is active, the 
+					font will be applied to it</td>
+			</tr>
+			<tr>
+				<td><img alt="" src="../Images/linkdropdown.gif" />&nbsp;</td>
+				<td>insert predefined links on the current selection</td>
+			</tr>
+			<tr>
+				<td><img alt="" src="../Images/codedropdown.gif" />&nbsp;</td>
+				<td>insert predefined HTML code snippets on the current selection</td>
+			</tr>
+			<tr>
+				<td><img alt="" src="../Images/imagedropdown.gif" />&nbsp;</td>
+				<td>insert predefined Images on the current selection</td>
+			</tr>
+			<tr>
+				<td><img alt="" src="../Images/zoom.gif" />&nbsp;</td>
+				<td>Zoom dropdown</td>
+			</tr>
+		</table>
+	</body>
+</html>

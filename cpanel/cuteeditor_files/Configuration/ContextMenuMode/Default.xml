@@ -1,0 +1,190 @@
+  <contextmenus>
+    <ref name="Undo" />
+    <spliter />
+    <ref name="Cut" />
+    <ref name="Copy" />
+    <ref name="Paste" />
+    <ref name="Delete" />
+    <spliter />
+    <ref name="SelectAll" />
+    <ref name="EditGroup" />
+    <ref name="FormattingGroup" />
+    <ref name="InsertGroup" />
+    <special type="tags"/>
+    <special type="verbs"/>
+    <special type="relative"/>
+    <special type="style" />
+    <special type="property" />
+    <define name="Undo" text="Undo" command="Undo" hotkey="CTRL+Z" />
+    <define name="Redo" text="Redo" command="Redo" hotkey="CTRL+Y" />
+    <define name="Cut" text="Cut" command="Cut" hotkey="CTRL+X" />
+    <define name="Copy" text="Copy" command="Copy" hotkey="CTRL+C" />
+    <define name="Paste" text="Paste" command="Paste" hotkey="CTRL+V" />
+    <define name="Delete" text="Delete" image="delete" command="Delete" hotkey="DELETE" />
+    <define name="SelectAll" text="SelectAll" command="SelectAll" hotkey="CTRL+A" />
+    <define name="PasteText" text="PasteText" command="PasteText" />
+    <define name="PasteWord" text="PasteWord" command="PasteWord" />
+    <define name="ToggleBorder" text="ToggleBorder" command="ToggleBorder" image="borders" />
+    <define name="FromFullPage" text="FromFullPage" command="FullPage" hotkey="F12"
+			image="restore" condition="editor.GetFullPage()" />
+    <define name="ToFullPage" text="ToFullPage" command="FullPage" hotkey="F12" image="fit"
+			condition="!editor.GetFullPage()" />
+    <define name="Bold" text="Bold" command="Bold" hotkey="Ctrl+B" />
+    <define name="Italic" text="Italic" command="Italic" hotkey="Ctrl+I" />
+    <define name="Underline" text="Underline" command="Underline" hotkey="Ctrl+U" image="under" />
+    <define name="StrikeThrough" text="StrikeThrough" command="StrikeThrough" image="strike" />
+
+    <define name="ImageGalleryByBrowsing" command="ImageGalleryByBrowsing" text="ImageBrowsing"
+			image="image" />
+    <define name="InsertImage" command="InsertImage" text="Image" image="eximage" />
+    <define name="InsertFlash" command="InsertFlash" text="Flash" image="flash" />
+    <define name="InsertMedia" command="InsertMedia" text="Media" image="media" />
+    <define name="InsertDocument" command="InsertDocument" text="Document" image="document" />
+    <define name="InsertTemplate" command="InsertTemplate" text="Template" image="template" />
+
+    <define name="InsertTable" command="InsertTable" text="Table" image="instable" />
+    <define name="InsertRowTop" command="InsertRowTop" text="InsertRowTop" image="instable"/>
+    <define name="InsertRowBottom" command="InsertRowBottom" text="InsertRowBottom" image="insrow_b"/>
+    <define name="DeleteRow" command="DeleteRow" text="DeleteRow" image="delrow"/>
+    <define name="InsertColumnLeft" command="InsertColumnLeft" text="InsertColumnLeft" image="inscol_l"/>
+    <define name="InsertColumnRight" command="InsertColumnRight" text="InsertColumnRight" image="inscol_r"/>
+    <define name="DeleteColumn" command="DeleteColumn" text="DeleteColumn" image="delcol"/>
+    <define name="InsertCell" command="InsertCell" text="InsertCell" image="inscell"/>
+    <define name="DeleteCell" command="DeleteCell" text="DeleteCell" image="delcell"/>
+    <define name="EditRow" command="EditRow" text="EditRow" image="row"/>
+    <define name="EditCell" command="EditCell" text="EditCell" image="cell"/>
+    <define name="MergeRight" command="MergeRight" text="MergeRight" image="mrgcell_r"/>
+    <define name="MergeBottom" command="MergeBottom" text="MergeBottom" image="mrgcell_b"/>
+    <define name="HorSplitCell" command="HorSplitCell" text="HorSplitCell" image="spltcell_r"/>
+    <define name="VerSplitCell" command="VerSplitCell" text="VerSplitCell" image="spltcell_b"/>
+
+    <define name="InsertHorizontalRule" command="InsertHorizontalRule" text="HorRule" image="rule" />
+    <define name="InsertFieldSet" command="InsertFieldSet" text="InsertFieldSet" image="groupbox" />
+    <define name="InsertGridLayoutPanel" command="InsertGridLayoutPanel" text="GridLayoutPanel" image="text" />
+    <define name="InsertParagraph" command="InsertParagraph" text="Paragraph" image="-" hotkey="Ctrl+M" />
+    <define name="InsertLineBreak" command="InsertLineBreak" text="LineBreak" image="-" hotkey="Shift+Enter" />
+    <define name="InsertOrderedList" command="InsertOrderedList" text="OrderedList" image="-" />
+    <define name="InsertUnorderedList" command="InsertUnorderedList" text="UnorderedList" image="-" />
+
+    <define name="InsertForm" command="InsertForm" text="InsertForm" image="form" />
+    <define name="InsertInputText" command="InsertInputText" text="InsertInputText" image="textbox" />
+    <define name="InsertTextBox" command="InsertTextBox" text="InsertTextBox" image="textarea" />
+    <define name="InsertRadioBox" command="InsertRadioBox" text="InsertRadioBox" image="optionbutton" />
+    <define name="InsertCheckBox" command="InsertCheckBox" text="InsertCheckBox" image="checkbox" />
+    <define name="InsertListBox" command="InsertListBox" text="InsertListBox" image="listbox" />
+    <define name="InsertDropDown" command="InsertDropDown" text="InsertDropDown" image="dropdownbox" />
+    <define name="InsertInputImage" command="InsertInputImage" text="InsertInputImage" image="imagebutton" />
+    <define name="InsertInputSubmit" command="InsertInputSubmit" text="InsertInputSubmit" image="submit" />
+    <define name="InsertInputReset" command="InsertInputReset" text="InsertInputReset" image="Reset" />
+    <define name="InsertInputReset" command="InsertInputReset" text="InsertInputReset" image="passwordfield" />
+    <define name="InsertInputHidden" command="InsertInputHidden" text="InsertInputHidden" image="hiddenfield" />
+    <define name="InsertInputButton" command="InsertInputButton" text="InsertInputButton" image="pushbutton" />
+
+
+    <define name="Paste" command="Paste" text="Paste"/>
+    <define name="PasteText" command="PasteText" text="PasteText"/>
+    <define name="PasteWord" command="PasteWord" text="PasteWord"/>
+    <define name="PasteAsHTML" command="PasteAsHTML" text="PasteAsHTML"/>
+
+
+    <define name="EditGroup" text="Edit">
+      <subItems>
+        <ref name="Undo" />
+        <ref name="Redo" />
+        <spliter />
+        <ref name="SelectAll" />
+        <ref name="PasteText" />
+        <ref name="PasteWord" />
+        <spliter />
+        <ref name="ToggleBorder" />
+        <ref name="FromFullPage" />
+        <ref name="ToFullPage" />
+      </subItems>
+      <initializer>
+        <![CDATA[
+			]]>
+      </initializer>
+    </define>
+    <define name="FormattingGroup" text="Formatting">
+      <subItems>
+        <ref name="Bold" />
+        <ref name="Italic" />
+        <ref name="Underline" />
+        <ref name="StrikeThrough" />
+      </subItems>
+    </define>
+    <define name="InsertGroup" text="Insert">
+      <subItems>
+        <ref name="ImageGalleryByBrowsing" />
+        <ref name="InsertImage" />
+        <ref name="InsertFlash" />
+        <ref name="InsertMedia" />
+        <ref name="InsertDocument" />
+        <ref name="InsertTemplate" />
+        <spliter />
+        <ref name="InsertTable" />
+        <ref name="InsertHorizontalRule" />
+        <spliter />
+        <ref name="InsertAdvancedGroup"/>
+        <ref name="InsertFormGroup"/>
+      </subItems>
+    </define>
+    <define name="InsertAdvancedGroup" text="Advanced">
+      <subItems>
+        <ref name="InsertParagraph" />
+        <ref name="InsertLineBreak" />
+        <ref name="InsertOrderedList" />
+        <ref name="InsertUnorderedList" />
+        <ref name="InsertFieldSet" />
+        <ref name="InsertGridLayoutPanel" />
+      </subItems>
+    </define>
+
+    <define name="InsertFormGroup" text="InsertForm">
+      <subItems>
+        <ref name="InsertForm" />
+        <ref name="InsertInputText" />
+        <ref name="InsertTextBox" />
+        <ref name="InsertRadioBox" />
+        <ref name="InsertCheckBox" />
+        <ref name="InsertListBox" />
+        <ref name="InsertDropDown" />
+        <ref name="InsertInputImage" />
+        <ref name="InsertInputSubmit" />
+        <ref name="InsertInputReset" />
+        <ref name="InsertInputReset" />
+        <ref name="InsertInputHidden" />
+        <ref name="InsertInputButton" />
+      </subItems>
+    </define>
+
+    <define name="InsertTableGroup" text="InsertTable">
+      <subItems>
+        <ref name="InsertTable" />
+        <ref name="InsertRowTop" />
+        <ref name="InsertRowBottom" />
+        <ref name="DeleteRow" />
+        <ref name="InsertColumnLeft" />
+        <ref name="InsertColumnRight" />
+        <ref name="DeleteColumn" />
+        <ref name="InsertCell" />
+        <ref name="DeleteCell" />
+        <ref name="EditRow" />
+        <ref name="EditCell" />
+        <ref name="MergeRight" />
+        <ref name="MergeBottom" />
+        <ref name="HorSplitCell" />
+        <ref name="VerSplitCell" />
+      </subItems>
+    </define>
+
+    <define name="PasteGroup" text="Paste">
+      <subItems>
+        <ref name="Paste" />
+        <ref name="PasteText" />
+        <ref name="PasteWord" />
+        <ref name="PasteAsHTML" />
+      </subItems>
+    </define>
+  </contextmenus>
+

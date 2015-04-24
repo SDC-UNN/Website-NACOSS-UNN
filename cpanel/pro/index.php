@@ -1,7 +1,10 @@
 <?php
 require_once '../class_lib.php';
+require_once 'functions.php';
 require_once 'NewsAdmin.php';
-require_once './functions.php';
+//Including Cute Editor files
+//Author: http://cutesoft.net
+include_once("../cuteeditor_files/include_CuteEditor.php");
 
 $admin = new NewsAdmin();
 if ($admin->activateLogin()) {
@@ -23,6 +26,27 @@ if ($admin->activateLogin()) {
         default:
             $admin->logoutAdmin();
             break;
+    }
+
+    //Set page number
+    $page = filter_input(INPUT_GET, "p");
+    if (empty($page)) {
+        $page = 1;
+    }
+
+    //Check for post request
+    $array = filter_input_array(INPUT_POST);
+    if ($array !== FALSE && $array !== null) {
+        foreach ($array as $key => $value) {
+            if (is_array($array[$key])) {
+                foreach ($array[$key] as $subkey => $subvalue) {
+                    $subvalue[$subkey] = html_entity_decode($subvalue[$subkey]);
+                }
+            } else {
+                $array[$key] = html_entity_decode($array[$key]);
+            }
+        }
+        //Further processing is done in the page to which the request was directed to
     }
 } else {
     header("location: ../index.php");
@@ -49,8 +73,8 @@ limitations under the License.
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-        <link rel="icon" href="favicon.ico" type="image/x-icon" />
-        <link rel="shortcut icon" href="favicon.ico" type="image/x-icon" />
+        <link rel="icon" href="<?= HOSTNAME ?>favicon.ico" type="image/x-icon" />
+        <link rel="shortcut icon" href="<?= HOSTNAME ?>favicon.ico" type="image/x-icon" />
 
         <link href="<?= HOSTNAME ?>css/metro-bootstrap.css" rel="stylesheet">
         <link href="<?= HOSTNAME ?>css/metro-bootstrap-responsive.css" rel="stylesheet">
@@ -66,7 +90,7 @@ limitations under the License.
         <script src="<?= HOSTNAME ?>js/prettify/prettify.js"></script>
 
         <!-- Metro UI CSS JavaScript plugins -->
-        <script src="<?= HOSTNAME ?>js/load-metro.js"></script>
+        <script src="<?= HOSTNAME ?>js/metro.min.js"></script>
 
         <!-- Local JavaScript -->
         <script src="<?= HOSTNAME ?>js/docs.js"></script>
@@ -77,8 +101,8 @@ limitations under the License.
     </head>
 
     <body class="metro">
-        <div class="ribbed-darkGreen">
-            <div class="container bg-white">            
+        <div class="">
+            <div class="bg-white">            
                 <?php require_once '../header.php'; ?>
                 <div class="padding20">
                     <h2>PRO</h2>
@@ -87,23 +111,28 @@ limitations under the License.
                             <div class="span3">
                                 <nav class="sidebar light">
                                     <ul class="">
-                                        <li class="">
-                                            <a href="#">Post News</a>
+                                        <li class="<?= $page == 1 || $page == 11 ? "stick bg-darkBlue " : "" ?>">
+                                            <a class="dropdown-toggle" href="#"><i class="icon-broadcast"></i>News</a>
+                                            <ul class="dropdown-menu" data-role="dropdown">
+                                                <li><a href="index.php?p=1">View All</a></li>
+                                                <li><a href="index.php?p=11">Add New</a></li>
+                                            </ul>
                                         </li>
-                                        <li class="">
-                                            <a href="#">All News Posts</a>
+                                        <li class="<?= $page == 2 ? "stick bg-darkBlue" : "" ?>">
+                                            <a href="index.php?p=2"><i class="icon-image"></i>Home Page Images</a>
                                         </li>
-                                        <li class="">
-                                            <a href="#">Home Slides & Images</a>
+                                        <li class="<?= $page == 3 ? "stick bg-darkBlue" : "" ?>">
+                                            <a href="index.php?p=3"><i class="icon-user-3"></i>Board Members</a>
                                         </li>
-                                        <li class="">
-                                            <a href="#">Board Members</a>
+                                        <li class="<?= $page == 4 || $page == 41 || $page == 42 ? "stick bg-darkBlue" : "" ?>">
+                                            <a class="dropdown-toggle" href="#"><i class="icon-help"></i>FAQs</a>
+                                            <ul class="dropdown-menu" data-role="dropdown">
+                                                <li><a href="index.php?p=4">View All</a></li>
+                                                <li><a href="index.php?p=41">Add New</a></li>
+                                            </ul>
                                         </li>
-                                        <li class="">
-                                            <a href="#">FAQs</a>
-                                        </li>
-                                        <li class="">
-                                            <a href="#">Settings</a>
+                                        <li class="<?= $page == 5 ? "stick bg-darkBlue" : "" ?>">
+                                            <a href="index.php?p=5"><i class="icon-tools"></i>Settings</a>
                                         </li>
                                     </ul>
                                     <br/>
@@ -111,18 +140,43 @@ limitations under the License.
                                         <div class="panel-header">Statistics</div>
                                         <div class="panel-content">
                                             <p>Total Posts</p>
-                                            <p>0</p>
+                                            <p><?= getTotalPosts() ?></p>
                                             <p>Total headlines</p>
-                                            <p>0</p>
+                                            <p><?= getTotalHeadlines() ?></p>
                                             <p>Total Hits</p>
-                                            <p>0</p>
+                                            <p><?= getTotalHits() ?></p>
                                         </div>
                                     </div>
                                 </nav>
                             </div>
 
-                            <div class="span9">
-
+                            <div class="span12">
+                                <?php
+                                switch ($page) {
+                                    case 1: require_once 'all_posts.php';
+                                        break;
+                                    case 11: require_once 'new_post.php';
+                                        break;
+                                    case 12: require_once 'edit_post.php';
+                                        break;
+                                    case 2: require_once 'home_page_images.php';
+                                        break;
+                                    case 21: require_once 'select_post.php';
+                                        break;
+                                    case 3: require_once 'board_members.php';
+                                        break;
+                                    case 4: require_once 'all_faqs.php';
+                                        break;
+                                    case 41: require_once 'new_faq.php';
+                                        break;
+                                    case 42: require_once 'edit_faq.php';
+                                        break;
+                                    case 5: require_once 'settings.php';
+                                        break;
+                                    default : require_once 'all_posts.php';
+                                        break;
+                                }
+                                ?>
                             </div>
                         </div>
                     </div>

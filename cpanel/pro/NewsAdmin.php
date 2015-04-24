@@ -1,6 +1,6 @@
 <?php
 
-/* 
+/*
  * Copyright 2015 NACOSS UNN Developers Group (NDG).
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -16,6 +16,171 @@
  * limitations under the License.
  */
 
-class NewsAdmin extends Admin{
-    
+class NewsAdmin extends Admin {
+
+    public function deletePosts($postIds) {
+        $link = AdminUtility::getDefaultDBConnection();
+        mysqli_autocommit($link, false);
+        foreach ($postIds as $value) {
+            $query = "update news set is_deleted = 1 where id='$value'";
+            $ok = mysqli_query($link, $query);
+            if (!$ok) {
+                //Log error
+                AdminUtility::logMySQLError($link);
+                return FALSE;
+            }
+        }
+        return mysqli_commit($link);
+    }
+
+    public function newPost($title, $content, $expire_time) {
+        $link = AdminUtility::getDefaultDBConnection();
+        $check_query = "select * from news where title='$title' and expire_time='$expire_time'";
+        $check_result = mysqli_query($link, $check_query);
+        if (!$check_result) {
+            //Log error
+            AdminUtility::logMySQLError($link);
+            throw new Exception("Oops! Something went wrong");
+        }
+        if (mysqli_num_rows($check_result) > 0) {
+            throw new Exception("Post already exists");
+        }
+
+        $query = "insert into news set title='" . mysqli_escape_string($link, $title) . "', "
+                . "content='" . mysqli_escape_string($link, $content) . "', "
+                . "last_modified = now(), expire_time='$expire_time'";
+        $result = mysqli_query($link, $query);
+        //Log error
+        AdminUtility::logMySQLError($link);
+
+        return $result;
+    }
+
+    public function modifyPost($id, $title, $content, $expire_time) {
+        $link = AdminUtility::getDefaultDBConnection();
+        $query = "update news set title='" . mysqli_escape_string($link, $title) . "', "
+                . "content='" . mysqli_escape_string($link, $content) . "', "
+                . "expire_time='" . mysqli_escape_string($link, $expire_time) . "', "
+                . "last_modified=now() "
+                . "where id = '$id'";
+        $result = mysqli_query($link, $query);
+        //Log error
+        AdminUtility::logMySQLError($link);
+
+        return $result;
+    }
+
+    public function deleteFAQs($faqIds) {
+        $link = AdminUtility::getDefaultDBConnection();
+        mysqli_autocommit($link, false);
+        foreach ($faqIds as $value) {
+            $query = "delete from faq where id='$value'";
+            $ok = mysqli_query($link, $query);
+            if (!$ok) {
+                //Log error
+                AdminUtility::logMySQLError($link);
+                return FALSE;
+            }
+        }
+        return mysqli_commit($link);
+    }
+
+    public function newFAQ($question, $answer) {
+        $link = AdminUtility::getDefaultDBConnection();
+        $check_query = "select * from faq where question='" . mysqli_escape_string($link, $question) . "'";
+        $check_result = mysqli_query($link, $check_query);
+        if (!$check_result) {
+            //Log error
+            AdminUtility::logMySQLError($link);
+            throw new Exception("Oops! Something went wrong");
+        }
+        if (mysqli_num_rows($check_result) > 0) {
+            throw new Exception("Question already exists");
+        }
+
+        $query = "insert into faq set question='" . mysqli_escape_string($link, $question) . "', "
+                . "answer='" . mysqli_escape_string($link, $answer) . "'";
+        $result = mysqli_query($link, $query);
+        //Log error
+        AdminUtility::logMySQLError($link);
+
+        return $result;
+    }
+
+    public function modifyFAQ($id, $question, $answer) {
+        $link = AdminUtility::getDefaultDBConnection();
+        $query = "update faq set question='" . mysqli_escape_string($link, $question) . "', "
+                . "answer='" . mysqli_escape_string($link, $answer) . "' where id = '$id'";
+        $result = mysqli_query($link, $query);
+        //Log error
+        AdminUtility::logMySQLError($link);
+
+        return $result;
+    }
+
+    public function deleteHomePageImages($imageIds) {
+        $link = AdminUtility::getDefaultDBConnection();
+        mysqli_autocommit($link, false);
+        foreach ($imageIds as $value) {
+            //Delete image in file system
+            $check_query = "select * from home_page_images where id='$value'";
+            $check_result = mysqli_query($link, $check_query);
+            if ($check_result) {
+                $row = mysqli_fetch_array($check_result);
+                $deleted = unlink($row["img_url"]);
+                if (!$deleted) {
+                    throw new Exception("Home page image with id = $value could not be deleted");
+                }
+            }
+            //Log error
+            AdminUtility::logMySQLError($link);
+
+            //Delete from database
+            $query = "delete from home_page_images where id='$value'";
+            $ok = mysqli_query($link, $query);
+            if (!$ok) {
+                //Log error
+                AdminUtility::logMySQLError($link);
+                return FALSE;
+            }
+        }
+        return mysqli_commit($link);
+    }
+
+    public function newHomePageImage($img, $href, $caption, $size) {
+        $img_url = filter_input(INPUT_SERVER, 'HTTP_HOST') . "/$img";
+        $link = AdminUtility::getDefaultDBConnection();
+        //Check if exists
+        $check_query = "select * from home_page_images where img_url='" . mysqli_escape_string($link, $img_url) . "' "
+                . "and caption = '" . mysqli_escape_string($link, $caption) . "'";
+        $check_result = mysqli_query($link, $check_query);
+        if (!$check_result) {
+            //Log error
+            AdminUtility::logMySQLError($link);
+            throw new Exception("Oops! Something went wrong");
+        } elseif (mysqli_num_rows($check_result) > 0) {
+            throw new Exception("Image already exists");
+        }
+
+        //Check image dimension
+        $size_ok = checkDimension($img_url, $size);
+        if(!$size_ok){
+            throw new Exception("Image do not meet the specifications for $size");
+        }
+        //Create thumbnail
+        $thumb_url = createThumbnail($img_url);
+
+        $query = "insert into home_page_images set "
+                . "img_url='" . mysqli_escape_string($link, $img_url) . "', "
+                . "href='" . mysqli_escape_string($link, $href) . "', "
+                . "thumb_url='" . mysqli_escape_string($link, $thumb_url) . "', "
+                . "caption='" . mysqli_escape_string($link, $caption) . "', "
+                . "size='" . mysqli_escape_string($link, $size) . "'";
+        $result = mysqli_query($link, $query);
+        //Log error
+        AdminUtility::logMySQLError($link);
+
+        return $result;
+    }
+
 }
