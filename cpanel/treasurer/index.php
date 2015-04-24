@@ -52,8 +52,8 @@ limitations under the License.
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-        <link rel="icon" href="favicon.ico" type="image/x-icon" />
-        <link rel="shortcut icon" href="favicon.ico" type="image/x-icon" />
+        <link rel="icon" href="<?= HOSTNAME ?>favicon.ico" type="image/x-icon" />
+        <link rel="shortcut icon" href="<?= HOSTNAME ?>favicon.ico" type="image/x-icon" />
 
         <link href="<?=HOSTNAME?>css/metro-bootstrap.css" rel="stylesheet">
         <link href="<?=HOSTNAME?>css/metro-bootstrap-responsive.css" rel="stylesheet">
@@ -69,7 +69,7 @@ limitations under the License.
         <script src="<?=HOSTNAME?>js/prettify/prettify.js"></script>
 
         <!-- Metro UI CSS JavaScript plugins -->
-        <script src="<?=HOSTNAME?>js/load-metro.js"></script>
+        <script src="<?=HOSTNAME?>js/metro.min.js"></script>
 
         <!-- Local JavaScript -->
         <script src="<?=HOSTNAME?>js/docs.js"></script>
@@ -79,8 +79,8 @@ limitations under the License.
         <title>CPanel</title>        
     </head>
     <body class="metro">
-        <div class="ribbed-darkGreen">
-            <div class="container bg-white">            
+        <div class="">
+            <div class="bg-white">            
                 <?php require_once '../header.php'; ?>
                 <div class="padding20">
                     <h2>Class Representatives</h2>
