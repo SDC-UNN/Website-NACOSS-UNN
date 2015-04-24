@@ -196,7 +196,7 @@ limitations under the License.
                                             <div class="row ntm">
                                                 <label class="span1">ID <i title="Registration number" class="icon-help fg-blue"></i></label>
                                                 <div class="span4">
-                                                    <input class="text" name='id' maxlength="20" style="width: inherit" required type='text' 
+                                                    <input class="text" name='id' maxlength="11" style="width: inherit" required type='text' 
                                                            <?= $isFormRequest ? "value='$id'" : ""; ?> tabindex='1' />
                                                 </div>
                                             </div>
@@ -211,14 +211,14 @@ limitations under the License.
                                                        name='submit' value='Login' tabindex='3'/>
                                                 <br/>
                                                 <a href="login.php?s=2" class=""> &nbsp;&nbsp;create account?</a>
-                                                <a href="resetPassword.php" class=""> &nbsp;&nbsp;forgot password?</a>
+                                                <a href="reset_password.php" class=""> &nbsp;&nbsp;forgot password?</a>
                                             </div>
                                             <div class="on-phone no-tablet no-desktop padding20 ntp nbp">
                                                 <input class="button default bg-NACOSS-UNN bg-hover-dark" type='submit'
                                                        name='submit' value='Login' tabindex='3'/>
                                                 <br/>
                                                 <a href="login.php?s=2" class="">create account?</a>
-                                                <a href="resetPassword.php" class=""> &nbsp;&nbsp;forgot password?</a>
+                                                <a href="reset_password.php" class=""> &nbsp;&nbsp;forgot password?</a>
                                             </div>
                                         </div>
                                     <?php } else { ?>

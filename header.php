@@ -18,9 +18,9 @@ $user = new User();
                             <a class="bg-hover-dark" href="login.php">Login | Register</a>
                         <?php } ?>
                     </li>
-                    <li>
+<!--                    <li>
                         <a class="bg-hover-dark" target="_blank" href="#">Forum</a>
-                    </li>
+                    </li>-->
                     <li>
                         <a class="bg-hover-dark" href="prospectus.php">Prospectus</a>
                     </li>

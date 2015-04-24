@@ -1,6 +1,8 @@
 <?php
 require_once './class_lib.php';
-$array = NewsFeeds::getLargeHomePageImages();
+$news = new NewsFeeds();
+$slides = NewsFeeds::getLargeHomePageImages();
+$links = NewsFeeds::getSmallHomePageImages();
 ?>
 
 <!DOCTYPE html>
@@ -63,11 +65,11 @@ limitations under the License.
                         <div class="panel no-border" style="background-color: rgba(0,0,0,0.7)">
                             <div class="panel-content">
                                 <?php
-                                foreach ($array as $value) {
+                                foreach ($slides as $value) {
                                     ?>
                                     <h2 class="fg-white">
                                         <i class="icon-arrow-right-5"></i>
-                                        <a class="fg-white fg-hover-NACOSS-UNN" href="<?= $value['link'] ?>">
+                                        <a class="fg-white fg-hover-NACOSS-UNN" href="<?= $value['href'] ?>">
                                             <?= $value['caption'] ?>
                                         </a>
                                     </h2>
@@ -83,9 +85,9 @@ limitations under the License.
                     <div class="carousel">
                         <div class="bg-transparent no-overflow" id="carousel">
                             <?php
-                            foreach ($array as $value) {
+                            foreach ($slides as $value) {
                                 ?>
-                                <a class="slide image-container" target="_blank" href="<?= $value['link'] ?>">
+                                <a class="slide image-container" href="<?= $value['href'] ?>">
                                     <img src="<?= $value['img_url'] ?>" alt="" class="image"/>
                                     <div class="overlay">
                                         <h2 class="fg-white">
@@ -118,53 +120,101 @@ limitations under the License.
                     });
                 });
             </script>
-            <br/>
 
-            <!--Your code goes here-->
-			
-				<div style = "margin:0% 10% 0% 10%; ">
-				
-					<div style = "float:left; clear:right; margin-right:10%">	
-						<div class="image-container shadow">
-							<img src="img/prosp.jpg">
-								<div class="overlay-fluid">
-									What do You Know about Your Department? View The NACOSS prospectus to stay informed.
-								</div>
-						</div>
-					</div>
-						
-					<div style = "float:left; clear:right; margin-right:10%">		
-						<div class="image-container shadow">
-							<img src="img/lib.jpg">
-								<div class="overlay-fluid">
-									The NACOSS online library is now available for you. View materials now, or help us grow by submitting e-books for archiving.
-								</div>
-						</div>
-					</div>
-					
-					<div style = "float:left; clear:right">			
-						<div class="image-container shadow">
-							<img src="img/ndg.jpg">
-								<div class="overlay-fluid">
-									Contribute to this and other future projects... <br> Join <a href = "#"> NDG </a> today.
-								</div>
-						</div>
-					</div>
-				
-				</div>
-				
-            <!--Your code goes here-->
+            <div class="grid">
+                <div class="row">
+                    <div class="span10 no-phone"  style="padding-left: 50px">
+                        <?php
+                        for ($i = 0; $i < count($links); $i++) {
+                            if ($i % 3 === 0) {
+                                if ($i === 0) {
+                                    echo '<div class="row">';
+                                } else {
+                                    echo '</div>';
+                                    echo '<div class="row">';
+                                }
+                            }
+                            ?>
+                            <div class="span3">
+                                <div class="image-container"  style="height: 230px; width: 230px">
+                                    <a href="<?= $links[$i]['href'] ?>">
+                                        <img class="image" style="height: 100%; width: 100%" src="<?= $links[$i]['img_url'] ?>" alt=""/>
+                                    </a>
+                                    <div class="overlay-fluid"><?= $links[$i]['caption'] ?></div>
+                                </div>
+                            </div>
+                            <?php
+                        }
+                        echo '</div>';
+                        ?>
+                    </div>
+                    <div class="span4">
+                        <div  class="listview-outlook">
+                            <?php
+                            $allNews = $news->getAllNews();
+                            if (!empty($allNews)) {
+                                ?>
+                                <h4 class="padding5 bg-NACOSS-UNN fg-white">Latest Stories</h4>
+                                <?php
+                                $length = min(array(5, count($allNews)));
+                                for ($index = 0; $index < $length; $index++) {
+                                    ?>
+                                    <a href="news_post.php?id=<?= $allNews[$index]['id'] ?>" class="list">
+                                        <div class="list-content">
+                                            <span class="list-title fg-lightBlue"><?= $allNews[$index]['title'] ?></span>
+                                        </div>
+                                    </a>
+                                    <?php
+                                }
+                                ?>
+                                <br/>
+                                <?php
+                            }
 
+                            $topNews = $news->getTopNews();
+                            if (!empty($topNews)) {
+                                ?>
+                                <h4 class="padding5 bg-NACOSS-UNN fg-white">Top Stories</h4>
+                                <?php
+                                foreach ($topNews as $value) {
+                                    ?>
+                                    <a href="news_post.php?id=<?= $value['id'] ?>" class="list">
+                                        <div class="list-content">
+                                            <span class="list-title fg-lightBlue"><?= $value['title'] ?></span>
+                                        </div>
+                                    </a>
+                                    <?php
+                                }
+                            }
+                            ?>
+                        </div>
+                    </div>
+                </div>
+            </div>
 
-            <br/>
-            <div class="bg-grayLighter style = "clear:left"> <!-- added clear left -->
+            <div class="bg-grayLighter">
                 <div class="padding5 grid">
                     <div class="row">
                         <small class="span1" style="padding-top: 15px">sponsors</small>
                         <div class="span11">
-                            <div class="">
-                                <a href="http://unn.edu.ng">
+                            <div class="span1">
+                                <a href="http://unn.edu.ng" target="_blank">
                                     <img src="img/sponsors/UNN_Logo.png" alt="" style="height: 50px; width: 50px"/>
+                                </a>
+                            </div>
+                            <div class="span1">
+                                <a href="http://ncs.org.ng" target="_blank">
+                                    <img src="img/sponsors/ncs.jpg" alt="" style="height: 50px; width: 50px"/>
+                                </a>
+                            </div>
+                            <div class="span1">
+                                <a href="#" target="_blank">
+                                    <img src="img/sponsors/ispon.jpg" alt="" style="height: 50px; width: 50px"/>
+                                </a>
+                            </div>
+                            <div class="span1">
+                                <a href="#" target="_blank">
+                                    <img src="img/sponsors/cpn.jpg" alt="" style="height: 50px; width: 50px"/>
                                 </a>
                             </div>
                         </div>

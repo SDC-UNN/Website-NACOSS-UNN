@@ -35,7 +35,7 @@ class NewsFeeds {
 
     public static function getLargeHomePageImages() {
         $array = array();
-        $query = "select * from home_page_images where size = 'LARGE' limit 10";
+        $query = "select * from home_page_images where size = 'LARGE'";
         $link = UserUtility::getDefaultDBConnection();
         $result = mysqli_query($link, $query);
         if ($result) {
@@ -51,7 +51,7 @@ class NewsFeeds {
 
     public static function getSmallHomePageImages() {
         $array = array();
-        $query = "select * from home_page_images where size = 'SMALL' limit 10";
+        $query = "select * from home_page_images where size = 'SMALL'";
         $link = UserUtility::getDefaultDBConnection();
         $result = mysqli_query($link, $query);
         if ($result) {
@@ -67,7 +67,7 @@ class NewsFeeds {
 
     private function setNews() {
         $array = array();
-        $query = "select * from news order by time_of_post DESC";
+        $query = "select * from news where is_deleted = 0 and expire_time >= now() order by time_of_post DESC limit 30";
         $link = UserUtility::getDefaultDBConnection();
         $result = mysqli_query($link, $query);
         if ($result) {
@@ -85,9 +85,28 @@ class NewsFeeds {
         return $this->news;
     }
 
+    /**
+     * Get first 5 news with highest hits
+     * @return type
+     */
+    public function getTopNews() {
+        $sortedNews = $this->news;
+        $topHits = array();
+        foreach ($sortedNews as $key => $row) {
+            $hits[$key] = $row['hits'];
+        }
+        array_multisort($hits, SORT_DESC, $sortedNews);
+
+        $length = min(array(5, count($sortedNews)));
+        for ($index = 0; $index < $length; $index++) {
+            $topHits[] = $sortedNews[$index];
+        }
+        return $topHits;
+    }
+
     public function getNews($id) {
         foreach ($this->news as $news) {
-            if (strcmp($news[$id], $id) === 0) {
+            if (strcmp($news["id"], $id) === 0) {
                 return $news;
             }
         }
