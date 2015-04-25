@@ -14,14 +14,12 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-abstract class uploader{
+require_once('constants.php');
+abstract class Uploader{
 	/*
 	This is a base class for file upload; can be extended for various categories of files e.g documents, images, videos, etc.
 	ASSUMPTIONS
 	1. Max upload size is 50 MB i.e max upload size for most apeche servers
-	2. MIME types in the array (below) are not exhaustive
-		This can be made up for by calling setSupportedMIME_types() this way:
-		setSupportedMIME_types(array_merge(getSupportedMIME_types(), $new_array_of_types)) to add more types
 	*/
 	private $name;
 	private $size;
@@ -31,41 +29,47 @@ abstract class uploader{
 	private $full_output_file_name;
 	private $upload_directory;
 	private $max_file_size;
-	private $supported_MIME_types;
+	private $supported_MIME_types = array();
 	
-	function _construct(string $input_name, string $output_file_name){
-		if(strlen($input_name) and ($_FILES[$input_name]["error"]== UPLOAD_ERR_OK)){
+	function __construct($input_name, $output_file_name){
+		if($_FILES[$input_name]["error"] == UPLOAD_ERR_OK){
 			$this->name = $_FILES[$input_name]['name'];
 			$this->size = $_FILES[$input_name]['size'];
 			$this->tmp_name = $_FILES[$input_name]['tmp_name'];
-			$this->extension = substr($this->name, strrpos($this->name, '.') );
+			$var = explode('.', $this->name);
+			$this->extension = $var[sizeof($var)-1];
 			$this->MIME_type = $_FILES[$input_name]['type'];
-			$this->setOutputFileName($this->name, $this->extension);
-			$this->setMaxFileSize(uploader::uploadLimit());
+			$this->setOutputFileName($output_file_name, $this->extension);
+			$this->setMaxFileSize(Uploader::uploadLimit());
 		}else{
 			die('Some errors were encountered while uploading file!');
 		}
 	}
-	protected function setOutputFileName(string $name, string $extension){
+	protected function setOutputFileName($name, $extension){
 		if(strlen($name) and strlen($extension)){
 			$this->full_output_file_name = $name.'.'.$extension;
 		}else{die('Invalid file output filename or invalid extension for input file');}
 	}
-	protected function setUploadDirectory(string $dir){
+	protected function setUploadDirectory($dir){
 		if(is_dir($dir)){$this->upload_directory = $dir;}else{die($dir.' is not a directory');}
 	}
 	public function setSupportedMIME_types(array $new_types){
 		if(!empty($new_types)){$this->supported_MIME_types = $new_types;}else{die('MIME Type Not Set');}
 	}
-	public function setMaxFileSize(int $new_size){
-		if($new_size>0 and $new_size < uploader::uploadLimit()){$this->max_file_size = $new_size;}else{die('Invalid file size set');}
+	public function setMaxFileSize($new_size){
+		if($new_size>0 and $new_size <= Uploader::uploadLimit()){$this->max_file_size = $new_size;}else{die('Invalid file size set');}
 	}
 	public function upload(){
-		if(($this->getSize() <= $this->getMaxFileSize()) and in_array($this->getMIME(), $this->getSupportedMIME_types()) ){
-			move_uploaded_file($this->tmp_name,($this->upload_directory).($this->full_output_file_name));
+		if(!($this->getSize() <= $this->getMaxFileSize())){
+			die('File size too large: '. $this->getSize() .'. Max size allowed: '. $this->getMaxFileSize());
+		}elseif(!in_array($this->getMIME(), $this->getSupportedMIME_types()) ){
+			die('Unsupported file type: '. $this->getMIME());
 		}else{
-			die('File size too large or type not supported.');
+			return move_uploaded_file($this->tmp_name,($this->upload_directory).($this->full_output_file_name));
 		}
+	}
+	public function getFileLink(){
+		return LIBRARY_UPLOAD_DIR.$this->full_output_file_name;
 	}
 	public function getSupportedMIME_types(){
 		return $this->supported_MIME_types;

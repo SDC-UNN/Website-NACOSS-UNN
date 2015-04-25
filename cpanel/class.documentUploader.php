@@ -14,33 +14,26 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-require_once('class.uploader.php');
+require_once('class.Uploader.php');
 
-class documentUploader extends uploader{
+class DocumentUploader extends Uploader{
 	/*
-	This class extends the uploader abstract class and adapts it for general documents
+	This class extends the Uploader abstract class and adapts it for general documents
 	ASSUMPTIONS
-	1. MIME types in the array (below) are not exhaustive
-		This can be made up for by calling setSupportedMIME_types() this way:
-		setSupportedMIME_types(array_merge(getSupportedMIME_types(), $new_array_of_types)) to add more types
+	1. The function MIME() assumes that the query returns some comma-seperated values from settings table
 	*/
-	function _construct(string $input_name, string $output_file_name, string $upload_directory){
-		parent::_construct($input_name, $output_file_name);
+	function __construct($input_name, $output_file_name, $upload_directory){
+		parent::__construct($input_name, $output_file_name);
 		$this->setUploadDirectory($upload_directory);
-		$this->setSupportedMIME_types(documentUploader::MIME());
+		$this->setSupportedMIME_types(DocumentUploader::MIME());
 	}
 	public static function MIME(){
-		return array(
-			'text/plain',
-			'text/html',
-			'application/x-zip-compressed',
-			'application/zip',
-			'application/pdf',
-			'application/msword',
-			'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
-			'application/vnd.ms-excel',
-			'application/x-forcedownload'
-			);
+		$link = AdminUtility::getDefaultDBConnection();
+		$query = "select value from settings where name='MIME_ebooks'";
+		$result = mysqli_query($link, $query);
+		$row = mysqli_fetch_array($result);
+		$value = $row['value'];
+		return explode(',', $value);
 	}
 }
 ?>
