@@ -14,9 +14,29 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
 */
+require_once('LibraryAdmin.php');
+$admin = new LibraryAdmin();
 
-require_once('class.libraryItem.php');
-{
-echo '<b style="color:green">New Library Item Created</b>';
+$array = filter_input_array(INPUT_POST);
+if ($array !== FALSE && $array !== null) {
+	foreach ($array as $key => $value) {
+		if (is_array($array[$key])) {
+			foreach ($array[$key] as $subkey => $subvalue) {
+				$array[$key][$subkey] = html_entity_decode($array[$key][$subkey]);
+			}
+		} else {
+			$array[$key] = html_entity_decode($array[$key]);
+		}
+	}
+
+	if(isset($array['file_source_type']) and isset($array['media'])){
+		$admin->addLibraryItem($array);
+	}
+}else{
+	echo 'No data recieved.';
 }
+///NOTE
+/*
+
+*/
 ?>

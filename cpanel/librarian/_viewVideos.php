@@ -1,6 +1,6 @@
 <?php
 //Initializing variables with default values
-$defaultPage = "index.php?p=2";
+$defaultPage = "index.php?p=1";
 const MEDIA = "video";
 $sort_type = SORT_LIBRARY_TYPE_TITLE;
 $order = ORDER_LIBRARY_ASC;
@@ -83,7 +83,7 @@ limitations under the License.
 </script>
 <div>
     <h4>VIDEOS: <?= $on_shelf==1?'ON SHELF' : 'OFF SHELF'; ?></h4>
-    <div class="row">
+   <div class="row">
         <a href="index.php?p=2&sh=0" class="<?= $on_shelf==1?'button bg-blue bg-hover-dark fg-white place-right':'button disabled place-right';?>">Off Shelf</a>
         <a href="index.php?p=2&sh=1" class="<?= $on_shelf==0?'button bg-blue bg-hover-dark fg-white place-right':'button disabled place-right';?>">On Shelf</a>
     </div>
@@ -94,9 +94,9 @@ limitations under the License.
         } else {
             ?>
             <div class="bg-grayLighter padding5">
-                <form method="post" action="index.php?p=2&sh=<?= $on_shelf; ?>">
+                <form method="post" action="index.php?p=1&sh=<?= $on_shelf; ?>">
                     <div class="input-control text" data-role="input-control">
-                        <input type="text" value="<?= $searchQuery ?>" placeholder="Search videos" name="search"/>
+                        <input type="text" value="<?= $searchQuery ?>" placeholder="Search Books" name="search"/>
                         <button class="btn-search" name="search_button" type="submit"></button>
                     </div>
 
@@ -154,7 +154,7 @@ limitations under the License.
             }
             ?>
             <div id="top">
-                <form action="index.php?p=2&sh=<?= $on_shelf; ?>" method="post">
+                <form action="index.php?p=1&sh=<?= $on_shelf; ?>" method="post">
                     <input class="span1" name="search" hidden value="<?= $searchQuery ?>"/>
                     <input class="span1" name="sort_type" hidden value="<?= $sort_type ?>"/>
                     <input class="span1" name="sort_order" hidden value="<?= $order ?>"/>
@@ -162,7 +162,7 @@ limitations under the License.
                     <?php if($on_shelf){ ?>
                         <input class="" onclick="warn()" name="suspend_button" type="submit" value="Take Off Shelf"/>
                     <?php } else { ?>
-                        <input class="" onclick="warn()" name="restore_button" type="submit" value="Restore"/>
+                        <input class="" onclick="warn()" name="restore_button" type="submit" value="Add To Shelf"/>
                     <?php } ?>
                         <input class="" onclick="warn()" name="delete_button" type="submit" value="Delete"/>
                     </div>
@@ -170,12 +170,9 @@ limitations under the License.
                         <table class="table hovered bordered">
                             <thead>
                                 <tr>
-                                    <th class="text-left"></th>
-                                    <th class="text-left" title="Click video title to start download"><sup>[TYPE]</sup>Title</th>
-                                    <th class="text-left">Author</th>
-                                    <th class="text-left">Date Added</th>
-                                    <th class="text-left">Key Words</th>
-                                    <th class="text-left">Downloads</th>
+                                    <th class="text-left">&nbsp;</th>
+                                    <th class="text-left">Publication Details</th>
+                                    <th class="text-left">&hellip;</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -188,14 +185,20 @@ limitations under the License.
                                     <tr>                            
                                         <td class="text-left"><input type="checkbox" name="checkbox[]" value="<?= $videos[$index]['id'] ?>"/></td>
                                         <td class="text-left">
-										<a href="<?= HOSTNAME .'download.php?id='.$videos[$index]['id'] ?>" target="new">
-										<?= '<sup>['.strtoupper($videos[$index]['file_type']).']</sup>'.$videos[$index]['title'] ?>
+                                        <i>Title:</i> <?= $videos[$index]['title']; ?><br/>
+                                        <i>Author(s):</i> <?= $videos[$index]['author']; ?><br/>
+                                        <i>Publisher:</i> <?= $videos[$index]['publisher']; ?> | 
+                                        <i>Date:</i> <?= $videos[$index]['date_published']; ?>
+                                        <i>Keywords:</i> <?= $videos[$index]['keywords']; ?><br/><i>
+                                        Contributed By: <?= $videos[$index]['contributor']; ?> | 
+                                        Date: <?= $videos[$index]['date_added']; ?></i>
+                                        </td>
+                                        <td class="text-left">
+                                        Downloads: <?= $videos[$index]['num_of_downloads'] ?><br/>
+                                        <a href="<?= HOSTNAME .'download.php?id='.$videos[$index]['id'] ?>" target="new">
+										<?= '<sup>['.strtoupper($videos[$index]['file_type']).']</sup> Download'; ?>
                                         </a>
                                         </td>
-                                        <td class="text-left"><?= $videos[$index]['author'] ?></td>
-                                        <td class="text-left"><?= $videos[$index]['date_added'] ?></td>
-                                        <td class="text-left"><?= $videos[$index]['keywords'] ?></td>
-                                        <td class="text-left"><?= $videos[$index]['num_of_downloads'] ?></td>
                                     </tr>
                                     <?php
                                 }
@@ -204,9 +207,9 @@ limitations under the License.
                             </tbody>
                         </table>
                     </div>
-    <div class="row">
-        <a href="index.php?p=2&sh=0" class="<?= $on_shelf==1?'button bg-blue bg-hover-dark fg-white place-right':'button disabled place-right';?>">Off Shelf</a>
-        <a href="index.php?p=2&sh=1" class="<?= $on_shelf==0?'button bg-blue bg-hover-dark fg-white place-right':'button disabled place-right';?>">On Shelf</a>
+   <div class="row">
+        <a href="index.php?p=1&sh=0" class="<?= $on_shelf==1?'button bg-blue bg-hover-dark fg-white place-right':'button disabled place-right';?>">Off Shelf</a>
+        <a href="index.php?p=1&sh=1" class="<?= $on_shelf==0?'button bg-blue bg-hover-dark fg-white place-right':'button disabled place-right';?>">On Shelf</a>
     </div>
                 </form>
             <?php } ?>

@@ -113,9 +113,9 @@ class AdminUtility {
         $line = $exc->getLine();
         $file = mysqli_escape_string($link, $exc->getFile());
         $message = mysqli_escape_string($link, $exc->getMessage());
-        $trace = mysqli_escape_string($link, html_entity_decode($exc->getTraceAsString()));
+        $trace = mysqli_escape_string($link, $exc->getTraceAsString());
         //Check if error has been logged previously
-        $query = "select * from error_log where message = '$message' and trace='$trace'";
+        $query = "select * from error_log where message = '$message' and file='$file' and line='$line'";
         $result = mysqli_query($link, $query);
         if ($result) {
             $row = mysqli_fetch_array($result);
@@ -124,8 +124,9 @@ class AdminUtility {
         if ($result && $row) {
             $query = "update error_log set time_of_error = now(), is_fixed = 0 where id = '" . $row['id'] . "'";
         } else {
-            $query = "insert into error_log set message = '$message', "
-                    . "file=' $file', trace='$trace', line='$line', time_of_error = now()";
+            $query = "insert into error_log set message = '" . mysqli_escape_string($link, $message) . "', "
+                    . "file='" . mysqli_escape_string($link, $file) . "', "
+                    . "trace='" . mysqli_escape_string($link, $trace) . "', line='$line', time_of_error = now()";
         }
         //Log error
         AdminUtility::logMySQLError($link);
@@ -157,33 +158,33 @@ class AdminUtility {
             AdminUtility::writeToLog(new Exception($error));
         }
     }
-    
-    public static function uploadDocument(string $input_name, $output_file_name, string $upload_directory) {
-        $file_url = "";
-        // implementation
-
-        return $file_url;
-    }
-
-    /*
-      to resize image and create with imageUploader():
-      set $resize = array('resize'=>true, 'width'=>200, 'height'=>400, 'jpeg_quality'=>90 );
-      set $thumb_nail = array('create_thumb_nail'=>true, 'width'=>120, 'height'=>120, 'jpeg_quality'=>90 );
-      call AdminUtility::uploadImage('input_name', 'output_name', 'upload_dir', $resize, $thumb_nail)
-     */
-
-    public static function uploadImage(string $input_name, $output_file_name, string $upload_directory, array $resize = array('resize' => false, 'width' => 0, 'height' => 0, 'jpeg_quality' => 90), array $thumb_nail = array('create_thumb_nail' => false, 'width' => 0, 'height' => 0, 'jpeg_quality' => 90)
-    ) {
-        $file_url = "";
-        // implementation
-        return $file_url;
-    }
-
-    public static function uploadVideo(string $input_name, $output_file_name, string $upload_directory) {
-        $file_url = "";
-        // implementation
-
-        return $file_url;
-    }
-
+	
+	public static function uploadDocument( $input_name, $output_file_name, $upload_directory){
+		$file_url = "";
+		// implementation
+		
+		return $file_url;
+	}
+	
+	/*
+		to resize image and create with imageUploader():
+			set $resize = array('resize'=>true, 'width'=>200, 'height'=>400, 'jpeg_quality'=>90 );
+			set $thumb_nail = array('create_thumb_nail'=>true, 'width'=>120, 'height'=>120, 'jpeg_quality'=>90 );
+			call AdminUtility::uploadImage('input_name', 'output_name', 'upload_dir', $resize, $thumb_nail)
+	*/
+	public static function uploadImage(string $input_name, $output_file_name, $upload_directory, 
+				array $resize=array('resize'=>false, 'width'=>0, 'height'=>0, 'jpeg_quality'=>90 ),
+				array $thumb_nail=array('create_thumb_nail'=>false, 'width'=>0, 'height'=>0, 'jpeg_quality'=>90 )
+				){
+		$file_url = "";
+		// implementation
+		return $file_url;
+	}
+	
+	public static function uploadVideo($input_name, $output_file_name, $upload_directory){
+		$file_url = "";
+		// implementation
+		
+		return $file_url;
+	}
 }

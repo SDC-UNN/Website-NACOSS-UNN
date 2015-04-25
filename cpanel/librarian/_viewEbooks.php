@@ -170,7 +170,7 @@ limitations under the License.
                         <table class="table hovered bordered">
                             <thead>
                                 <tr>
-                                    <th class="text-left"><input type="checkbox" name="checkbox[]" value="<?= $books[$index]['id'] ?>"/></th>
+                                    <th class="text-left">&nbsp;</th>
                                     <th class="text-left">Publication Details</th>
                                     <th class="text-left">&hellip;</th>
                                 </tr>
@@ -185,18 +185,18 @@ limitations under the License.
                                     <tr>                            
                                         <td class="text-left"><input type="checkbox" name="checkbox[]" value="<?= $books[$index]['id'] ?>"/></td>
                                         <td class="text-left">
-                                        Title: <?= $books[$index]['title']; ?><br/>
-                                        Author(s): <?= $books[$index]['author']; ?><br/>
-                                        Publisher: <?= $books[$index]['title']; ?><br/>
-                                        Date Published: <?= $books[$index]['title']; ?> | 
-                                        ISBN: <?= $books[$index]['title']; ?><br/>
-                                        Uploaded By: <?= $books[$index]['title']; ?> | 
-                                        Date: <?= $books[$index]['date_added']; ?><br/> |
-                                        Downloads: <?= $books[$index]['num_of_downloads'] ?><br/>
-                                        Keywords: <?= $books[$index]['keywords']; ?>
+                                        <i>Title:</i> <?= $books[$index]['title']; ?><br/>
+                                        <i>Author(s):</i> <?= $books[$index]['author']; ?><br/>
+                                        <i>Publisher:</i> <?= $books[$index]['publisher']; ?><br/>
+                                        <i>Date Published:</i> <?= $books[$index]['date_published']; ?> | 
+                                        <i>ISBN:</i> <?= $books[$index]['isbn']; ?><br/>
+                                        <i>Keywords:</i> <?= $books[$index]['keywords']; ?><br/><i>
+                                        Contributed By: <?= $books[$index]['contributor']; ?> | 
+                                        Date: <?= $books[$index]['date_added']; ?></i>
                                         </td>
                                         <td class="text-left">
- 										<a href="<?= HOSTNAME .'download.php?id='.$books[$index]['id'] ?>" target="new">
+                                        Downloads: <?= $books[$index]['num_of_downloads'] ?><br/>
+                                        <a href="<?= HOSTNAME .'download.php?id='.$books[$index]['id'] ?>" target="new">
 										<?= '<sup>['.strtoupper($books[$index]['file_type']).']</sup> Download'; ?>
                                         </a>
                                         </td>

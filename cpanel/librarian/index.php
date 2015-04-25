@@ -111,7 +111,7 @@ limitations under the License.
                             <div class="span3">
                                 <nav class="sidebar light">
                                     <ul class="">
-                                        <li class="<?= $page == 1 || $page == 11 || $page == 12 ? "stick bg-darkBlue active" : "" ?>">
+                                        <li class="<?= $page == 1 ? "stick bg-darkBlue active" : "" ?>">
                                             <a href="?p=1">View Ebooks</a>
                                         </li>
                                         <li class="<?= $page == 2 ? "stick bg-darkBlue active" : "" ?>">
@@ -120,7 +120,7 @@ limitations under the License.
                                         <li class="<?= $page == 3 ? "stick bg-darkBlue active" : "" ?>">
                                             <a href="?p=3">New Library Entry&hellip;</a>
                                         </li>
-                                        <li class="<?= $page == 4 ? "stick bg-darkBlue active" : "" ?>">
+                                        <li class="<?= $page == 4 || $page == 41 ? "stick bg-darkBlue active" : "" ?>">
                                             <a href="?p=4">Settings</a>
                                         </li>
                                     </ul>
@@ -152,6 +152,12 @@ limitations under the License.
                                         break;
                                     case 3:
                                         include_once('_newItem.php');
+                                        break;
+                                    case 4:
+                                        include_once('_settings.php');
+                                        break;
+                                    case 41:
+                                        include_once('_settings_changePassword.php');
                                         break;
                                     default :
                                         include_once('_viewEbooks.php');

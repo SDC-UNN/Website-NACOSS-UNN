@@ -15,81 +15,14 @@
  * limitations under the License.
  */
 
-require_once('../class.documentUploader.php');
-require_once('../class.videoUploader.php');
 //Initializing variables with default values
 $defaultPage = "index.php?p=3";
+require_once('../class.Uploader.php');
+require_once('../class.DocumentUploader.php');
+require_once('../class.VideoUploader.php');
 
-$request=false;
-$title='';
-$author='';
-$publisher='';
-$date_published='';
-$isbn='';
-$keywords='';
-$category='';
-$sub_category='';
-
-if(isset($_FILES["FileInput"]))
-{
-exit;
-}
-/*
-const MEDIA = "ebook";
-$sort_type = SORT_LIBRARY_TYPE_TITLE;
-$order = ORDER_LIBRARY_ASC;
-$s = filter_input(INPUT_GET, "sh");
-$on_shelf = $s=='0' ? 0 : 1;
-$searchQuery = "";
-
-if (isset($array['search_button']) || //$array from index.php
-        isset($array['restore_button']) ||
-        isset($array['suspend_button']) ||
-		isset($array['delete_button'])) {
-
-    //process POST requests
-    $page = 1;
-
-    $searchQuery = html_entity_decode(filter_input(INPUT_POST, "search"));
-    $sort_type = html_entity_decode(filter_input(INPUT_POST, "sort_type"));
-    $order = html_entity_decode(filter_input(INPUT_POST, "sort_order"));
-
-    try {
-        if (isset($array['restore_button'])) {
-            $actionPerformed = true;
-            restoreLibraryItems($array['checkbox']);
-        } elseif (isset($array['suspend_button'])) {
-            $actionPerformed = true;
-            suspendLibraryItems($array['checkbox']);
-        } elseif (isset($array['delete_button'])) {
-            $actionPerformed = true;
-            deleteLibraryItems($array['checkbox']);
-		}
-        $success = true;
-        $error_message = "";
-    } catch (Exception $exc) {
-        $success = false;
-        $error_message = $exc->getMessage();
-    }
-    $books = searchLibraryItems($searchQuery, MEDIA, $on_shelf, $sort_type, $order);
-} else {
-    //Process GET requests or no requests
-    $page = filter_input(INPUT_GET, "pg");
-    if (isset($page)) {
-        //if switching page, repeat search
-        $searchQuery = filter_input(INPUT_GET, "q");
-        $sort_type = filter_input(INPUT_GET, "s");
-        $order = filter_input(INPUT_GET, "o");
-
-        $books = searchLibraryItems($searchQuery, MEDIA, $on_shelf, $sort_type, $order);
-    } else {
-        $page = 1;
-        $books = getLibraryItems(MEDIA, $on_shelf);
-    }
-}
-*/
 ?>
-<script type="text/javascript" src="<?=HOSTNAME?>js/jquery/jquery-1.10.2.min.js"></script>
+<script type="text/javascript" src="<?=HOSTNAME?>js/jquery/jquery.min.js"></script>
 <script type="text/javascript" src="<?=HOSTNAME?>js/jquery/jquery.form.min.js"></script>
 
 <script type="text/javascript">
@@ -99,7 +32,7 @@ $(document).ready(function() {
 			beforeSubmit:  beforeSubmit,  // pre-submit callback 
 			uploadProgress: OnProgress, //upload progress callback 
 			success:       afterSuccess,  // post-submit callback 
-			resetForm: true        // reset the form after successful submit 
+			resetForm: false        // reset the form after successful submit 
 		};
 		
 	 $('#newLibItemForm').submit(function() { 
@@ -115,6 +48,7 @@ function beforeSubmit(){
 	{
 		var fsize = $('#FileInput')[0].files[0].size; //get file size
 		var ftype = $('#FileInput')[0].files[0].type; // get file type
+		$('#media').val(ftype);
 		var maxFileSize = $('#max_Fsize').val();
 		var supportedTypes = $('#supportedFtypes').val().split(',');
 //		$.makeArray(supportedTypes);
@@ -143,9 +77,9 @@ function beforeSubmit(){
 			$('#file_source').val('LinkInput');
 		}
 						
-		$('#input-file-wrapper').hide(); //hide submit button
-		$('#progressbox').show(); //hide submit button
+		//$('#input-file-wrapper').hide(); //hide submit button
 		$("#requestResponse").html("");  
+		$('#progressbox').show(); //hide submit button
 	}
 	else
 	{
@@ -153,13 +87,6 @@ function beforeSubmit(){
 		$("#requestResponse").html("Please upgrade your browser, because your current browser lacks some new features we need!");
 		return false;
 	}
-}
-
-//function after succesful file upload (when server response)
-function afterSuccess()
-{
-	$('#progressbox').delay( 1000 ).fadeOut(); //hide progress bar
-	$('#input-file-wrapper').show(); //hide submit button
 }
 
 //progress bar function
@@ -171,8 +98,16 @@ function OnProgress(event, position, total, percentComplete)
     $('#statustxt').html(percentComplete + '%'); //update status text
     if(percentComplete>50)
         {
-            $('#statustxt').css('color','#000'); //change status text to white after 50%
+            $('#statustxt').css('color','#FFFFFF'); //change status text to white after 50%
         }
+}
+
+//function after succesful file upload (when server response)
+function afterSuccess()
+{
+    $('#statustxt').html('Complete'); //update status text
+	$('#progressbox').delay( 4000 ).fadeOut();
+	//$('#input-file-wrapper').delay(5000).fadeIn(); //hide submit button
 }
 
 //function to format bites bit.ly/19yoIPO
@@ -183,36 +118,31 @@ function bytesToSize(bytes) {
    return Math.round(bytes / Math.pow(1024, i), 2) + ' ' + sizes[i];
 }
 
-}); 
+});
 </script>
 
 <style type="text/css">
 #upload-wrapper {
-	background: #3D91A2;
 	padding: 4px;
 	border-radius: 4px;
 }
 #upload-wrapper input[type=file] {
-	background: #3D91A2;
-	border-radius: 5px;
-	border:2px solid #FFFFFF;
+	border:2px solid #06F;
 	width:100%;
-	color:#FFFFFF;
+	color:#06F;
 	font-size:0.65em;
 }
 #progressbox {
-	border: 1px solid #FFFFFF;
+	border: 1px solid #06F;
 	padding: 2px; 
 	position:relative;
 	width:100%;
-	border-radius: 5px;
 	display:none;
 	text-align:left;
 }
 #progressbar {
 	height:1.1em;
-	border-radius: 3px;
-	background-color: #CAF2FF;
+	background-color: #093;
 	width:1%;
 }
 #statustxt {
@@ -221,74 +151,75 @@ function bytesToSize(bytes) {
 	left:50%;
 	position:absolute;
 	display:inline-block;
-	color: #FFFFFF;
+	color: #000000;
 }
 </style>
 <div>
 	<h4>New Library Entry</h4>
-    <form method="post" enctype="multipart/form-data" action="_processor.newItem.php" id="newLibItemForm">
+    <div id="progressbox" ><div id="progressbar"></div ><div id="statustxt">0%</div></div>
+    <form method="post" enctype="multipart/form-data" action="_processor.library.php" id="newLibItemForm" onreset='$("#requestResponse").html()'>
+
+
+                <input type="hidden" value="<?= Uploader::uploadLimit(); ?>" id="max_Fsize"/>
+                <input type="hidden" value="<?= implode(',',array_merge(DocumentUploader::MIME(),VideoUploader::MIME())); ?>" id="supportedFtypes"/>
+
+                <input type="hidden" name="file_source_type" id="file_source" value=""/>
+                <input type="hidden" name="media" id="media" value=""/>
+
             	<div class="row" id="requestResponse"></div>
                 <div class="row" >
                     <label class="span2">Title: <span class="fg-red">*</span></label>
                     <div class="span7">
-                        <input name='title' required style="width: inherit" type='text' 
-                               <?= $request ? "value='$title'" : ""; ?> tabindex='1' />
+                        <input name='title' required style="width: inherit" type='text' tabindex='1' />
                     </div>
                 </div>
 
                 <div class="row" >
                     <label class="span2">Author: <span class="fg-red">*</span></label>
                     <div class="span7">
-                        <input name='author' required style="width: inherit" type='text' 
-                               <?= $request ? "value='$author'" : ""; ?> tabindex='2' />
+                        <input name='author' required style="width: inherit" type='text' tabindex='2' />
                     </div>
                 </div>
 
                 <div class="row" >
                     <label class="span2">Publisher: <span class="fg-red">*</span></label>
                     <div class="span7">
-                        <input name='publisher' style="width: inherit" type='text' required 
-                               <?= $request ? "value='$publisher'" : ""; ?>  tabindex='3'/>
+                        <input name='publisher' style="width: inherit" type='text' required tabindex='3'/>
                     </div>
                 </div>
 
                 <div class="row" >
                     <label class="span2">Date Published: <span class="fg-red">*</span></label>
                     <div class="span7">
-                        <input name='date_published' style="width: inherit" type='number' required placeholder="year" 
-                               <?= $request ? "value='$date_published'" : ""; ?>  tabindex='4' maxlength="4"/>
+                        <input name='date_published' style="width: inherit" type="date" required placeholder="year" tabindex='4' maxlength="4"/>
                     </div>
                 </div>
 
                 <div class="row" >
-                    <label class="span2">ISBM: <span class="fg-red">*</span></label>
+                    <label class="span2">ISBN: </label>
                     <div class="span7">
-                        <input name='isbn' style="width: inherit" type="text" required 
-                               <?= $request ? "value='$isbn'" : ""; ?>  tabindex='5' maxlength="15"/>
-                    </div>
-                </div>
-
-                <div class="row" >
-                    <label class="span2">Keywords: <span class="fg-red">*</span></label>
-                    <div class="span7">
-                        <input name='keywords' style="width: inherit" type='text' required 
-                               <?= $request ? "value='$keywords'" : ""; ?>  tabindex='6' maxlength="40"/>
+                        <input name='isbn' style="width: inherit" type="text" tabindex='5' maxlength="15"/>
                     </div>
                 </div>
 
                 <div class="row" >
                     <label class="span2">Category: <span class="fg-red">*</span></label>
                     <div class="span7">
-                        <input name='category' style="width: inherit" type='text' required 
-                               <?= $request ? "value='$category'" : ""; ?>  tabindex='7' maxlength="20"/>
+                        <input name='category' style="width: inherit" type='text' required tabindex='7' maxlength="20"/>
                     </div>
                 </div>
 
                 <div class="row" >
                     <label class="span2">Sub-Category: <span class="fg-red">*</span></label>
                     <div class="span7">
-                        <input name='sub_category' style="width: inherit" type='text' required 
-                               <?= $request ? "value='$sub_category'" : ""; ?>  tabindex='8' maxlength="20"/>
+                        <input name='sub_category' style="width: inherit" type='text' required tabindex='8' maxlength="20"/>
+                    </div>
+                </div>
+
+                <div class="row" >
+                    <label class="span2">Keywords: <span class="fg-red">*</span></label>
+                    <div class="span7">
+                        <input name='keywords' style="width: inherit" type='text' required tabindex='6' maxlength="40"/>
                     </div>
                 </div>
 
@@ -297,26 +228,23 @@ function bytesToSize(bytes) {
                     </label>
                     <div class="span7" id="upload-wrapper">
                         <div id="input-file-wrapper"><input name="FileInput" id="FileInput" type="file" tabindex="9"/></div>
-                        <div id="progressbox" ><div id="progressbar"></div ><div id="statustxt">0%</div></div>
                     </div>
                 </div>
                 <div class="row">
                     <label class="span2"><span class="fg-red">OR</span>: [<span class="fg-red">Web*</span>]
                     </label>
                     <div class="span7">
-                        <input name="LinkInput" id="LinkInput" type="url" style="width: inherit" tabindex="10"
-                        <?= $request ? "value='$sub_category'" : ""; ?> placeholder="Paste url of file on the web"/>
+                        <input name="LinkInput" id="LinkInput" type="url" style="width: inherit" tabindex="10" placeholder="Paste url of file"/>
                     </div>
                 </div>
                 <div class="row no-phone offset2">
-                    <input class="button default bg-NACOSS-UNN bg-hover-dark" type='submit' value='Send Message' tabindex='11'/>
+                    <input class="button default bg-NACOSS-UNN bg-hover-dark" type='reset' value='Reset' tabindex='11'/>
+                    <input class="button default bg-NACOSS-UNN bg-hover-dark" type='submit' value='Add New Entry' tabindex='12'/>
                 </div>
+
                 <div class="row on-phone no-tablet no-desktop padding20 ntp nbp">
-                    <input class="button default bg-NACOSS-UNN bg-hover-dark" type='submit' value='Send Message' tabindex='11'/>
+                    <input class="button default bg-NACOSS-UNN bg-hover-dark"  type='reset' value='Reset' tabindex='11'/>
+                    <input class="button default bg-NACOSS-UNN bg-hover-dark" type='submit' value='Add New Entry' tabindex='12'/>
                 </div>
-                <input type="hidden" name="file_source_type" value="" id="file_source"/>
-                <input type="hidden" name="max_Fsize" value="<?= uploader::uploadLimit(); ?>" id="max_Fsize"/>
-                <input type="hidden" name="supportedFtypes" 
-                value="<?= implode(',',array_merge(documentUploader::MIME(), videoUploader::MIME())); ?>" id="supportedFtypes"/>
     </form>
 </div>

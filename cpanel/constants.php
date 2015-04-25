@@ -29,3 +29,4 @@ define("HOSTNAME", "http://localhost/Website-NACOSS-UNN/"); //Location of this p
 define("HOSTNAME_REL", "/Website-NACOSS-UNN/"); //Location of this project relative to localhost
 define("CPANEL_URL", "http://localhost/Website-NACOSS-UNN/cpanel/"); //Location of cpanel in your computer (relative to localhost)
 define("NDG_HOMEPAGE", "http://localhost/ndg/"); //NDG Homepage
+define("LIBRARY_UPLOAD_DIR", HOSTNAME.'uploads/');

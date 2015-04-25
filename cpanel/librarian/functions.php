@@ -148,22 +148,6 @@ function sortLibraryItems(array &$items, $sort_type, $sort_order) {
     }
 }
 
-function getLibrarySettings() {
-    $settings = array();
-    $query = "select * from settings";
-    $link = AdminUtility::getDefaultDBConnection();
-    $result = mysqli_query($link, $query);
-    if ($result) {
-        while ($row = mysqli_fetch_array($result)) {
-            $settings[] = $row;
-        }
-    }
-    //Log error
-    AdminUtility::logMySQLError($link);
-
-    return $settings;
-}
-
 function getFileTypes($media = 'ebook'){
 	$name = ($media == 'ebook')? SETTINGS_FILE_TYPES_EBOOKS : SETTINGS_FILE_TYPES_VIDEOS;
     $types = array();
