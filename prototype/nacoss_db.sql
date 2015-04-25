@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Apr 24, 2015 at 07:47 PM
+-- Generation Time: Apr 25, 2015 at 07:38 PM
 -- Server version: 5.6.17
 -- PHP Version: 5.5.12
 
@@ -41,7 +41,7 @@ CREATE TABLE IF NOT EXISTS `admins` (
 INSERT INTO `admins` (`username`, `password`, `type`, `email`) VALUES
 ('1234/123456', '$2y$10$JRjBJLF1Td6e9xWVttk9juRXK7UOdIrAyF7buxloPei/8.06/GccC', 'CLASS_REP', 'example@domain.com'),
 ('2011/111222', '$2y$10$CkYXw5Y6.mR0GSDJCq/k..c608PGInY4YAcgNFbbBzQKq3wjk2asW', 'CLASS_REP', 'eanthony@yahoo.com'),
-('2011/177392', '$2y$10$YyJfgW.y1Jrt3zyWJPFGTuKk9at.e/jLqK8n1VRELdyBJoPi3RDj6', 'CLASS_REP', 'anuebunwa.victor@gmail.com'),
+('2011/177392', '$2y$10$YyJfgW.y1Jrt3zyWJPFGTuKk9at.e/jLqK8n1VRELdyBJoPi3RDj6', 'CLASS_REP', 'foo.victor@gmail.com'),
 ('libraryadmin', '$2y$10$YyJfgW.y1Jrt3zyWJPFGTuKk9at.e/jLqK8n1VRELdyBJoPi3RDj6', 'LIBRARIAN', 'example@domain.com'),
 ('newsadmin', '$2y$10$YyJfgW.y1Jrt3zyWJPFGTuKk9at.e/jLqK8n1VRELdyBJoPi3RDj6', 'PRO', 'example@domain.com'),
 ('treasurer', '$2y$10$YyJfgW.y1Jrt3zyWJPFGTuKk9at.e/jLqK8n1VRELdyBJoPi3RDj6', 'TREASURER', 'example@domain.com'),
@@ -94,11 +94,11 @@ INSERT INTO `error_log` (`id`, `time_of_error`, `message`, `trace`, `file`, `lin
 (11, '2015-04-08 23:46:49', 'Unknown column ''username'' in ''where clause''', '', 'C:\\wamp\\www\\Website-NACOSS-UNN\\cpanel\\AdminUtility.php', 155, 1),
 (61, '2015-04-18 15:35:56', 'You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '' expire_time=''2015-04-19 06:00:00'''' at line 1', '#0 C:\\wamp\\www\\Website-NACOSS-UNN\\cpanel\\pro\\NewsAdmin.php(42): AdminUtility::logMySQLError(Object(mysqli))\n#1 C:\\wamp\\www\\Website-NACOSS-UNN\\cpanel\\pro\\new_post.php(21): NewsAdmin->newPost(''Contact Us'', ''\\xC2\\xA0<h1 class="fg...'', ''2015-04-19 06:0...'')\n#2 C:\\wamp\\www\\Website-NACOSS-UNN\\cpanel\\pro\\index.php(158): require_once(''C:\\\\wamp\\\\www\\\\Web...'')\n#3 {main}', ' C:\\wamp\\www\\Website-NACOSS-UNN\\cpanel\\AdminUtility.php', 157, 1),
 (62, '2015-04-18 15:51:13', 'You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '' expire_time=''2015-04-19 00:00:00'''' at line 1', '#0 C:\\wamp\\www\\Website-NACOSS-UNN\\cpanel\\pro\\NewsAdmin.php(42): AdminUtility::logMySQLError(Object(mysqli))\n#1 C:\\wamp\\www\\Website-NACOSS-UNN\\cpanel\\pro\\new_post.php(21): NewsAdmin->newPost(''Test'', ''\\xC2\\xA0Test news'', ''2015-04-19 00:0...'')\n#2 C:\\wamp\\www\\Website-NACOSS-UNN\\cpanel\\pro\\index.php(158): require_once(''C:\\\\wamp\\\\www\\\\Web...'')\n#3 {main}', ' C:\\wamp\\www\\Website-NACOSS-UNN\\cpanel\\AdminUtility.php', 157, 1),
-(63, '2015-04-20 11:38:21', 'Unknown column ''num_of_downloads'' in ''field list''', '#0 C:\\wamp\\www\\Website-NACOSS-UNN\\cpanel\\librarian\\functions.php(58): AdminUtility::logMySQLError(Object(mysqli))\n#1 C:\\wamp\\www\\Website-NACOSS-UNN\\cpanel\\librarian\\index.php(136): getNumberOfLibraryItemsDownloaded(''video'')\n#2 {main}', ' C:\\wamp\\www\\Website-NACOSS-UNN\\cpanel\\AdminUtility.php', 157, 0),
-(64, '2015-04-20 11:38:21', 'Unknown column ''num_of_downloads'' in ''field list''', '#0 C:\\wamp\\www\\Website-NACOSS-UNN\\cpanel\\librarian\\functions.php(58): AdminUtility::logMySQLError(Object(mysqli))\n#1 C:\\wamp\\www\\Website-NACOSS-UNN\\cpanel\\librarian\\index.php(138): getNumberOfLibraryItemsDownloaded(''ebook'')\n#2 {main}', ' C:\\wamp\\www\\Website-NACOSS-UNN\\cpanel\\AdminUtility.php', 157, 0),
-(65, '2015-04-18 16:30:26', 'Unknown column ''on_shelf'' in ''where clause''', '#0 C:\\wamp\\www\\Website-NACOSS-UNN\\cpanel\\librarian\\functions.php(78): AdminUtility::logMySQLError(Object(mysqli))\n#1 C:\\wamp\\www\\Website-NACOSS-UNN\\cpanel\\librarian\\_viewEbooks.php(53): getLibraryItems(''ebook'', 1)\n#2 C:\\wamp\\www\\Website-NACOSS-UNN\\cpanel\\librarian\\index.php(157): include_once(''C:\\\\wamp\\\\www\\\\Web...'')\n#3 {main}', ' C:\\wamp\\www\\Website-NACOSS-UNN\\cpanel\\AdminUtility.php', 157, 0),
-(66, '2015-04-20 11:38:07', 'Unknown column ''on_shelf'' in ''where clause''', '#0 C:\\wamp\\www\\Website-NACOSS-UNN\\cpanel\\librarian\\functions.php(78): AdminUtility::logMySQLError(Object(mysqli))\n#1 C:\\wamp\\www\\Website-NACOSS-UNN\\cpanel\\librarian\\_viewEbooks.php(53): getLibraryItems(''ebook'', 1)\n#2 C:\\wamp\\www\\Website-NACOSS-UNN\\cpanel\\librarian\\index.php(148): include_once(''C:\\\\wamp\\\\www\\\\Web...'')\n#3 {main}', ' C:\\wamp\\www\\Website-NACOSS-UNN\\cpanel\\AdminUtility.php', 157, 0),
-(67, '2015-04-20 11:38:21', 'Unknown column ''on_shelf'' in ''where clause''', '#0 C:\\wamp\\www\\Website-NACOSS-UNN\\cpanel\\librarian\\functions.php(78): AdminUtility::logMySQLError(Object(mysqli))\n#1 C:\\wamp\\www\\Website-NACOSS-UNN\\cpanel\\librarian\\_viewVideos.php(53): getLibraryItems(''video'', 1)\n#2 C:\\wamp\\www\\Website-NACOSS-UNN\\cpanel\\librarian\\index.php(151): include_once(''C:\\\\wamp\\\\www\\\\Web...'')\n#3 {main}', ' C:\\wamp\\www\\Website-NACOSS-UNN\\cpanel\\AdminUtility.php', 157, 0),
+(63, '2015-04-24 18:08:18', 'Unknown column ''num_of_downloads'' in ''field list''', '#0 C:\\wamp\\www\\Website-NACOSS-UNN\\cpanel\\librarian\\functions.php(58): AdminUtility::logMySQLError(Object(mysqli))\n#1 C:\\wamp\\www\\Website-NACOSS-UNN\\cpanel\\librarian\\index.php(136): getNumberOfLibraryItemsDownloaded(''video'')\n#2 {main}', ' C:\\wamp\\www\\Website-NACOSS-UNN\\cpanel\\AdminUtility.php', 157, 0),
+(64, '2015-04-24 18:08:18', 'Unknown column ''num_of_downloads'' in ''field list''', '#0 C:\\wamp\\www\\Website-NACOSS-UNN\\cpanel\\librarian\\functions.php(58): AdminUtility::logMySQLError(Object(mysqli))\n#1 C:\\wamp\\www\\Website-NACOSS-UNN\\cpanel\\librarian\\index.php(138): getNumberOfLibraryItemsDownloaded(''ebook'')\n#2 {main}', ' C:\\wamp\\www\\Website-NACOSS-UNN\\cpanel\\AdminUtility.php', 157, 0),
+(65, '2015-04-24 18:08:01', 'Unknown column ''on_shelf'' in ''where clause''', '#0 C:\\wamp\\www\\Website-NACOSS-UNN\\cpanel\\librarian\\functions.php(78): AdminUtility::logMySQLError(Object(mysqli))\n#1 C:\\wamp\\www\\Website-NACOSS-UNN\\cpanel\\librarian\\_viewEbooks.php(53): getLibraryItems(''ebook'', 1)\n#2 C:\\wamp\\www\\Website-NACOSS-UNN\\cpanel\\librarian\\index.php(157): include_once(''C:\\\\wamp\\\\www\\\\Web...'')\n#3 {main}', ' C:\\wamp\\www\\Website-NACOSS-UNN\\cpanel\\AdminUtility.php', 157, 0),
+(66, '2015-04-24 18:08:13', 'Unknown column ''on_shelf'' in ''where clause''', '#0 C:\\wamp\\www\\Website-NACOSS-UNN\\cpanel\\librarian\\functions.php(78): AdminUtility::logMySQLError(Object(mysqli))\n#1 C:\\wamp\\www\\Website-NACOSS-UNN\\cpanel\\librarian\\_viewEbooks.php(53): getLibraryItems(''ebook'', 1)\n#2 C:\\wamp\\www\\Website-NACOSS-UNN\\cpanel\\librarian\\index.php(148): include_once(''C:\\\\wamp\\\\www\\\\Web...'')\n#3 {main}', ' C:\\wamp\\www\\Website-NACOSS-UNN\\cpanel\\AdminUtility.php', 157, 0),
+(67, '2015-04-24 18:08:16', 'Unknown column ''on_shelf'' in ''where clause''', '#0 C:\\wamp\\www\\Website-NACOSS-UNN\\cpanel\\librarian\\functions.php(78): AdminUtility::logMySQLError(Object(mysqli))\n#1 C:\\wamp\\www\\Website-NACOSS-UNN\\cpanel\\librarian\\_viewVideos.php(53): getLibraryItems(''video'', 1)\n#2 C:\\wamp\\www\\Website-NACOSS-UNN\\cpanel\\librarian\\index.php(151): include_once(''C:\\\\wamp\\\\www\\\\Web...'')\n#3 {main}', ' C:\\wamp\\www\\Website-NACOSS-UNN\\cpanel\\AdminUtility.php', 157, 0),
 (68, '2015-04-19 19:45:11', 'You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ''width: 20px; height: 20px; text-indent: 20px; background-image: url("/Website-NA'' at line 1', '#0 C:\\wamp\\www\\Website-NACOSS-UNN\\cpanel\\pro\\NewsAdmin.php(52): AdminUtility::logMySQLError(Object(mysqli))\n#1 C:\\wamp\\www\\Website-NACOSS-UNN\\cpanel\\pro\\new_post.php(21): NewsAdmin->newPost(''2015 School Aca...'', ''\\xC2\\xA0<p>\\xC2\\xA0</p><p><...'', ''2015-06-01 00:0...'')\n#2 C:\\wamp\\www\\Website-NACOSS-UNN\\cpanel\\pro\\index.php(158): require_once(''C:\\\\wamp\\\\www\\\\Web...'')\n#3 {main}', ' C:\\wamp\\www\\Website-NACOSS-UNN\\cpanel\\AdminUtility.php', 157, 0);
 
 -- --------------------------------------------------------
@@ -185,31 +185,37 @@ INSERT INTO `home_page_images` (`id`, `img_url`, `thumb_url`, `href`, `caption`,
 
 CREATE TABLE IF NOT EXISTS `library` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `title` varchar(60) NOT NULL,
-  `author` varchar(30) NOT NULL,
-  `keywords` varchar(30) NOT NULL,
-  `date_added` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `link` text NOT NULL,
-  `file_type` varchar(10) NOT NULL,
+  `title` varchar(60) DEFAULT NULL,
+  `author` varchar(30) DEFAULT NULL,
+  `publisher` varchar(50) DEFAULT NULL,
+  `date_published` int(4) DEFAULT NULL,
+  `isbn` varchar(20) DEFAULT NULL,
+  `category` varchar(50) DEFAULT NULL,
+  `sub_category` varchar(50) DEFAULT NULL,
+  `keywords` varchar(30) DEFAULT NULL,
+  `contributor` varchar(20) DEFAULT NULL,
+  `date_added` datetime DEFAULT CURRENT_TIMESTAMP,
+  `file_type` varchar(10) DEFAULT NULL,
+  `link` text,
+  `num_of_downloads` int(11) DEFAULT '0',
+  `on_shelf` int(1) DEFAULT '1',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=12 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=13 ;
 
 --
 -- Dumping data for table `library`
 --
 
-INSERT INTO `library` (`id`, `title`, `author`, `keywords`, `date_added`, `link`, `file_type`) VALUES
-(1, 'How to be a programmer', 'K.L Foo', 'programming', '2015-03-24 17:35:14', '', ''),
-(2, 'Java: How to Program', 'Harvey Deitel', 'java, programming', '2015-03-24 17:35:14', '', ''),
-(3, 'C++: How to program', 'Paul Deitel', 'C++, programming', '2015-03-24 17:36:43', '', ''),
-(4, 'Database: Beginners Guide', 'Agozie Eneh', 'mysql, database', '2015-03-24 17:36:43', '', 'docx'),
-(5, 'Java: How to Program Edition 8', 'Harvey Deitel', 'java, programming', '2015-03-24 17:35:14', '', ''),
-(6, 'Java: How to Program Edition 9', 'Harvey Deitel', 'java, programming', '2015-03-24 17:35:14', '', 'pdf'),
-(7, 'C++: How to program Edition 5', 'Paul Deitel', 'C++, programming', '2015-03-24 17:36:43', '', ''),
-(8, 'C++: How to program Edition 6', 'Paul Deitel', 'C++, programming', '2015-03-24 17:36:43', '', ''),
-(9, 'C++: How to program Edition 9', 'Paul Deitel', 'C++, programming', '2015-03-24 17:36:43', '', ''),
-(10, 'Database: Advanced Guide', 'Agozie Eneh', 'mysql, database', '2015-03-24 17:36:43', '', ''),
-(11, 'Java: How to Program Edition 10', 'Harvey Deitel', 'java, programming', '2015-03-25 17:35:14', '', '');
+INSERT INTO `library` (`id`, `title`, `author`, `publisher`, `date_published`, `isbn`, `category`, `sub_category`, `keywords`, `contributor`, `date_added`, `file_type`, `link`, `num_of_downloads`, `on_shelf`) VALUES
+(1, 'How to be a programmer', 'K.L Foo', NULL, NULL, NULL, NULL, NULL, 'programming', NULL, '2015-03-24 00:00:00', 'pdf', '', 0, 1),
+(2, 'Java: How to Program', 'Harvey Deitel', NULL, NULL, NULL, NULL, NULL, 'java, programming', NULL, '2015-03-24 00:00:00', 'pdf', '', 0, 1),
+(4, 'Database: Beginners Guide', 'Agozie Eneh', NULL, NULL, NULL, NULL, NULL, 'mysql, database', NULL, '2015-03-24 00:00:00', 'docx', '', 10, 1),
+(5, 'Java: How to Program Edition 8', 'Harvey Deitel', NULL, NULL, NULL, NULL, NULL, 'java, programming', NULL, '2015-03-24 00:00:00', 'docx', '', 0, 1),
+(8, 'C++: How to program Edition 6', 'Paul Deitel', NULL, NULL, NULL, NULL, NULL, 'C++, programming', NULL, '2015-03-24 00:00:00', 'pdf', '', 0, 0),
+(9, 'C++: How to program Edition 9', 'Paul Deitel', NULL, NULL, NULL, NULL, NULL, 'C++, programming', NULL, '2015-03-24 00:00:00', 'pdf', '', 5, 0),
+(10, 'Database: Advanced Guide', 'Agozie Eneh', NULL, NULL, NULL, NULL, NULL, 'mysql, database', NULL, '2015-03-24 00:00:00', 'pdf', '', 3, 1),
+(11, 'Java: How to Program Edition 10', 'Harvey Deitel', NULL, NULL, NULL, NULL, NULL, 'java, programming', NULL, '2015-03-25 00:00:00', 'pdf', '', 0, 1),
+(12, 'new video', 'me', 'me too', 2015, '', 'programming', 'java', 'hello world', 'webadmin', '2015-04-24 07:28:49', 'mp4', 'http://localhost/Website-NACOSS-UNN/uploads/1429896529553a7d51d550b.mp4', 1, 1);
 
 -- --------------------------------------------------------
 
@@ -287,7 +293,7 @@ CREATE TABLE IF NOT EXISTS `settings` (
   `value` text NOT NULL,
   `description` text NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=6 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=11 ;
 
 --
 -- Dumping data for table `settings`
@@ -297,7 +303,11 @@ INSERT INTO `settings` (`id`, `name`, `value`, `description`) VALUES
 (1, 'email', 'example@domain.com', 'Organization contact email. This is the email address at which message from website visitors will be sent to.'),
 (2, 'help_lines', '+2348012345678, +2347087654321', 'Organisation contact lines. Phone number(s) that will be publicly displayed on website for visitors to call. NOTE: Multiple numbers should be separated with commas'),
 (3, 'hash_algo_cost', '10', 'Highest cost this server can afford without slowing down when computing hash algorithm'),
-(5, 'max_hash_time', '250', 'Minimum amount of time in milliseconds that it should take to calculate the (password) hashes. Field hash_algo_cost should be recalculated if this value changes.');
+(5, 'max_hash_time', '250', 'Minimum amount of time in milliseconds that it should take to calculate the (password) hashes. Field hash_algo_cost should be recalculated if this value changes.'),
+(6, 'fileTypes_ebook', 'txt,html,pdf,doc,docx,excel', 'Supported files types for ebooks in library e.g. text/plain. Seperate multiple entries with a single comma, no spaces allowed'),
+(7, 'fileTypes_video', 'avi,mp4,3gp', 'Supported file types for videos in library e.g. video/mp4. Seperate multiple entries with a single comma, no spaces allowed'),
+(9, 'MIME_ebooks', 'text/plain,text/html,application/pdf,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document,application/vnd.ms-excel,application/x-forcedownload', ''),
+(10, 'MIME_videos', 'video/mp4,video/flv,video/3gpp', '');
 
 -- --------------------------------------------------------
 
@@ -336,9 +346,8 @@ CREATE TABLE IF NOT EXISTS `users` (
 
 INSERT INTO `users` (`regno`, `first_name`, `last_name`, `other_names`, `password`, `department`, `level`, `entry_year`, `phone`, `email`, `dob`, `address1`, `address2`, `interests`, `bio`, `pic_url`, `verified`, `is_class_rep`, `is_suspended`, `is_deleted`) VALUES
 ('1234/123456', 'Jane', 'Doe', 'Anonymous', '$2y$10$JRjBJLF1Td6e9xWVttk9juRXK7UOdIrAyF7buxloPei/8.06/GccC', 'COMPUTER SCIENCE/MATHEMATICS', '100', 2015, '07012345678', 'example@domain.com', '1995-07-29', '', '', 'Java', 'Find out', 'uploads/12341234565518047d54a75.jpeg', 1, 0, 0, 0),
-('2011/111111', 'Jennifer', 'Ubah', NULL, '$2y$08$KJvecJJmpauEyUM4vnYJF.zJvFWEKMvNQWmQsLLLRd.cUipEGQIYu', NULL, NULL, 0000, '07012345678', 'ubahjennifer@gmail.com', NULL, NULL, NULL, NULL, NULL, '', 0, 0, 0, 1),
 ('2011/111222', 'Anthony', 'Ejinwa', '', '$2y$10$CkYXw5Y6.mR0GSDJCq/k..c608PGInY4YAcgNFbbBzQKq3wjk2asW', 'COMPUTER SCIENCE', '100', 2015, '07012345678', 'eanthony@yahoo.com', '2015-01-01', '', '', '', '', '', 0, 0, 1, 0),
-('2011/177392', 'Victor', 'Anuebunwa', '', '$2y$10$YyJfgW.y1Jrt3zyWJPFGTuKk9at.e/jLqK8n1VRELdyBJoPi3RDj6', 'COMPUTER SCIENCE', '100', 2014, '07064561570', 'anuebunwa.victor@gmail.com', '2001-02-14', '', '', 'Programming, Gaming', '', 'uploads/20111773925518ac310be9e.jpeg', 0, 0, 0, 0);
+('2011/177392', 'Victor', 'Anuebunwa', '', '$2y$10$YyJfgW.y1Jrt3zyWJPFGTuKk9at.e/jLqK8n1VRELdyBJoPi3RDj6', 'COMPUTER SCIENCE', '100', 2014, '07064561570', 'foo.victor@gmail.com', '2001-02-14', '', '', 'Programming, Gaming', '', 'uploads/20111773925518ac310be9e.jpeg', 0, 0, 0, 0);
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
