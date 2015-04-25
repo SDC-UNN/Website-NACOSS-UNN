@@ -20,9 +20,7 @@ class DocumentUploader extends Uploader{
 	/*
 	This class extends the Uploader abstract class and adapts it for general documents
 	ASSUMPTIONS
-	1. MIME types in the array (below) are not exhaustive
-		This can be made up for by calling setSupportedMIME_types() this way:
-		setSupportedMIME_types(array_merge(getSupportedMIME_types(), $new_array_of_types)) to add more types
+	1. The function MIME() assumes that the query returns some comma-seperated values from settings table
 	*/
 	function __construct($input_name, $output_file_name, $upload_directory){
 		parent::__construct($input_name, $output_file_name);

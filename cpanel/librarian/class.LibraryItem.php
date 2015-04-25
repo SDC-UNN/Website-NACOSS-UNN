@@ -229,7 +229,7 @@ class LibraryItem{
 		return $this->on_shelf;
 	}
 	
-	function _destruct(){
+	function __destruct(){
 		$this->saveItem();
 	}
 }

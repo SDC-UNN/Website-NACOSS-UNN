@@ -20,9 +20,6 @@ abstract class Uploader{
 	This is a base class for file upload; can be extended for various categories of files e.g documents, images, videos, etc.
 	ASSUMPTIONS
 	1. Max upload size is 50 MB i.e max upload size for most apeche servers
-	2. MIME types in the array (below) are not exhaustive
-		This can be made up for by calling setSupportedMIME_types() this way:
-		setSupportedMIME_types(array_merge(getSupportedMIME_types(), $new_array_of_types)) to add more types
 	*/
 	private $name;
 	private $size;
