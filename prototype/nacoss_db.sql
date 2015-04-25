@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Apr 25, 2015 at 01:04 PM
+-- Generation Time: Apr 25, 2015 at 07:38 PM
 -- Server version: 5.6.17
 -- PHP Version: 5.5.12
 
@@ -41,7 +41,7 @@ CREATE TABLE IF NOT EXISTS `admins` (
 INSERT INTO `admins` (`username`, `password`, `type`, `email`) VALUES
 ('1234/123456', '$2y$10$JRjBJLF1Td6e9xWVttk9juRXK7UOdIrAyF7buxloPei/8.06/GccC', 'CLASS_REP', 'example@domain.com'),
 ('2011/111222', '$2y$10$CkYXw5Y6.mR0GSDJCq/k..c608PGInY4YAcgNFbbBzQKq3wjk2asW', 'CLASS_REP', 'eanthony@yahoo.com'),
-('2011/177392', '$2y$10$YyJfgW.y1Jrt3zyWJPFGTuKk9at.e/jLqK8n1VRELdyBJoPi3RDj6', 'CLASS_REP', 'anuebunwa.victor@gmail.com'),
+('2011/177392', '$2y$10$YyJfgW.y1Jrt3zyWJPFGTuKk9at.e/jLqK8n1VRELdyBJoPi3RDj6', 'CLASS_REP', 'foo.victor@gmail.com'),
 ('libraryadmin', '$2y$10$YyJfgW.y1Jrt3zyWJPFGTuKk9at.e/jLqK8n1VRELdyBJoPi3RDj6', 'LIBRARIAN', 'example@domain.com'),
 ('newsadmin', '$2y$10$YyJfgW.y1Jrt3zyWJPFGTuKk9at.e/jLqK8n1VRELdyBJoPi3RDj6', 'PRO', 'example@domain.com'),
 ('treasurer', '$2y$10$YyJfgW.y1Jrt3zyWJPFGTuKk9at.e/jLqK8n1VRELdyBJoPi3RDj6', 'TREASURER', 'example@domain.com'),
@@ -346,9 +346,8 @@ CREATE TABLE IF NOT EXISTS `users` (
 
 INSERT INTO `users` (`regno`, `first_name`, `last_name`, `other_names`, `password`, `department`, `level`, `entry_year`, `phone`, `email`, `dob`, `address1`, `address2`, `interests`, `bio`, `pic_url`, `verified`, `is_class_rep`, `is_suspended`, `is_deleted`) VALUES
 ('1234/123456', 'Jane', 'Doe', 'Anonymous', '$2y$10$JRjBJLF1Td6e9xWVttk9juRXK7UOdIrAyF7buxloPei/8.06/GccC', 'COMPUTER SCIENCE/MATHEMATICS', '100', 2015, '07012345678', 'example@domain.com', '1995-07-29', '', '', 'Java', 'Find out', 'uploads/12341234565518047d54a75.jpeg', 1, 0, 0, 0),
-('2011/111111', 'Jennifer', 'Ubah', NULL, '$2y$08$KJvecJJmpauEyUM4vnYJF.zJvFWEKMvNQWmQsLLLRd.cUipEGQIYu', NULL, NULL, 0000, '07012345678', 'ubahjennifer@gmail.com', NULL, NULL, NULL, NULL, NULL, '', 0, 0, 0, 1),
 ('2011/111222', 'Anthony', 'Ejinwa', '', '$2y$10$CkYXw5Y6.mR0GSDJCq/k..c608PGInY4YAcgNFbbBzQKq3wjk2asW', 'COMPUTER SCIENCE', '100', 2015, '07012345678', 'eanthony@yahoo.com', '2015-01-01', '', '', '', '', '', 0, 0, 1, 0),
-('2011/177392', 'Victor', 'Anuebunwa', '', '$2y$10$YyJfgW.y1Jrt3zyWJPFGTuKk9at.e/jLqK8n1VRELdyBJoPi3RDj6', 'COMPUTER SCIENCE', '100', 2014, '07064561570', 'anuebunwa.victor@gmail.com', '2001-02-14', '', '', 'Programming, Gaming', '', 'uploads/20111773925518ac310be9e.jpeg', 0, 0, 0, 0);
+('2011/177392', 'Victor', 'Anuebunwa', '', '$2y$10$YyJfgW.y1Jrt3zyWJPFGTuKk9at.e/jLqK8n1VRELdyBJoPi3RDj6', 'COMPUTER SCIENCE', '100', 2014, '07064561570', 'foo.victor@gmail.com', '2001-02-14', '', '', 'Programming, Gaming', '', 'uploads/20111773925518ac310be9e.jpeg', 0, 0, 0, 0);
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
