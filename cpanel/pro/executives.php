@@ -16,7 +16,7 @@
  */
 ?>
 <div>
-    <h4>BOARD MEMBERS</h4>
+    <h4>EXECUTIVES</h4>
     <br/>
     <p>Not available at the moment</p>
 </div>

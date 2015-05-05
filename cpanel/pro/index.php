@@ -81,7 +81,7 @@ limitations under the License.
         <link href="<?= HOSTNAME ?>css/iconFont.css" rel="stylesheet">
         <link href="<?= HOSTNAME ?>js/prettify/prettify.css" rel="stylesheet">
 
-        <script src="<?= HOSTNAME ?>js/metro/metro.min.js"></script>
+        <!--<script src="<?= HOSTNAME ?>js/metro/metro.min.js"></script>-->
 
         <!-- Load JavaScript Libraries -->
         <script src="<?= HOSTNAME ?>js/jquery/jquery.min.js"></script>
@@ -122,7 +122,7 @@ limitations under the License.
                                             <a href="index.php?p=2"><i class="icon-image"></i>Home Page Images</a>
                                         </li>
                                         <li class="<?= $page == 3 ? "stick bg-darkBlue" : "" ?>">
-                                            <a href="index.php?p=3"><i class="icon-user-3"></i>Board Members</a>
+                                            <a href="index.php?p=3"><i class="icon-user-3"></i>Executives</a>
                                         </li>
                                         <li class="<?= $page == 4 || $page == 41 || $page == 42 ? "stick bg-darkBlue" : "" ?>">
                                             <a class="dropdown-toggle" href="#"><i class="icon-help"></i>FAQs</a>
@@ -163,7 +163,7 @@ limitations under the License.
                                         break;
                                     case 21: require_once 'select_post.php';
                                         break;
-                                    case 3: require_once 'board_members.php';
+                                    case 3: require_once 'executives.php';
                                         break;
                                     case 4: require_once 'all_faqs.php';
                                         break;

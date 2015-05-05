@@ -127,9 +127,12 @@ class NewsAdmin extends Admin {
             $check_result = mysqli_query($link, $check_query);
             if ($check_result) {
                 $row = mysqli_fetch_array($check_result);
-                $deleted = unlink($row["img_url"]);
-                if (!$deleted) {
-                    throw new Exception("Home page image with id = $value could not be deleted");
+                $thumb_url = filter_input(INPUT_SERVER, "DOCUMENT_ROOT") . SITE_FOLDER . $row["thumb_url"];
+                if (is_file($thumb_url)) {
+                    $deleted = unlink($thumb_url);
+                    if (!$deleted) {
+                        throw new Exception("Home page image thumbnail with id = $value could not be deleted");
+                    }
                 }
             }
             //Log error
@@ -148,7 +151,7 @@ class NewsAdmin extends Admin {
     }
 
     public function newHomePageImage($img, $href, $caption, $size) {
-        $img_url = filter_input(INPUT_SERVER, 'HTTP_HOST') . "/$img";
+        $img_url = "http://" . filter_input(INPUT_SERVER, 'HTTP_HOST') . "/$img";
         $link = AdminUtility::getDefaultDBConnection();
         //Check if exists
         $check_query = "select * from home_page_images where img_url='" . mysqli_escape_string($link, $img_url) . "' "
@@ -162,13 +165,18 @@ class NewsAdmin extends Admin {
             throw new Exception("Image already exists");
         }
 
+        //Validate news 
+        if (empty($href) || empty($caption)) {
+            throw new Exception("Link or caption is empty");
+        }
+
         //Check image dimension
-        $size_ok = checkDimension($img_url, $size);
-        if(!$size_ok){
+        $size_ok = checkDimension($img, $size);
+        if (!$size_ok) {
             throw new Exception("Image do not meet the specifications for $size");
         }
         //Create thumbnail
-        $thumb_url = createThumbnail($img_url);
+        $thumb_url = createThumbnail($img);
 
         $query = "insert into home_page_images set "
                 . "img_url='" . mysqli_escape_string($link, $img_url) . "', "

@@ -90,11 +90,11 @@ if (isset($array['post_button'])) {
             $editor->Height = 560;
             $editor->Width = 960;
             $editor->MaxImageSize = "200";
-            $editor->ImageGalleryPath = HOSTNAME_REL . "/uploads/news/images/";
-            $editor->FilesGalleryPath = HOSTNAME_REL . "/uploads/news/files/";
-            $editor->FlashGalleryPath = HOSTNAME_REL . "/uploads/news/flash/";
-            $editor->MediaGalleryPath = HOSTNAME_REL . "/uploads/news/media/";
-            $editor->TemplateGalleryPath = HOSTNAME_REL . "/uploads/news/templates/";
+            $editor->ImageGalleryPath = SITE_FOLDER . "/uploads/news/images/";
+            $editor->FilesGalleryPath = SITE_FOLDER . "/uploads/news/files/";
+            $editor->FlashGalleryPath = SITE_FOLDER . "/uploads/news/flash/";
+            $editor->MediaGalleryPath = SITE_FOLDER . "/uploads/news/media/";
+            $editor->TemplateGalleryPath = SITE_FOLDER . "/uploads/news/templates/";
             $editor->Draw();
             $editor = null;
             ?>
