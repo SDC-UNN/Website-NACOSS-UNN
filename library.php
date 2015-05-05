@@ -169,14 +169,25 @@ limitations under the License.
                             ?>
                             <tr class="">
                                 <td class="">
-                                    <h4>
-                                        <?= $array[$index]['title'] ?> 
-                                        <?= empty($array[$index]['file_type']) ? "" : "[" . $array[$index]['file_type'] . "]" ?>
-                                    </h4>
-                                    <p>
-                                        by <?= $array[$index]['author'] ?>
-                                        <a class="button link" target="_blank" href="download.php?id=<?= $array[$index]['id'] ?>">Download</a>
-                                    </p>
+                                    <div class="grid">
+                                        <div class="row ntm nbm">
+                                            <div class="span1">
+                                                
+                                            </div>
+                                            <div class="span11">
+                                                <h4>
+                                                    <?= $array[$index]['title'] ?> 
+                                                    <?= empty($array[$index]['file_type']) ? "" : "[" . $array[$index]['file_type'] . "]" ?>
+                                                </h4>
+                                                <p>
+                                                    by <?= $array[$index]['author'] ?>
+                                                    <a class="button link" target="_blank" href="download.php?id=<?= $array[$index]['id'] ?>">Download</a>
+                                                    <br/>
+                                                    <?= $array[$index]['num_of_downloads'] ?> download(s)
+                                                </p>   
+                                            </div>
+                                        </div>
+                                    </div>
                                 </td>
                             </tr>
                             <?php

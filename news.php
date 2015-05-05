@@ -50,37 +50,67 @@ limitations under the License.
         <script src="js/github.info.js"></script>
 
         <!-- Page Title -->
-        <title>NACOSS UNN : News</title>        
+        <title>NACOSS UNN : News</title>      
+
     </head>
     <body class="metro" style="background-image: url(img/bg.jpg); background-repeat: repeat;">
         <div class="container bg-white">            
             <?php require_once './header.php'; ?>
-            <br/>
             <div class="padding20">
-
                 <h1>News / Events</h1>
                 <?php
-                $array = $news->getAllNews();
-                for ($index = 0; $index < count($array); $index++) {
+                $allNews = $news->getAllNews();
+                $topNews = $news->getTopNews();
+                if (empty($allNews)) {
                     ?>
-                    <div class="listview-outlook" data-role="listview">
-                        <div class="list-group collapsed">
-                            <a href="#" class="group-title">
-                                <?= "Posted: " . $array[$index]['time_of_post'] ?>
-                            </a>
-                            <div class="group-content">
-                                <a href="news_post.php?id=<?= $array[$index]['id'] ?>" class="list">
-                                    <div class="list-content"><?= "Headline: " . $array[$index]['title'] ?></div>
-                                </a>
+                    <p>no post</p>
+                    <?php
+                } else {
+                    ?>
+                    <div class="grid">
+                        <div class="row">
+                            <div class="span8 listview-outlook">
+                                <?php
+                                foreach ($allNews as $value) {
+                                    ?>
+                                    <a href="news_post.php?id=<?= $value['id'] ?>" class="list">
+                                        <div class="list-content text-left">
+                                            <h4 class="fg-lightBlue"><?= $value['title'] ?></h4>
+                                            <small class="">
+                                                <?php
+                                                $plain = strip_tags($value['content']); //get plain text
+                                                $preview = str_split($plain, 150)[0]; //get first 150 characters
+                                                echo $preview . "...";
+                                                ?>
+                                                <br/>
+                                                <strong>Posted: <?= $value['time_of_post'] ?></strong>
+                                            </small>
+                                        </div>
+                                    </a>
+                                    <?php
+                                }
+                                ?>
                             </div>
+                            <div class="span4 listview-outlook">
+                                <h4 class="padding5 bg-NACOSS-UNN fg-white">Top Stories</h4>
+                                <?php
+                                foreach ($topNews as $value) {
+                                    ?>
+                                    <a href="news_post.php?id=<?= $value['id'] ?>" class="list">
+                                        <div class="list-content">
+                                            <span class="list-title fg-lightBlue"><?= $value['title'] ?></span>
+                                        </div>
+                                    </a>
+                                    <?php
+                                }
+                                ?>
+                            </div> 
                         </div>
                     </div>
                     <?php
                 }
                 ?>
             </div>
-
-
             <br/>
             <?php require_once './footer.php'; ?>
         </div>

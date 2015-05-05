@@ -112,4 +112,13 @@ class NewsFeeds {
         }
     }
 
+    public function plusOneHit($id) {
+        $query = "update news set hits = hits + 1 where id = '$id'";
+        $link = UserUtility::getDefaultDBConnection();
+        $result = mysqli_query($link, $query);
+        //Log error            
+        UserUtility::logMySQLError($link);
+        return $result;
+    }
+
 }

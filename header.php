@@ -18,9 +18,9 @@ $user = new User();
                             <a class="bg-hover-dark" href="login.php">Login | Register</a>
                         <?php } ?>
                     </li>
-<!--                    <li>
-                        <a class="bg-hover-dark" target="_blank" href="#">Forum</a>
-                    </li>-->
+                    <!--                    <li>
+                                            <a class="bg-hover-dark" target="_blank" href="#">Forum</a>
+                                        </li>-->
                     <li>
                         <a class="bg-hover-dark" href="prospectus.php">Prospectus</a>
                     </li>
@@ -36,10 +36,14 @@ $user = new User();
                         <a class="bg-hover-dark" target="_blank" href="alumni/">Alumni</a>
                     </li>
                     <li>
-                        <a class="bg-hover-dark" href="contact.php">Contact</a>
+                        <a class="bg-hover-dark" href="contact.php">Contact Us</a>
                     </li>
                     <li>
-                        <a class="bg-hover-dark" href="about.php">About Us</a>
+                        <a href="#" class="dropdown-toggle bg-NACOSS-UNN bg-hover-dark">Get to Know Us</a>
+                        <ul class="dropdown-menu dark" data-role="dropdown">
+                            <li><a href="about.php">About Us</a></li>
+                            <li><a href="executives.php">Our Executives</a></li>
+                        </ul>
                     </li>
 
                 </ul>

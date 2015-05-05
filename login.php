@@ -19,6 +19,7 @@ if ($user->isLoggedIn()) {
                 foreach ($array as $key => $value) {
                     $array[$key] = html_entity_decode($array[$key]);
                 }
+                $ok = true;
             } else {
                 $ok = false;
                 $error_message = "Oops! Something went wrong, parameters are invalid.";
@@ -28,7 +29,7 @@ if ($user->isLoggedIn()) {
                 try {
                     $success = $user->
                             registerUser($array['regno'], $array['password1'], $array['password2'], $array['email'], $array['first_name'], $array['last_name'], $array['phone']);
-                    if ($success and $user->loginUser($array['regno'], $array['password1'])) {                        
+                    if ($success and $user->loginUser($array['regno'], $array['password1'])) {
                         header("location: profile.php");
                     } else {
                         $success = FALSE;
@@ -41,6 +42,7 @@ if ($user->isLoggedIn()) {
                 }
             } else {
                 $success = false;
+                $error_message = "No request recieved";
             }
         } else {
             //handle request from login form
@@ -237,26 +239,29 @@ limitations under the License.
                                             <div class="row" >
                                                 <label class="span2">Reg. Number<span class="fg-red">*</span></label>
                                                 <div class="span4">
-                                                    <input name='regno' style="width: inherit" maxlength="11" type='text' 
+                                                    <input name='regno' required style="width: inherit" maxlength="11" type='text' 
                                                            <?= $isFormRequest && isset($array['regno']) ? "value='" . $array['regno'] . "'" : ""; ?>  tabindex='3'  />
                                                 </div>
                                             </div>
                                             <div class="row" >
                                                 <label class="span2">Password<span class="fg-red">*</span></label>
                                                 <div class="span4">
-                                                    <input class="password" name='password1' style="width: inherit" type='password' tabindex='4' />
-                                                </div>
+                                                    <input class="password" required name='password1' style="width: inherit" type='password' tabindex='4' />
+                                                    <label class="fg-lime">
+                                                        <small>Should be up to 8 characters long and contain both upper and lower cases</small>
+                                                    </label> 
+                                                </div>                                                                                                
                                             </div>
                                             <div class="row" >
                                                 <label class="span2">Confirm Password<span class="fg-red">*</span></label>
                                                 <div class="span4">
-                                                    <input class="password" name='password2' style="width: inherit" type='password' tabindex='5' />
+                                                    <input class="password" required name='password2' style="width: inherit" type='password' tabindex='5' />
                                                 </div>
                                             </div>
                                             <div class="row" >
                                                 <label class="span2">Phone<span class="fg-red">*</span></label>
                                                 <div class="span4">
-                                                    <input name='phone' style="width: inherit" type='tel' 
+                                                    <input name='phone' required style="width: inherit" type='tel' 
                                                            <?= $isFormRequest && isset($array['phone']) ? "value='" . $array['phone'] . "'" : ""; ?> tabindex='6'/>
                                                 </div>
                                             </div>
@@ -266,6 +271,10 @@ limitations under the License.
                                                 <div class="span4">
                                                     <input name='email' style="width: inherit" required type='email' 
                                                            <?= $isFormRequest && isset($array['email']) ? "value='" . $array['email'] . "'" : ""; ?>  tabindex='7'   />
+
+                                                    <label class="fg-lime">
+                                                        <small>This will be used for password recovery and account verification</small>
+                                                    </label> 
                                                 </div>
                                             </div>
                                             <div class="no-phone offset2">

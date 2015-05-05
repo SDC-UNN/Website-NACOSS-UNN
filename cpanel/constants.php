@@ -26,7 +26,7 @@ define("DB_HOSTNAME", "localhost"); //Database hostname
 define("DB_USERNAME", "root"); //Database username
 define("DB_PASSWORD", ""); //Database password
 define("HOSTNAME", "http://localhost/Website-NACOSS-UNN/"); //Location of this project
-define("HOSTNAME_REL", "/Website-NACOSS-UNN/"); //Location of this project relative to localhost
+define("SITE_FOLDER", "/Website-NACOSS-UNN/"); //Location of this project relative to localhost
 define("CPANEL_URL", "http://localhost/Website-NACOSS-UNN/cpanel/"); //Location of cpanel in your computer (relative to localhost)
 define("NDG_HOMEPAGE", "http://localhost/ndg/"); //NDG Homepage
 define("LIBRARY_UPLOAD_DIR", HOSTNAME.'uploads/');

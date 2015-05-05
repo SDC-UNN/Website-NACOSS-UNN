@@ -72,7 +72,7 @@ class Admin {
 
     public function activateLogin() {
         if ($this->isLoggedIn()) {
-            return $this->setAdminCookies($this->getAdminCookiesID(), $this->getAdminCookiesPassword(), $this->getAdminCookiesType());
+            return $this->setAdminCookies($this->getAdminCookiesID(), $this->getAdminCookiesPassword());
         }
         return false;
     }
@@ -104,9 +104,9 @@ class Admin {
      * @param type $password admin's password
      * @return boolean true if admin was successfully validated and cookies was sucessfully set, false otherwise
      */
-    public function loginAdmin($ID, $password, $type) {
-        if (!(empty($ID) | empty($password) | empty($type))) {
-            $query = "select * from admins where username = '$ID' and type = '$type'";
+    public function loginAdmin($ID, $password) {
+        if (!(empty($ID) | empty($password))) {
+            $query = "select * from admins where username = '$ID'";
             $link = AdminUtility::getDefaultDBConnection();
             $result = mysqli_query($link, $query);
             if ($result) {
@@ -120,14 +120,17 @@ class Admin {
                         // If so, create a new hash, and replace the old one
                         $newHash = password_hash($password, PASSWORD_DEFAULT, $options);
                         $hash = mysqli_escape_string($link, $newHash);
+                        //Replace in database
                         $query = "update admins set password = '$hash' where username = '$ID'";
                         mysqli_query($link, $query);
                         //Log error
                         AdminUtility::logMySQLError($link);
+                        
+                        //Replace existing password
+                        $row['password'] = $hash;
                     }
-
-                    $ok = $this->setAdminCookies($ID, $hash, $type);
-//                    $this->adminInfo = $this->getAdminData(); //Reload data
+                    $this->adminInfo = $row;
+                    $ok = $this->setAdminCookies($ID, $hash);
                     return $ok;
                 }
             }
@@ -135,7 +138,7 @@ class Admin {
             AdminUtility::logMySQLError($link);
 
             //Not found or no match
-            throw new Exception("Wrong username, password or type");
+            throw new Exception("Wrong username or password");
         } else {
             throw new Exception("Some fields are empty");
         }
@@ -195,12 +198,6 @@ class Admin {
         return filter_input(INPUT_COOKIE, "admin_pwd");
     }
 
-    /**
-     * @returns admins type from cookies
-     */
-    private function getAdminCookiesType() {
-        return filter_input(INPUT_COOKIE, "t");
-    }
 
     /**
      * Sets cookies
@@ -208,14 +205,11 @@ class Admin {
      * @param type $password
      * @return type
      */
-    private function setAdminCookies($id, $password, $type) {
+    private function setAdminCookies($id, $password) {
         $expire = time() + (60 * 60 * 1); //1 hour i.e 60secs * 60mins * 1hr
         $ok = setcookie("admin_id", $id, $expire);
         if ($ok) {
             $ok = setcookie("admin_pwd", $password, $expire);
-        }
-        if ($ok) {
-            $ok = setcookie("t", $type, $expire);
         }
         return $ok;
     }
@@ -227,8 +221,7 @@ class Admin {
     private function clearAdminCookies() {
         $clearIDOk = setcookie("admin_id", "", time() - 3600);
         $clearPwdOk = setcookie("admin_pwd", "", time() - 3600);
-        $clearTypeOk = setcookie("t", "", time() - 3600);
-        return $clearIDOk && $clearPwdOk && $clearTypeOk;
+        return $clearIDOk && $clearPwdOk ;
     }
 
 }

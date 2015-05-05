@@ -4,15 +4,14 @@ require_once './class_lib.php';
 $admin = new Admin();
 $isFormRequest = filter_input(INPUT_POST, "submit");
 if (isset($isFormRequest)) {
-    $type = html_entity_decode(filter_input(INPUT_POST, "admin_type"));
     $id = html_entity_decode(filter_input(INPUT_POST, "id"));
     $password = html_entity_decode(filter_input(INPUT_POST, "password"));
 
     //Login
     try {
-        $success = $admin->loginAdmin($id, $password, $type);
+        $success = $admin->loginAdmin($id, $password);
         if ($success) {
-            switch ($type) {
+            switch ($admin->getAdminType()) {
                 case Admin::WEBMASTER:
                     header("location: webmaster/");
                     break;
@@ -123,7 +122,7 @@ limitations under the License.
                     <br/>
                     <br/>
                     <br/>
-                    <div class="offset5 span6 panel shadow">
+                    <div style="margin-left: auto; margin-right: auto;" class="span6 panel shadow">
                         <h2 class="panel-header bg-grayDark fg-white">
                             NACOSS UNN CPanel
                         </h2>
@@ -136,20 +135,10 @@ limitations under the License.
                             <form method='post' action='index.php'>
                                 <!--Login form-->
                                 <div class="grid">
-                                    <div class="text-center">
-                                        <input type="radio" <?= isset($type) ? ($type === Admin::WEBMASTER ? "checked" : "") : "checked" ?> name="admin_type" required value="<?= Admin::WEBMASTER ?>" /> Web Master&nbsp;
-                                        <input type="radio" <?= isset($type) ? ($type === Admin::PRO ? "checked" : "") : "" ?> name="admin_type" required value="<?= Admin::PRO ?>"/> PRO &nbsp;
-                                        <input type="radio" <?= isset($type) ? ($type === Admin::LIBRARIAN ? "checked" : "") : "" ?> name="admin_type" required value="<?= Admin::LIBRARIAN ?>"/> Librarian&nbsp;
-                                        
-                                        <!--Temporary disabled-->
-                                        <!--<input type="radio" <?= isset($type) ? ($type === Admin::TREASURER ? "checked" : "") : "" ?> name="admin_type" required value="<?= Admin::TREASURER ?>"/> Treasurer&nbsp;-->
-                                        <!--<input type="radio" <?= isset($type) ? ($type === Admin::CLASS_REP ? "checked" : "") : "" ?> name="admin_type" required value="<?= Admin::CLASS_REP ?>"/> Class Rep.-->
-                                    </div>
-                                    <br/>
                                     <div class="row ntm">
                                         <label class="span1">ID</label>
                                         <div class="span4">
-                                            <input class="text" name='id' maxlength="11" style="width: inherit" required type='text' 
+                                            <input class="text" name='id' style="width: inherit" required type='text' 
                                                    <?= $isFormRequest ? "value='$id'" : ""; ?> tabindex='1' />
                                         </div>
                                     </div>
@@ -169,6 +158,8 @@ limitations under the License.
                             </form>
                         </div>
                     </div>                    
+                    <br/>
+                    <br/>
                     <br/>
                     <br/>
                     <br/>

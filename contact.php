@@ -101,6 +101,11 @@ limitations under the License.
                 <h1 class="fg-dark">Contact Us</h1>
                 <p>If you would like to get in touch with NACOSS UNN Chapter, here’s how you can reach us:</p>
                 <br/>
+                <div class="grid">
+                    <div class="row">
+                        <iframe class="span12" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3961.191598794443!2d7.408535000000007!3d6.8676299999999975!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x1044e7defeff9725%3A0xffb8a28c30660e7d!2sUniversity+of+Nigeria+Nsukka!5e0!3m2!1sen!2sng!4v1430176121283"  frameborder="0" style="border:0"></iframe>
+                    </div>
+                </div>
                 <div class="panel bg-white no-border">
                     <strong>CALL <i class="icon-phone-2"></i></strong>
                     <br/>

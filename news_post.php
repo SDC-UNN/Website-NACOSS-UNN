@@ -1,3 +1,19 @@
+<?php
+require_once 'class_lib.php';
+
+$id = filter_input(INPUT_GET, "id");
+if (!empty($id)) {
+    $all_news = new NewsFeeds();
+    $news = $all_news->getNews($id);
+    if (empty($news)) {
+        header("location: news.php");
+    } else {
+        $all_news->plusOneHit($id);
+    }
+} else {
+    header("location: news.php");
+}
+?>
 <!DOCTYPE html>
 <!--
 Copyright 2015 NACOSS UNN Developers Group (NDG).
@@ -46,15 +62,23 @@ limitations under the License.
         <script src="js/github.info.js"></script>
 
         <!-- Page Title -->
-        <title>NACOSS UNN : Title</title>        
+        <title><?= $news['title'] ?></title>        
     </head>
     <body class="metro" style="background-image: url(img/bg.jpg); background-repeat: repeat;">
         <div class="container bg-white">            
             <?php require_once './header.php'; ?>
             <br/>
             <div class="padding20">
-
-                <!--Your code goes here-->
+                <h2><?= $news['title']; ?></h2>
+                <h5><?= "Posted on: " . $news['time_of_post']; ?></h5>
+                <hr>
+                <h6 style="text-align: center;"><a href="news.php">
+                        -Back to news page</a>&nbsp;&nbsp;||&nbsp;&nbsp;<a href="index.php">Return to Home-</a>
+                </h6>
+                <div style='text-align:justify'>
+                    <?= $news['content']; ?>
+                </div>
+                <h6 style="text-align: center;"><a href="news.php">-Back to news page</a>&nbsp;&nbsp;||&nbsp;&nbsp;<a href="index.php">Return to Home-</a></h6>
 
             </div>
             <br/>

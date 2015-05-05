@@ -175,7 +175,7 @@ class User {
         }
 
         $prefix = str_replace("/", "", $this->getUserID());
-        $url = "uploads/" . uniqid($prefix) . $file_ext;
+        $url = "uploads/userpics/" . uniqid($prefix) . $file_ext;
         $moved = move_uploaded_file($_FILES[$filename]["tmp_name"], $url);
 
         if ($moved) {
@@ -214,7 +214,7 @@ class User {
 
     private function validatePassword($password) {
         if (strlen($password) >= 8) {
-            $regex = "#([A-Z]+[a-z]*[0-9]*\S*)([A-Z]*[a-z]+[0-9]*\S*)([A-Z]*[a-z]*[0-9]+\S*)#";
+            $regex = "#([A-Z]+[a-z]*[0-9]*\S*)([A-Z]*[a-z]+[0-9]*\S*)([A-Z]*[a-z]*[0-9]*\S*)#";
             if (!preg_match($regex, $password)) {
                 throw new Exception("Invalid password: try switching letter cases, adding numbers and special characters");
             }
