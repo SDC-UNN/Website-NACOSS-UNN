@@ -79,7 +79,7 @@ limitations under the License.
                                             <small class="">
                                                 <?php
                                                 $plain = strip_tags($value['content']); //get plain text
-                                                $preview = str_split($plain, 150)[0]; //get first 150 characters
+                                                $preview = str_split($plain, 80)[0]; //get first 80 characters
                                                 echo $preview . "...";
                                                 ?>
                                                 <br/>

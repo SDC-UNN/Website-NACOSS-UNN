@@ -17,7 +17,7 @@
 
 if (isset($array['addClassRep'])) {
     try {
-        $admin->addClassRep($array['regno']);
+        $admin->addClassRep($array['regno'], $array['sms_units']);
         $success = true;
         $error_message = "";
     } catch (Exception $exc) {
@@ -37,6 +37,19 @@ if (isset($array['remove_button'])) {
     }
 }
 
+if (isset($array['save_balance'])) {
+    try {
+		$balances = $array['balance'];
+		foreach($balances as $user_id => $new_balance){
+			$admin->updateClassRepSMSbalance($user_id, $new_balance);
+			$success = true;
+			$error_message = "";
+		}
+    } catch (Exception $exc) {
+        $success = false;
+        $error_message = $exc->getMessage();
+    }
+}
 $classReps = getClassReps();
 ?>
 
@@ -68,6 +81,15 @@ $classReps = getClassReps();
             ?>
             <form action="index.php?p=2" method="post">
                 <table class="table hovered">
+                	<thead>
+                    	<th class="text-left">Name</th>
+                    	<th class="text-left">Reg. No.</th>
+                    	<th class="text-left">Level</th>
+                    	<th class="text-left">SMS Balance</th>
+                    	<th class="text-left">Units Used</th>
+                    	<th class="text-left">&hellip;</th>
+                    	<th class="text-left">&hellip;</th>
+                    </thead>
                     <tbody>
                         <?php
                         foreach ($classReps as $class_rep) {
@@ -81,6 +103,10 @@ $classReps = getClassReps();
                                     <?= empty($class_rep['level']) ? "" : $class_rep['level'] . " Level" ?>
                                 </td>
                                 <td>
+                                	<input name="balance[<?= $class_rep['user_id']; ?>]" value="<?= $class_rep['units_assigned'] ?>" type="number" max="10000" required="required"/>
+                                </td>
+                                <td><?= $class_rep['units_used'] ?></td>
+                              <td>
                                     <button class="link" onclick="warn()" type="url" name="remove_button" value="<?= $class_rep['regno'] ?>">remove</button>
                                 </td>
                                 <td class="text-left">
@@ -93,8 +119,14 @@ $classReps = getClassReps();
                         }
                         ?>
                     </tbody>
+                    	<tr>
+                        	<td colspan="3">&nbsp;</td>
+                        	<td><input name="save_balance" type="submit" value="Save Balance" class="button bg-blue bg-hover-dark fg-white"/></td>
+                        	<td colspan="3">&nbsp;</td>
+                        </tr>
                 </table>
             </form>
+
         <?php } ?>
         <br/>
         <br/>
@@ -102,7 +134,7 @@ $classReps = getClassReps();
         if (count($classReps) < 4) {
             ?>
             <div class="panel">
-                <div class="panel-header">Add New</div>
+                <div class="panel-header">Add New Class-Rep.</div>
                 <div class="panel-content">
                     <?php
                     if (isset($array['addClassRep'])) {
@@ -114,8 +146,8 @@ $classReps = getClassReps();
                     }
                     ?>
                     <form action="index.php?p=2" method="post">
-                        <label>Registration Number</label>
-                        <input type="text" maxlength="11" name="regno" value="<?= isset($array['regno']) ? $array['regno'] : "" ?>"/>
+                        <input type="text" maxlength="11" name="regno" value="<?= isset($array['regno']) ? $array['regno'] : "" ?>" required="required" placeholder="Registration Number"/>
+                        <input type="number" max="10000" name="sms_units" value="<?= isset($array['sms_units']) ? $array['sms_units'] : "" ?>" placeholder="SMS Units"/>
                         <input type="submit"  class="button bg-blue bg-hover-dark fg-white" name="addClassRep" value="Add"/>
                     </form>
                 </div>

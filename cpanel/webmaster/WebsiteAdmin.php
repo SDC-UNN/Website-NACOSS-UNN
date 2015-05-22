@@ -59,7 +59,7 @@ class WebsiteAdmin extends Admin {
         return 250;
     }
 
-    public function addClassRep($regno) {
+    public function addClassRep($regno, $sms_units) {
         $link = AdminUtility::getDefaultDBConnection();
 
         $q = "select * from admins where username = '$regno'";
@@ -72,14 +72,16 @@ class WebsiteAdmin extends Admin {
         $result = mysqli_query($link, $query);
         if ($result and mysqli_num_rows($result) > 0) {
             $row = mysqli_fetch_array($result);
-            $query = "insert into admins set username = '$regno', "
+            $query1 = "insert into admins set username = '$regno', "
                     . "password = '" . $row['password'] . "', "
                     . "type = '" . Admin::CLASS_REP . "', "
                     . "email = '" . $row['email'] . "'";
-            $result = mysqli_query($link, $query);
+			$query2 = "insert into messenger_sms_biller values(NULL, '$regno', $sms_units, 0, 'Class Rep')";
+            $result1 = mysqli_query($link, $query1);
+            $result2 = mysqli_query($link, $query2);
             //Log error
             AdminUtility::logMySQLError($link);
-            return $result;
+            return true;
         }
         //Log error
         AdminUtility::logMySQLError($link);
@@ -88,15 +90,29 @@ class WebsiteAdmin extends Admin {
 
     public function removeClassRep($regno) {
         $link = AdminUtility::getDefaultDBConnection();
-        $query = "delete from admins where username = '$regno'";
-        $result = mysqli_query($link, $query);
-        if ($result) {
-            return $result;
+        $query1 = "delete from admins where username = '$regno'";
+        $query2 = "delete from messenger_sms_biller where user_id = '$regno'";
+        $result1 = mysqli_query($link, $query1);
+        $result2 = mysqli_query($link, $query2);
+        if ($result1 and $result2) {
+            return true;
         }
         //Log error
         AdminUtility::logMySQLError($link);
         throw new Exception("Failed to remove $regno");
     }
+	
+	public function updateClassRepSMSbalance($user_id, $new_balance){
+        $link = AdminUtility::getDefaultDBConnection();
+        $query = "update messenger_sms_biller set units_assigned = $new_balance where user_id = '$user_id'";
+        $result = mysqli_query($link, $query);
+        if ($result) {
+            return true;
+        }
+        //Log error
+        AdminUtility::logMySQLError($link);
+        throw new Exception("Failed to update balance for $user_id");
+	}
 
     function deleteUsers(array $regno) {
         $link = AdminUtility::getDefaultDBConnection();

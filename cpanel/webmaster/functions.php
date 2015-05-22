@@ -284,8 +284,8 @@ function validateNumbers($numbers) {
 
 function getClassReps() {
     $class_reps = array();
-    $query = "select u.first_name, u.last_name, u.regno, u.level from admins a "
-            . "join users u on u.regno = a.username "
+    $query = "select u.first_name, u.last_name, u.regno, u.level, m.user_id, m.units_used, m.units_assigned from admins a "
+            . "join (users u, messenger_sms_biller m) on (u.regno = a.username and u.regno = m.user_id) "
             . "where a.type = '" . Admin::CLASS_REP . "' ";
     $link = AdminUtility::getDefaultDBConnection();
     $result = mysqli_query($link, $query);

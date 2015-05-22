@@ -195,7 +195,7 @@ limitations under the License.
             <div class="bg-grayLighter">
                 <div class="padding5 grid">
                     <div class="row">
-                        <small class="span1" style="padding-top: 15px">sponsors</small>
+                        <small class="span1" style="padding-top: 15px">Sponsors</small>
                         <div class="span11">
                             <div class="span1">
                                 <a href="http://unn.edu.ng" target="_blank">

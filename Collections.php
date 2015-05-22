@@ -93,6 +93,7 @@ class Collections {
             foreach ($this->books as $value) {
                 if (stripos($value['title'], $query) !== FALSE ||
                         stripos($value['author'], $query) !== FALSE ||
+                        stripos($value['file_type'], $query) !== FALSE ||
                         stripos($value['keywords'], $query) !== FALSE) {
                     array_push($array, $value);
                 }

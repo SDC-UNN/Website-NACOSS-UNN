@@ -1,7 +1,7 @@
 <?php
-require_once '../class_lib.php';
-require_once 'StudentAdmin.php';
-require_once './functions.php';
+require_once('../class_lib.php');
+require_once('StudentAdmin.php');
+require_once('functions.php');
 
 $admin = new StudentAdmin();
 if ($admin->activateLogin()) {
@@ -26,6 +26,28 @@ if ($admin->activateLogin()) {
             $admin->logoutAdmin();
             break;
     }
+
+    //Set page number
+    $page = filter_input(INPUT_GET, "p");
+    if (empty($page)) {
+        $page = 1;
+    }
+
+    //Check for post request
+    $array = filter_input_array(INPUT_POST);
+    if ($array !== FALSE && $array !== null) {
+        foreach ($array as $key => $value) {
+            if (is_array($array[$key])) {
+                foreach ($array[$key] as $subkey => $subvalue) {
+                    $subvalue[$subkey] = html_entity_decode($subvalue[$subkey]);
+                }
+            } else {
+                $array[$key] = html_entity_decode($array[$key]);
+            }
+        }
+        //Further processing is done in the page to which the request was directed to
+    }
+
 } else {
     header("location: ../index.php");
 }
@@ -79,38 +101,71 @@ limitations under the License.
         <title>CPanel</title>        
     </head>
     <body class="metro">
-        <div class="">
             <div class="bg-white">            
                 <?php require_once '../header.php'; ?>
                 <div class="padding20">
-                    <h2>Class Representatives</h2>
+                    <h2>CLASS REP.</h2>
                     <div class="grid">
                         <div class="row">
                             <div class="span3">
                                 <nav class="sidebar light">
                                     <ul class="">
-                                        <li class="">
-                                            <a href="#">Add New Results</a>
+                                        <li class="<?= $page == 1 ? "stick bg-darkBlue" : "" ?>">
+                                            <a href="index.php?p=1"><i class="icon-image"></i>Class List</a>
                                         </li>
-                                        <li class="">
-                                            <a href="#">All Results</a>
+                                        <li class="<?= $page == 2 || ($page >= 21 and $page <= 25) ? "stick bg-darkBlue " : "" ?>">
+                                            <a class="dropdown-toggle" href="#"><i class="icon-broadcast"></i>Messenger</a>
+                                            <ul class="dropdown-menu" data-role="dropdown">
+                                                <li><a href="index.php?p=2">Compose Message</a></li>
+                                                <li><a href="index.php?p=22">Contacts/Group</a></li>
+                                                <li><a href="index.php?p=24">Message Logs</a></li>
+                                                <li><a href="index.php?p=25">Status</a></li>
+                                            </ul>
                                         </li>
-                                        <li class="">
-                                            <a href="#">Settings</a>
+                                        <li class="<?= $page == 3 ? "stick bg-darkBlue" : "" ?>">
+                                            <a href="index.php?p=3"><i class="icon-tools"></i>Settings</a>
                                         </li>
                                     </ul>
                                     <br/>
                                     <div class="panel no-border">
                                         <div class="panel-header">Statistics</div>
                                         <div class="panel-content">
-                                            
+                                            <p>Number in Class</p>
+                                            <p><? ?>-</p>
+                                            <p>Males</p>
+                                            <p><? ?>-</p>
+                                            <p>Females</p>
+                                            <p><? ?>-</p>
                                         </div>
                                     </div>
                                 </nav>
                             </div>
 
                             <div class="span12">
-
+                                <?php
+                                switch ($page) {
+                                    case 1: require_once '_class_list.php';
+                                        break;
+                                    case 2: require_once '_messenger_new_sms.php';
+                                        break;
+                                    case 21: require_once '_messenger_new_mail.php';
+                                        break;
+                                    case 22: require_once '_messenger_contacts_all.php';
+                                        break;
+                                    case 23: require_once '_messenger_contacts_groups.php';
+                                        break;
+                                    case 24: require_once '_messenger_logs.php';
+                                        break;
+                                    case 25: require_once '_messenger_status.php';
+                                        break;
+									case 26: require_once '_messenger_select_recipients.php';
+										break;
+                                    case 3: require_once '_settings.php';
+                                        break;
+                                    default : require_once '_class_list.php';
+                                        break;
+                                }
+                                ?>
                             </div>
                         </div>
                     </div>
@@ -119,6 +174,5 @@ limitations under the License.
                 <br/>
                 <?php require_once '../footer.php'; ?>
             </div>
-        </div>
     </body>
 </html>

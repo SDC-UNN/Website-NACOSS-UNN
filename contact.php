@@ -100,111 +100,116 @@ limitations under the License.
             <div class="padding20" id="inquiries">
                 <h1 class="fg-dark">Contact Us</h1>
                 <p>If you would like to get in touch with NACOSS UNN Chapter, here’s how you can reach us:</p>
-                <br/>
                 <div class="grid">
                     <div class="row">
-                        <iframe class="span12" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3961.191598794443!2d7.408535000000007!3d6.8676299999999975!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x1044e7defeff9725%3A0xffb8a28c30660e7d!2sUniversity+of+Nigeria+Nsukka!5e0!3m2!1sen!2sng!4v1430176121283"  frameborder="0" style="border:0"></iframe>
+                        <div class="row">
+                            <strong>LOCATION <i class="icon-location"></i></strong>
+                            <br/>
+                            <address class="">
+                                Room 425, Department of Computer Science, Abuja Building, University of Nigeria, Nsukka.
+                            </address>
+                        </div>            
+                        <div class="row">
+                            <iframe class="span12" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3961.191598794443!2d7.408535000000007!3d6.8676299999999975!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x1044e7defeff9725%3A0xffb8a28c30660e7d!2sUniversity+of+Nigeria+Nsukka!5e0!3m2!1sen!2sng!4v1430176121283"  frameborder="0" style="border:0"></iframe>
+                        </div>
                     </div>
-                </div>
-                <div class="panel bg-white no-border">
-                    <strong>CALL <i class="icon-phone-2"></i></strong>
-                    <br/>
-                    <?php
-                    $array = UserUtility::getContactNumbers();
-                    for ($index = 0; $index < count($array); $index++) {
-                        echo '<span class="fg-lightBlue">' . $array[$index] . '</span>';
-                        if ($index < count($array) - 1) {
-                            echo ', ';
+                    <div class="row">
+                        <strong>CALL <i class="icon-phone-2"></i></strong>
+                        <br/>
+                        <?php
+                        $array = UserUtility::getContactNumbers();
+                        for ($index = 0; $index < count($array); $index++) {
+                            echo '<span class="fg-lightBlue">' . $array[$index] . '</span>';
+                            if ($index < count($array) - 1) {
+                                echo ', ';
+                            }
                         }
-                    }
-                    ?>
-                </div>
-                <br/>
-                <div>
-                    <p id="">
-                        <strong>Email Inquiries</strong><br />
-                        If you would prefer to contact us via email, simply fill out the form below.
-                    </p>
-                    <br/>
-
-                    <?php if ($request) { ?>
-                        <div class="row container">
-                            <div class="label">
-                                <?php if ($success) { ?>
-                                    <h2 class="success fg-green">Thank You!</h2>
-                                    <p>Your message has been sent, we will reply in a while.</p>
-                                <?php } else { ?>
-                                    <h2 class="error fg-red">Sorry, we could not send your message at the moment.</h2>
-                                    <p>
-                                        please check and make sure your details are correct
-                                    </p>
-                                <?php } ?>
-                            </div>
-                        </div>
-                    <?php }
-                    ?>
-                    <form method='post' enctype='multipart/form-data' action='contact.php#inquiries'>
-                        <div  class="container">
-                            <div class="grid" >
-                                <div class="row" >
-                                    <label class="span2">Name<span class="fg-red">*</span></label>
-                                    <div class="span7">
-                                        <input name='name' required style="width: inherit" type='text' 
-                                               <?= $request ? "value='$name'" : ""; ?> tabindex='1' />
-                                    </div>
-                                </div>
-                                <div class="row" >
-                                    <label class="span2">Company</label>
-                                    <div class="span7">
-                                        <input name='company' style="width: inherit" type='text' 
-                                               <?= $request ? "value='$company'" : ""; ?>  tabindex='2'/>
-                                    </div>
-                                </div>
-                                <div class="row" >
-                                    <label class="span2">Address<span class="fg-red">*</span></label>
-                                    <div class="span7">
-                                        <input type='text' required placeholder="Street Address" name='address' style="width: inherit"
-                                               <?= $request ? "value='$address'" : ""; ?> tabindex='3' />
-                                        <input type='text' required placeholder="City" name='city'
-                                               <?= $request ? "value='$city'" : ""; ?> tabindex='4' />
-                                        <input type='text' required placeholder="State / Region" name='region' 
-                                               <?= $request ? "value='$region'" : ""; ?> tabindex='5'   />
-                                    </div>
-                                </div>
-
-                                <div class="row" >
-                                    <label class="span2">Phone</label>
-                                    <div class="span7">
-                                        <input name='phone' type='tel' 
-                                               <?= $request ? "value='$phone'" : ""; ?>  tabindex='6'  />
-                                    </div>
-                                </div>
-                                <div class="row" >
-                                    <label class="span2">Email Address<span class="fg-red">*</span>
-                                    </label>
-                                    <div class="span7">
-                                        <input name='email' required style="width: inherit" type='email' 
-                                               <?= $request ? "value='$user_email'" : ""; ?>   tabindex='7'   />
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <label class="span2">Comments<span class="fg-red">*</span>
-                                    </label>
-                                    <div class="span7">
-                                        <textarea name='message' required style="width: inherit" tabindex='8' rows='10'><?= $request ? "value='$comment'" : ""; ?></textarea>
-                                    </div>
-                                </div>
-                                <div class="row no-phone offset2">
-                                    <input class="button default bg-NACOSS-UNN bg-hover-dark" type='submit'
-                                           name='submit' value='Send Message' tabindex='9'/>
-                                </div>
-                                <div class="row on-phone no-tablet no-desktop padding20 ntp nbp">
-                                    <input class="button default bg-NACOSS-UNN bg-hover-dark" type='submit'
-                                           name='submit' value='Send Message' tabindex='9'/>
+                        ?>
+                    </div>
+                    <div class="row">
+                        <p id="">
+                            <strong>EMAIL <i class="icon-mail-2"></i></strong><br />
+                            If you would prefer to contact us via email, simply fill out the form below.
+                        </p>
+                        <?php if ($request) { ?>
+                            <div class="row container">
+                                <div class="label">
+                                    <?php if ($success) { ?>
+                                        <h2 class="success fg-green">Thank You!</h2>
+                                        <p>Your message has been sent, we will reply in a while.</p>
+                                    <?php } else { ?>
+                                        <h2 class="error fg-red">Sorry, we could not send your message at the moment.</h2>
+                                        <p>
+                                            please check and make sure your details are correct
+                                        </p>
+                                    <?php } ?>
                                 </div>
                             </div>
-                        </div>
-                    </form>
+                        <?php }
+                        ?>
+                        <form method='post' enctype='multipart/form-data' action='contact.php#inquiries'>
+                            <div  class="container">
+                                <div class="grid" >
+                                    <div class="row" >
+                                        <label class="span2">Name<span class="fg-red">*</span></label>
+                                        <div class="span7">
+                                            <input name='name' required style="width: inherit" type='text' 
+                                                   <?= $request ? "value='$name'" : ""; ?> tabindex='1' />
+                                        </div>
+                                    </div>
+                                    <div class="row" >
+                                        <label class="span2">Company</label>
+                                        <div class="span7">
+                                            <input name='company' style="width: inherit" type='text' 
+                                                   <?= $request ? "value='$company'" : ""; ?>  tabindex='2'/>
+                                        </div>
+                                    </div>
+                                    <div class="row" >
+                                        <label class="span2">Address<span class="fg-red">*</span></label>
+                                        <div class="span7">
+                                            <input type='text' required placeholder="Street Address" name='address' style="width: inherit"
+                                                   <?= $request ? "value='$address'" : ""; ?> tabindex='3' />
+                                            <input type='text' required placeholder="City" name='city'
+                                                   <?= $request ? "value='$city'" : ""; ?> tabindex='4' />
+                                            <input type='text' required placeholder="State / Region" name='region' 
+                                                   <?= $request ? "value='$region'" : ""; ?> tabindex='5'   />
+                                        </div>
+                                    </div>
+
+                                    <div class="row" >
+                                        <label class="span2">Phone</label>
+                                        <div class="span7">
+                                            <input name='phone' type='tel' 
+                                                   <?= $request ? "value='$phone'" : ""; ?>  tabindex='6'  />
+                                        </div>
+                                    </div>
+                                    <div class="row" >
+                                        <label class="span2">Email Address<span class="fg-red">*</span>
+                                        </label>
+                                        <div class="span7">
+                                            <input name='email' required style="width: inherit" type='email' 
+                                                   <?= $request ? "value='$user_email'" : ""; ?>   tabindex='7'   />
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <label class="span2">Comments<span class="fg-red">*</span>
+                                        </label>
+                                        <div class="span7">
+                                            <textarea name='message' required style="width: inherit" tabindex='8' rows='10'><?= $request ? $comment : ""; ?></textarea>
+                                        </div>
+                                    </div>
+                                    <div class="row no-phone offset2">
+                                        <input class="button default bg-NACOSS-UNN bg-hover-dark" type='submit'
+                                               name='submit' value='Send Message' tabindex='9'/>
+                                    </div>
+                                    <div class="row on-phone no-tablet no-desktop padding20 ntp nbp">
+                                        <input class="button default bg-NACOSS-UNN bg-hover-dark" type='submit'
+                                               name='submit' value='Send Message' tabindex='9'/>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
                 </div>
             </div>
             <br/>

@@ -30,6 +30,10 @@ class Admin {
         $this->adminInfo = $this->getAdminData();
     }
 
+    protected function getAdminInfo() {
+        return $this->adminInfo;
+    }
+
     /**
      * Validates admin cookies against admin details in database
      * @return boolean true if admin cookies match admin details in database, else false
@@ -125,7 +129,7 @@ class Admin {
                         mysqli_query($link, $query);
                         //Log error
                         AdminUtility::logMySQLError($link);
-                        
+
                         //Replace existing password
                         $row['password'] = $hash;
                     }
@@ -198,7 +202,6 @@ class Admin {
         return filter_input(INPUT_COOKIE, "admin_pwd");
     }
 
-
     /**
      * Sets cookies
      * @param type $id
@@ -221,7 +224,7 @@ class Admin {
     private function clearAdminCookies() {
         $clearIDOk = setcookie("admin_id", "", time() - 3600);
         $clearPwdOk = setcookie("admin_pwd", "", time() - 3600);
-        return $clearIDOk && $clearPwdOk ;
+        return $clearIDOk && $clearPwdOk;
     }
 
 }

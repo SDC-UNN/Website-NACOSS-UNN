@@ -73,12 +73,12 @@ limitations under the License.
                 <h5><?= "Posted on: " . $news['time_of_post']; ?></h5>
                 <hr>
                 <h6 style="text-align: center;"><a href="news.php">
-                        -Back to news page</a>&nbsp;&nbsp;||&nbsp;&nbsp;<a href="index.php">Return to Home-</a>
+                        - Go to news page</a>&nbsp;&nbsp;||&nbsp;&nbsp;<a href="index.php">Return to Home-</a>
                 </h6>
                 <div style='text-align:justify'>
                     <?= $news['content']; ?>
                 </div>
-                <h6 style="text-align: center;"><a href="news.php">-Back to news page</a>&nbsp;&nbsp;||&nbsp;&nbsp;<a href="index.php">Return to Home-</a></h6>
+                <h6 style="text-align: center;"><a href="news.php">- Go to news page</a>&nbsp;&nbsp;||&nbsp;&nbsp;<a href="index.php">Return to Home-</a></h6>
 
             </div>
             <br/>

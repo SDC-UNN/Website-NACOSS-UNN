@@ -106,7 +106,7 @@ limitations under the License.
             <div class="padding20 grid">
                 <h1 class="fg-dark">Library</h1>
                 <br/>
-                <form method="post" action="library.php">
+                <form method="post" action="library.php" class="grid">
                     <div class="input-control text" data-role="input-control">
                         <input type="text" value="<?= $searchQuery ?>" placeholder="Search Library" name="search"/>
                         <button class="btn-search" name="submit" type="submit"></button>
@@ -155,7 +155,7 @@ limitations under the License.
 
                 <?php include './pagination.php'; ?>
 
-                <table class="table">
+                <table class="table grid hovered striped">
                     <?php
                     if (empty($array)) {
                         echo '<div class="text-center">';
@@ -169,25 +169,34 @@ limitations under the License.
                             ?>
                             <tr class="">
                                 <td class="">
-                                    <div class="grid">
-                                        <div class="row ntm nbm">
-                                            <div class="span1">
-                                                
-                                            </div>
-                                            <div class="span11">
-                                                <h4>
-                                                    <?= $array[$index]['title'] ?> 
-                                                    <?= empty($array[$index]['file_type']) ? "" : "[" . $array[$index]['file_type'] . "]" ?>
-                                                </h4>
-                                                <p>
-                                                    by <?= $array[$index]['author'] ?>
-                                                    <a class="button link" target="_blank" href="download.php?id=<?= $array[$index]['id'] ?>">Download</a>
-                                                    <br/>
-                                                    <?= $array[$index]['num_of_downloads'] ?> download(s)
-                                                </p>   
-                                            </div>
+                                    <div class="row ntm nbm">
+                                        <div class="span1">
+                                            <?php
+                                            if (file_exists("img/file_types/" . $array[$index]['file_type'] . ".png")) {
+                                                ?>
+                                                <img src="img/file_types/<?= $array[$index]['file_type'] ?>.png" alt="Icon"/>
+                                                <?php
+                                            } else {
+                                                ?>
+                                                <img src="img/file_types/nil.png" alt="Icon"/>
+                                                <?php
+                                            }
+                                            ?>
+                                        </div>
+                                        <div class="span11">
+                                            <h4>
+                                                <?= $array[$index]['title'] ?> 
+                                                <?= empty($array[$index]['file_type']) ? "" : "[" . $array[$index]['file_type'] . "]" ?>
+                                            </h4>
+                                            <p>
+                                                by <?= $array[$index]['author'] ?>
+                                                <a class="button link" target="_blank" href="download.php?id=<?= $array[$index]['id'] ?>">Download</a>
+                                                <br/>
+                                                <?= $array[$index]['num_of_downloads'] ?> download(s)
+                                            </p>   
                                         </div>
                                     </div>
+
                                 </td>
                             </tr>
                             <?php
