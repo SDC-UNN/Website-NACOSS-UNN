@@ -121,8 +121,12 @@ limitations under the License.
                                         <li class="<?= $page == 2 ? "stick bg-darkBlue" : "" ?>">
                                             <a href="index.php?p=2"><i class="icon-image"></i>Home Page Images</a>
                                         </li>
-                                        <li class="<?= $page == 3 ? "stick bg-darkBlue" : "" ?>">
-                                            <a href="index.php?p=3"><i class="icon-user-3"></i>Executives</a>
+                                        <li class="<?= $page == 3 || $page == 31 || $page == 32 ? "stick bg-darkBlue" : "" ?>">
+                                            <a class="dropdown-toggle" href="#"><i class="icon-user-3"></i>Executives</a>
+                                            <ul class="dropdown-menu" data-role="dropdown">
+                                                <li><a href="index.php?p=3">View All</a></li>
+                                                <li><a href="index.php?p=31">Add New</a></li>
+                                            </ul>
                                         </li>
                                         <li class="<?= $page == 4 || $page == 41 || $page == 42 ? "stick bg-darkBlue" : "" ?>">
                                             <a class="dropdown-toggle" href="#"><i class="icon-help"></i>FAQs</a>
@@ -165,6 +169,10 @@ limitations under the License.
                                         break;
                                     case 3: require_once 'executives.php';
                                         break;
+                                    case 31: require_once 'new_executive.php';
+                                        break;
+                                    case 32: require_once 'edit_executive.php';
+                                        break;
                                     case 4: require_once 'all_faqs.php';
                                         break;
                                     case 41: require_once 'new_faq.php';
@@ -172,6 +180,8 @@ limitations under the License.
                                     case 42: require_once 'edit_faq.php';
                                         break;
                                     case 5: require_once 'settings.php';
+                                        break;
+                                    case 6: require_once 'select_user.php';
                                         break;
                                     default : require_once 'all_posts.php';
                                         break;

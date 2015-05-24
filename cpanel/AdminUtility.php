@@ -18,6 +18,13 @@
 
 class AdminUtility {
 
+    const SORT_USER_TYPE_REGNO = "regno";
+    const SORT_USER_TYPE_FIRSTNAME = "first_name";
+    const SORT_USER_TYPE_LASTNAME = "last_name";
+    const SORT_USER_TYPE_LEVEL = "level";
+    const ORDER_ASC = "ASC";
+    const ORDER_DESC = "DESC";
+
     public static function getContactEmail() {
         $query = "select value from settings where name = 'email'";
         $link = AdminUtility::getDefaultDBConnection();
@@ -124,13 +131,10 @@ class AdminUtility {
         if ($result && $row) {
             $query = "update error_log set time_of_error = now(), is_fixed = 0 where id = '" . $row['id'] . "'";
         } else {
-            $query = "insert into error_log set message = '" . mysqli_escape_string($link, $message) . "', "
-                    . "file='" . mysqli_escape_string($link, $file) . "', "
-                    . "trace='" . mysqli_escape_string($link, $trace) . "', line='$line', time_of_error = now()";
+            $query = "insert into error_log set message = '$message', "
+                    . "file='$file', "
+                    . "trace='$trace', line='$line', time_of_error = now()";
         }
-        //Log error
-        AdminUtility::logMySQLError($link);
-
         return mysqli_query($link, $query);
     }
 
@@ -158,33 +162,164 @@ class AdminUtility {
             AdminUtility::writeToLog(new Exception($error));
         }
     }
-	
-	public static function uploadDocument( $input_name, $output_file_name, $upload_directory){
-		$file_url = "";
-		// implementation
-		
-		return $file_url;
-	}
-	
-	/*
-		to resize image and create with imageUploader():
-			set $resize = array('resize'=>true, 'width'=>200, 'height'=>400, 'jpeg_quality'=>90 );
-			set $thumb_nail = array('create_thumb_nail'=>true, 'width'=>120, 'height'=>120, 'jpeg_quality'=>90 );
-			call AdminUtility::uploadImage('input_name', 'output_name', 'upload_dir', $resize, $thumb_nail)
-	*/
-	public static function uploadImage(string $input_name, $output_file_name, $upload_directory, 
-				array $resize=array('resize'=>false, 'width'=>0, 'height'=>0, 'jpeg_quality'=>90 ),
-				array $thumb_nail=array('create_thumb_nail'=>false, 'width'=>0, 'height'=>0, 'jpeg_quality'=>90 )
-				){
-		$file_url = "";
-		// implementation
-		return $file_url;
-	}
-	
-	public static function uploadVideo($input_name, $output_file_name, $upload_directory){
-		$file_url = "";
-		// implementation
-		
-		return $file_url;
-	}
+
+    public static function getDeletedUsers() {
+        $deleted_users = array();
+        $query = "select * from users where is_deleted = 1";
+        $link = AdminUtility::getDefaultDBConnection();
+        $result = mysqli_query($link, $query);
+        if ($result) {
+            while ($row = mysqli_fetch_array($result)) {
+                $deleted_users[] = $row;
+            }
+        }
+        //Log error
+        AdminUtility::logMySQLError($link);
+        return $deleted_users;
+    }
+
+    public static function getSuspendedUsers() {
+        $suspended_users = array();
+        $query = "select * from users where is_suspended = 1";
+        $link = AdminUtility::getDefaultDBConnection();
+        $result = mysqli_query($link, $query);
+        if ($result) {
+            while ($row = mysqli_fetch_array($result)) {
+                $suspended_users[] = $row;
+            }
+        }
+        //Log error
+        AdminUtility::logMySQLError($link);
+
+        return $suspended_users;
+    }
+
+    public static function getActiveUsers() {
+        $users = array();
+        $query = "select * from users where is_deleted != 1 and is_suspended != 1";
+        $link = AdminUtility::getDefaultDBConnection();
+        $result = mysqli_query($link, $query);
+        if ($result) {
+            while ($row = mysqli_fetch_array($result)) {
+                $users[] = $row;
+            }
+            AdminUtility::sortUser($users, AdminUtility::SORT_USER_TYPE_LASTNAME, AdminUtility::ORDER_ASC);
+        }
+        //Log error
+        AdminUtility::logMySQLError($link);
+
+        return $users;
+    }
+
+    public static function getUserInfo($id) {
+        $query = "select * from users where regno = '$id'";
+        $link = AdminUtility::getDefaultDBConnection();
+        $result = mysqli_query($link, $query);
+        if ($result) {
+            $row = mysqli_fetch_array($result);
+            return $row;
+        }
+        //Log error
+        AdminUtility::logMySQLError($link);
+        return array();
+    }
+
+    /**
+     * 
+     * @param type $search_query
+     * @param type $sort_type
+     * @param type $sort_order
+     * @return array
+     */
+    public static function searchUsers($search_query, $is_deleted = false, $is_suspended = false, $sort_type = null, $sort_order = null) {
+        $users = array();
+        $link = AdminUtility::getDefaultDBConnection();
+        //process query
+        $fields = explode(" ", $search_query);
+        $query = "select * from users where (is_deleted = " . ( $is_deleted ? "1" : "0" ) . " and "
+                . "is_suspended = " . ( $is_suspended ? "1" : "0" ) . ") and "
+                . "(";
+        for ($count = 0; $count < count($fields); $count++) {
+            $query .= "regno = '$fields[$count]' or "
+                    . "last_name like '%$fields[$count]%' or "
+                    . "level = '$fields[$count]' or "
+                    . "first_name like '%$fields[$count]%'";
+            if ($count !== (count($fields) - 1)) {
+                $query .= " or ";
+            } else {
+                $query .= ")";
+            }
+        }
+        //Search
+        $result = mysqli_query($link, $query);
+        if ($result) {
+            while ($row = mysqli_fetch_array($result)) {
+                array_push($users, $row);
+            }
+        }
+        AdminUtility::sortUser($users, $sort_type, $sort_order);
+        //Log error
+        AdminUtility::logMySQLError($link);
+
+        return $users;
+    }
+
+    private static function sortUser(array &$users, $sort_type, $sort_order) {
+        if (empty($users) || empty($sort_type) || empty($sort_order)) {
+            return;
+        }
+
+        foreach ($users as $key => $row) {
+            $last_name[$key] = $row['last_name'];
+            $first_name[$key] = $row['first_name'];
+            $regno[$key] = $row['regno'];
+            $level[$key] = $row['level'];
+        }
+
+        switch ($sort_type) {
+            case AdminUtility::SORT_USER_TYPE_FIRSTNAME:
+                array_multisort($first_name, ($sort_order == AdminUtility::ORDER_DESC ? SORT_DESC : SORT_ASC), $last_name, SORT_ASC, $level, SORT_DESC, $users);
+                break;
+            case AdminUtility::SORT_USER_TYPE_LASTNAME:
+                array_multisort($last_name, ($sort_order == AdminUtility::ORDER_DESC ? SORT_DESC : SORT_ASC), $first_name, SORT_ASC, $level, SORT_DESC, $users);
+                break;
+            case AdminUtility::SORT_USER_TYPE_REGNO:
+                array_multisort($regno, ($sort_order == AdminUtility::ORDER_DESC ? SORT_DESC : SORT_ASC), $last_name, SORT_ASC, $first_name, SORT_DESC, $users);
+                break;
+            case AdminUtility::SORT_USER_TYPE_LEVEL:
+                array_multisort($level, ($sort_order == AdminUtility::ORDER_DESC ? SORT_DESC : SORT_ASC), $last_name, SORT_ASC, $first_name, SORT_DESC, $users);
+                break;
+            default :
+                throw new Exception("Invalid sort type");
+        }
+    }
+
+    public static function uploadDocument($input_name, $output_file_name, $upload_directory) {
+        $file_url = "";
+        // implementation
+
+        return $file_url;
+    }
+
+    /**
+      to resize image and create with imageUploader():
+      set $resize = array('resize'=>true, 'width'=>200, 'height'=>400, 'jpeg_quality'=>90 );
+      set $thumb_nail = array('create_thumb_nail'=>true, 'width'=>120, 'height'=>120, 'jpeg_quality'=>90 );
+      call AdminUtility::uploadImage('input_name', 'output_name', 'upload_dir', $resize, $thumb_nail)
+     */
+
+    public static function uploadImage(string $input_name, $output_file_name, $upload_directory, array $resize = array('resize' => false, 'width' => 0, 'height' => 0, 'jpeg_quality' => 90), array $thumb_nail = array('create_thumb_nail' => false, 'width' => 0, 'height' => 0, 'jpeg_quality' => 90)
+    ) {
+        $file_url = "";
+        // implementation
+        return $file_url;
+    }
+
+    public static function uploadVideo($input_name, $output_file_name, $upload_directory) {
+        $file_url = "";
+        // implementation
+
+        return $file_url;
+    }
+
 }

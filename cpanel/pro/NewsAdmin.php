@@ -191,4 +191,81 @@ class NewsAdmin extends Admin {
         return $result;
     }
 
+    function addExecutive($post, $session, $userID) {
+        if (empty($post) || empty($session) || empty($userID)) {
+            throw new Exception("Invalid parameter");
+        }
+
+        $match = preg_match("#\d{4}/\d{4}#", $session);
+        if ($match === 1) {
+            $years = explode("/", $session);
+            if ($years[0] > date("Y")) {
+                throw new Exception("Invalid Session");
+            }
+        } else {
+            throw new Exception("Invalid Session");
+        }
+
+        $link = AdminUtility::getDefaultDBConnection();
+        $confrimQuery = "select * from executives where post = '$post' and session = '$session'";
+        $result = mysqli_query($link, $confrimQuery);
+        $num_rows = mysqli_num_rows($result);
+        if (empty($num_rows)) {
+            $query = "insert into executives set post = '$post', session = '$session', user_id='$userID'";
+            mysqli_query($link, $query);
+        } else {
+            throw new Exception("$post already exists for $session");
+        }
+        //Log error
+        AdminUtility::logMySQLError($link);
+    }
+
+    function modifyExecutive($ID, $post, $session) {
+        if (empty($post) || empty($session) || empty($ID)) {
+            throw new Exception("Invalid parameter");
+        }
+        
+        $match = preg_match("#\d{4}/\d{4}#", $session);
+        if ($match === 1) {
+            $years = explode("/", $session);
+            if ($years[0] > date("Y")) {
+                throw new Exception("Invalid Session");
+            }
+        } else {
+            throw new Exception("Invalid Session");
+        }
+
+        $link = AdminUtility::getDefaultDBConnection();
+        $confrimQuery = "select * from executives where post = '$post' and session = '$session'";
+        $result = mysqli_query($link, $confrimQuery);
+        $num_rows = mysqli_num_rows($result);
+        if (empty($num_rows)) {
+            $query = "update executives set post = '$post', session = '$session' where id='$ID'";
+            mysqli_query($link, $query);
+        } else {
+            throw new Exception("$post already exists for $session");
+        }
+        //Log error
+        AdminUtility::logMySQLError($link);
+    }
+
+    function removeExecutives(array $executiveIDs) {
+        $link = AdminUtility::getDefaultDBConnection();
+        mysqli_autocommit($link, false);
+        foreach ($executiveIDs as $ID) {
+            $this->removeExecutive($ID, $link);
+        }
+        mysqli_commit($link);
+    }
+
+    function removeExecutive($executiveID, $link = null) {
+        $query = "delete from executives where id = '$executiveID'";
+        if (empty($link)) {
+            $link = AdminUtility::getDefaultDBConnection();
+        }
+        mysqli_query($link, $query);
+        //Log error
+        AdminUtility::logMySQLError($link);
+    }
+
 }

@@ -19,7 +19,7 @@ $id = filter_input(INPUT_GET, "id");
 //URL for back link
 $url = filter_input(INPUT_GET, "url");
 
-$array = getUserInfo($id);
+$array = AdminUtility::getUserInfo($id);
 
 if (empty($array)) {
     ?>

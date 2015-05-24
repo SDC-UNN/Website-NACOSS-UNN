@@ -153,7 +153,7 @@ limitations under the License.
                     </div>
                 </form>
 
-                <?php include './pagination.php'; ?>
+                <?php include './library_pagination.php'; ?>
 
                 <table class="table grid hovered striped">
                     <?php
@@ -205,7 +205,7 @@ limitations under the License.
                     ?>
                 </table>
 
-                <?php include './pagination.php'; ?>
+                <?php include './library_pagination.php'; ?>
             </div>
             <?php require_once './footer.php'; ?>
         </div>

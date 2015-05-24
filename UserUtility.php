@@ -184,21 +184,20 @@ class UserUtility {
         $line = $exc->getLine();
         $file = mysqli_escape_string($link, $exc->getFile());
         $message = mysqli_escape_string($link, $exc->getMessage());
+        $trace = mysqli_escape_string($link, $exc->getTraceAsString());
         //Check if error has been logged previously
         $query = "select * from error_log where message = '$message' and file='$file' and line='$line'";
         $result = mysqli_query($link, $query);
         if ($result) {
             $row = mysqli_fetch_array($result);
         }
-        //Log error
-        UserUtility::logMySQLError($link);
-
-
         //If previously logged, update time and set is-fixed = 0 else insert new log
         if ($result && $row) {
             $query = "update error_log set time_of_error = now(), is_fixed = 0 where id = '" . $row['id'] . "'";
         } else {
-            $query = "insert into error_log set message = '$message', file='$file', line='$line', time_of_error = now()";
+            $query = "insert into error_log set message = '$message', "
+                    . "file='$file', "
+                    . "trace='$trace', line='$line', time_of_error = now()";
         }
         return mysqli_query($link, $query);
     }
@@ -217,6 +216,19 @@ class UserUtility {
         return 10;
     }
 
+    public static function getUserInfo($id) {
+        $query = "select * from users where regno = '$id'";
+        $link = UserUtility::getDefaultDBConnection();
+        $result = mysqli_query($link, $query);
+        if ($result) {
+            $row = mysqli_fetch_array($result);
+            return $row;
+        }
+        //Log error
+        UserUtility::logMySQLError($link);
+        return array();
+    }
+
     /**
      * Log database error
      * @param type $link
@@ -227,4 +239,27 @@ class UserUtility {
             UserUtility::writeToLog(new Exception($error));
         }
     }
+
+    public static function getExecutives($session = "") {
+        $executives = array();
+        $query = "select e.id, u.regno, u.first_name, u.last_name, u.other_names, u.department, u.pic_url, e.post, e.session "
+                . "from users u join executives e "
+                . "on (u.regno = e.user_id) ";
+        if (!empty($session)) {
+            $query .= "where e.session = '$session' ";
+        }
+        $query .= "order by session desc";
+        $link = UserUtility::getDefaultDBConnection();
+        $result = mysqli_query($link, $query);
+        if ($result) {
+            while ($row = mysqli_fetch_array($result)) {
+                $executives[] = $row;
+            }
+        }
+        //Log error
+        UserUtility::logMySQLError($link);
+
+        return $executives;
+    }
+
 }

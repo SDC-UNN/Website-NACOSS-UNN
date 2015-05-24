@@ -16,13 +16,6 @@
  * limitations under the License.
  */
 
-        const SORT_USER_TYPE_REGNO = "regno";
-        const SORT_USER_TYPE_FIRSTNAME = "first_name";
-        const SORT_USER_TYPE_LASTNAME = "last_name";
-        const SORT_USER_TYPE_LEVEL = "level";
-        const ORDER_USER_ASC = "ASC";
-        const ORDER_USER_DESC = "DESC";
-
 function getNumberOfActiveUsers() {
     $query = "select * from users where is_deleted != 1 and is_suspended != 1";
     $link = AdminUtility::getDefaultDBConnection();
@@ -34,23 +27,6 @@ function getNumberOfActiveUsers() {
     AdminUtility::logMySQLError($link);
 
     return 0;
-}
-
-function getActiveUsers() {
-    $users = array();
-    $query = "select * from users where is_deleted != 1 and is_suspended != 1";
-    $link = AdminUtility::getDefaultDBConnection();
-    $result = mysqli_query($link, $query);
-    if ($result) {
-        while ($row = mysqli_fetch_array($result)) {
-            $users[] = $row;
-        }
-        sortUser($users, SORT_USER_TYPE_LASTNAME, ORDER_USER_ASC);
-    }
-    //Log error
-    AdminUtility::logMySQLError($link);
-
-    return $users;
 }
 
 function getNumberOfSuspendedUsers() {
@@ -66,22 +42,6 @@ function getNumberOfSuspendedUsers() {
     return 0;
 }
 
-function getSuspendedUsers() {
-    $suspended_users = array();
-    $query = "select * from users where is_suspended = 1";
-    $link = AdminUtility::getDefaultDBConnection();
-    $result = mysqli_query($link, $query);
-    if ($result) {
-        while ($row = mysqli_fetch_array($result)) {
-            $suspended_users[] = $row;
-        }
-    }
-    //Log error
-    AdminUtility::logMySQLError($link);
-
-    return $suspended_users;
-}
-
 function getNumberOfDeletedUsers() {
     $query = "select * from users where is_deleted = 1";
     $link = AdminUtility::getDefaultDBConnection();
@@ -92,34 +52,6 @@ function getNumberOfDeletedUsers() {
     //Log error
     AdminUtility::logMySQLError($link);
     return 0;
-}
-
-function getDeletedUsers() {
-    $deleted_users = array();
-    $query = "select * from users where is_deleted = 1";
-    $link = AdminUtility::getDefaultDBConnection();
-    $result = mysqli_query($link, $query);
-    if ($result) {
-        while ($row = mysqli_fetch_array($result)) {
-            $deleted_users[] = $row;
-        }
-    }
-    //Log error
-    AdminUtility::logMySQLError($link);
-    return $deleted_users;
-}
-
-function getUserInfo($id) {
-    $query = "select * from users where regno = '$id'";
-    $link = AdminUtility::getDefaultDBConnection();
-    $result = mysqli_query($link, $query);
-    if ($result) {
-        $row = mysqli_fetch_array($result);
-        return $row;
-    }
-    //Log error
-    AdminUtility::logMySQLError($link);
-    return array();
 }
 
 function getNumberOfUnseenErrorReports() {
@@ -298,76 +230,6 @@ function getClassReps() {
     AdminUtility::logMySQLError($link);
 
     return $class_reps;
-}
-
-/**
- * 
- * @param type $search_query
- * @param type $sort_type
- * @param type $sort_order
- * @return array
- */
-function searchUsers($search_query, $is_deleted = false, $is_suspended = false, $sort_type = null, $sort_order = null) {
-    $users = array();
-    $link = AdminUtility::getDefaultDBConnection();
-    //process query
-    $fields = explode(" ", $search_query);
-    $query = "select * from users where (is_deleted = " . ( $is_deleted ? "1" : "0" ) . " and "
-            . "is_suspended = " . ( $is_suspended ? "1" : "0" ) . ") and "
-            . "(";
-    for ($count = 0; $count < count($fields); $count++) {
-        $query .= "regno = '$fields[$count]' or "
-                . "last_name like '%$fields[$count]%' or "
-                . "level = '$fields[$count]' or "
-                . "first_name like '%$fields[$count]%'";
-        if ($count !== (count($fields) - 1)) {
-            $query .= " or ";
-        } else {
-            $query .= ")";
-        }
-    }
-    //Search
-    $result = mysqli_query($link, $query);
-    if ($result) {
-        while ($row = mysqli_fetch_array($result)) {
-            array_push($users, $row);
-        }
-    }
-    sortUser($users, $sort_type, $sort_order);
-    //Log error
-    AdminUtility::logMySQLError($link);
-
-    return $users;
-}
-
-function sortUser(array &$users, $sort_type, $sort_order) {
-    if (empty($users) || empty($sort_type) || empty($sort_order)) {
-        return;
-    }
-
-    foreach ($users as $key => $row) {
-        $last_name[$key] = $row['last_name'];
-        $first_name[$key] = $row['first_name'];
-        $regno[$key] = $row['regno'];
-        $level[$key] = $row['level'];
-    }
-
-    switch ($sort_type) {
-        case SORT_USER_TYPE_FIRSTNAME:
-            array_multisort($first_name, ($sort_order == ORDER_USER_DESC ? SORT_DESC : SORT_ASC), $last_name, SORT_ASC, $level, SORT_DESC, $users);
-            break;
-        case SORT_USER_TYPE_LASTNAME:
-            array_multisort($last_name, ($sort_order == ORDER_USER_DESC ? SORT_DESC : SORT_ASC), $first_name, SORT_ASC, $level, SORT_DESC, $users);
-            break;
-        case SORT_USER_TYPE_REGNO:
-            array_multisort($regno, ($sort_order == ORDER_USER_DESC ? SORT_DESC : SORT_ASC), $last_name, SORT_ASC, $first_name, SORT_DESC, $users);
-            break;
-        case SORT_USER_TYPE_LEVEL:
-            array_multisort($level, ($sort_order == ORDER_USER_DESC ? SORT_DESC : SORT_ASC), $last_name, SORT_ASC, $first_name, SORT_DESC, $users);
-            break;
-        default :
-            throw new Exception("Invalid sort type");
-    }
 }
 
 /**

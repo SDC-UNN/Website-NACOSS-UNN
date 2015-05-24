@@ -1,8 +1,8 @@
 <?php
 //Initializing variables with default values
 $defaultPage = "index.php?p=12";
-$sort_type = SORT_USER_TYPE_LASTNAME;
-$order = ORDER_USER_ASC;
+$sort_type = AdminUtility::SORT_USER_TYPE_LASTNAME;
+$order = AdminUtility::ORDER_ASC;
 
 $searchQuery = "";
 
@@ -28,7 +28,7 @@ if (isset($array['search_button']) || //$array from index.php
         $error_message = $exc->getMessage();
     }
 
-    $users = searchUsers($searchQuery, true, false, $sort_type, $order);
+    $users = AdminUtility::searchUsers($searchQuery, true, false, $sort_type, $order);
 } else {
     //Process GET requests or no requests
     $page = filter_input(INPUT_GET, "pg");
@@ -38,10 +38,10 @@ if (isset($array['search_button']) || //$array from index.php
         $sort_type = filter_input(INPUT_GET, "s");
         $order = filter_input(INPUT_GET, "o");
 
-        $users = searchUsers($searchQuery, true, false, $sort_type, $order);
+        $users = AdminUtility::searchUsers($searchQuery, true, false, $sort_type, $order);
     } else {
         $page = 1;
-        $users = getDeletedUsers();
+        $users = AdminUtility::getDeletedUsers();
     }
 }
 ?>
@@ -64,11 +64,11 @@ limitations under the License.
 -->
 <script>
     function warn() {
-        var ok = confirm("Are you sure?");
-        if (ok === false) {
-            //Cancel request
-            window.stop();
-        }
+//        var ok = confirm("Are you sure?");
+//        if (ok === false) {
+//            //Cancel request
+//            window.stop();
+//        }
     }
     ;
 </script>
@@ -100,35 +100,35 @@ limitations under the License.
                                 <input type="radio" name="sort_type" 
                                 <?=
                                 isset($sort_type) ?
-                                        ($sort_type == SORT_USER_TYPE_REGNO ? "checked" : "") :
+                                        ($sort_type == AdminUtility::SORT_USER_TYPE_REGNO ? "checked" : "") :
                                         "checked"
                                 ?>
-                                       value="<?= SORT_USER_TYPE_REGNO ?>"/> Reg. no
+                                       value="<?= AdminUtility::SORT_USER_TYPE_REGNO ?>"/> Reg. no
                                 <input type="radio" name="sort_type"
                                 <?=
                                 isset($sort_type) ?
-                                        ($sort_type == SORT_USER_TYPE_LASTNAME ? "checked" : "") :
+                                        ($sort_type == AdminUtility::SORT_USER_TYPE_LASTNAME ? "checked" : "") :
                                         ""
                                 ?>
-                                       value="<?= SORT_USER_TYPE_LASTNAME ?>"/> Last Name
+                                       value="<?= AdminUtility::SORT_USER_TYPE_LASTNAME ?>"/> Last Name
                                 <input type="radio" name="sort_type"
                                 <?=
                                 isset($sort_type) ?
-                                        ($sort_type == SORT_USER_TYPE_LEVEL ? "checked" : "") :
+                                        ($sort_type == AdminUtility::SORT_USER_TYPE_LEVEL ? "checked" : "") :
                                         ""
                                 ?>
-                                       value="<?= SORT_USER_TYPE_LEVEL ?>"/> Level
+                                       value="<?= AdminUtility::SORT_USER_TYPE_LEVEL ?>"/> Level
                             </div>
                         </div>
                         <div class="span3">
                             <label class="span1">Order: </label>
                             <div class="span2">
                                 <input type="radio" name="sort_order"
-                                <?= isset($order) ? ($order == ORDER_USER_ASC ? "checked" : "") : "checked" ?>
-                                       value="<?= ORDER_USER_ASC ?>"/> Asc
+                                <?= isset($order) ? ($order == AdminUtility::ORDER_ASC ? "checked" : "") : "checked" ?>
+                                       value="<?= AdminUtility::ORDER_ASC ?>"/> Asc
                                 <input type="radio" name="sort_order"
-                                <?= isset($order) ? ($order == ORDER_USER_DESC ? "checked" : "") : "" ?>
-                                       value="<?= ORDER_USER_DESC ?>"/> Desc
+                                <?= isset($order) ? ($order == AdminUtility::ORDER_DESC ? "checked" : "") : "" ?>
+                                       value="<?= AdminUtility::ORDER_DESC ?>"/> Desc
                             </div>
                         </div>
                     </div>
@@ -200,7 +200,7 @@ limitations under the License.
                         <input class="" onclick="warn()" name="activate_button" type="submit" value="Restore"/>
                     </div>
                 </form>
-            <?php } ?>
-        </div>
+            </div>
+        <?php } ?>
     </div>
 </div>

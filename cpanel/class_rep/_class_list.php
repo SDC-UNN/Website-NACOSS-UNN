@@ -51,11 +51,11 @@ limitations under the License.
 -->
 <script>
     function warn() {
-        var ok = confirm("Are you sure?");
-        if(ok === false){
-            //Cancel request
-            window.stop();
-        }
+//        var ok = confirm("Are you sure?");
+//        if(ok === false){
+//            //Cancel request
+//            window.stop();
+//        }
     }
     ;
 </script>

@@ -16,11 +16,11 @@
  * limitations under the License.
  */
 
-
         const SORT_POST_TYPE_TIME_OF_POST = "time_of_post";
         const SORT_POST_TYPE_LAST_MODIFIED = "last_modified";
         const SORT_FAQ_TYPE_QUESTION = "question";
         const SORT_FAQ_TYPE_ANSWER = "answer";
+
         const ORDER_ASC = "ASC";
         const ORDER_DESC = "DESC";
 
@@ -409,4 +409,59 @@ function save_image($source, $destination, $image_type, $quality) {
             return true; //save jpeg file
         default: return false;
     }
+}
+
+function getExecutive($ID) {
+    $executive = array();
+    $query = "select e.id, u.regno, u.first_name, u.last_name, u.other_names, u.department, e.post, e.session "
+            . "from users u join executives e "
+            . "on (u.regno = e.user_id) "
+            . "where e.id = '$ID'";
+    $link = AdminUtility::getDefaultDBConnection();
+    $result = mysqli_query($link, $query);
+    if ($result) {
+        return mysqli_fetch_array($result);
+    }
+    //Log error
+    AdminUtility::logMySQLError($link);
+
+    return $executive;
+}
+
+function getExecutives($session = "") {
+    $executives = array();
+    $query = "select e.id, u.regno, u.first_name, u.last_name, u.other_names, u.department, e.post, e.session "
+            . "from users u join executives e "
+            . "on (u.regno = e.user_id) ";
+    if (!empty($session)) {
+        $query .= "where e.session = '$session' ";
+    }
+    $query .= "order by session desc";
+    $link = AdminUtility::getDefaultDBConnection();
+    $result = mysqli_query($link, $query);
+    if ($result) {
+        while ($row = mysqli_fetch_array($result)) {
+            $executives[] = $row;
+        }
+    }
+    //Log error
+    AdminUtility::logMySQLError($link);
+
+    return $executives;
+}
+
+function getExecutivePosts() {
+    $posts = array();
+    $query = "select * from posts";
+    $link = AdminUtility::getDefaultDBConnection();
+    $result = mysqli_query($link, $query);
+    if ($result) {
+        while ($row = mysqli_fetch_array($result)) {
+            $posts[] = $row;
+        }
+    }
+    //Log error
+    AdminUtility::logMySQLError($link);
+
+    return $posts;
 }

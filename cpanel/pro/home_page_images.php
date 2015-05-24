@@ -57,11 +57,11 @@ limitations under the License.
 -->
 <Script Language="javascript">
     function warn() {
-        var ok = confirm("Are you sure?");
-        if (ok === false) {
-            //Cancel request
-            window.stop();
-        }
+//        var ok = confirm("Are you sure?");
+//        if (ok === false) {
+//            //Cancel request
+//            window.stop();
+//        }
     }
 </script>
 
@@ -194,7 +194,7 @@ limitations under the License.
                     }
                     ?>
                     <form action="index.php?p=2#new" method="post">
-                        <a  class="button large" href="index.php?p=21?image=<?= urlencode($image) ?>&size=<?= $size ?>&href=<?= urlencode($href) ?>&caption=<?= urlencode($caption) ?>">
+                        <a  class="button large" href="index.php?p=21&image=<?= urlencode($image) ?>&size=<?= $size ?>&href=<?= urlencode($href) ?>&caption=<?= urlencode($caption) ?>">
                             Select post
                         </a>                       
                         <div class="row ntm">

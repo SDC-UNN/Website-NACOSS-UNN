@@ -18,102 +18,74 @@
 
 /**
  * This file assumes that the following variables has already been created and initialized<br/>
- * $total_pages, $page, $searchQuery,$sort_type, and $order<br/>
+ * $total_pages, $page, $defaultPage<br/>
  * $total_pages inidicates the total number of pages.<br/>
  * $page inicates the current page.<br/>
- * $searchQuery holds the search query.<br/>
- * $sort_type contains the sort type.<br/>
- * $order contains the sort order i.e SORT_ASC or SORT_DESC.
+ * $defaultPage refers to the url to handle get request from this script
  */
 if ($total_pages > 1) {
+    if (strpos($defaultPage, "?") == FALSE) {
+        $defaultPage = $defaultPage . '?';
+    }
     ?>
     <div class="pagination">
         <ul>
             <li class="first">
-                <a href="library.php?<?=
-                'q=' . urlencode($searchQuery)
-                . '&p=1'
-                . '&s=' . urlencode($sort_type)
-                . '&o=' . urlencode($order)
-                ?>">
+                <a href="<?= $defaultPage ?>&pg=1">
                     <i class="icon-first-2"></i>
                 </a>
             </li>
             <li class="prev <?= ($page - 1) < 1 ? "disabled" : "" ?>">
-                <a href="library.php?<?=
-                'q=' . urlencode($searchQuery)
-                . '&p=' . ($page - 1)
-                . '&s=' . urlencode($sort_type)
-                . '&o=' . urlencode($order)
-                ?>"><i class="icon-previous"></i>
+                <a href="<?= $defaultPage . '&pg=' . ($page - 1) ?>">
+                    <i class="icon-previous"></i>
                 </a>
             </li>
             <?php if ($page - 2 >= 1) { ?>
-                <li><a href="library.php?<?=
-                    'q=' . urlencode($searchQuery)
-                    . '&p=' . ($page - 2)
-                    . '&s=' . urlencode($sort_type)
-                    . '&o=' . urlencode($order)
-                    ?>"><?= ($page - 2) ?></a>
+                <li>
+                    <a href="<?= $defaultPage . '&pg=' . ($page - 2) ?>">
+                        <?= ($page - 2) ?></a>
                 </li>
             <?php } ?>
 
             <?php if ($page - 1 >= 1) { ?>
-                <li><a href="library.php?<?=
-                    'q=' . urlencode($searchQuery)
-                    . '&p=' . ($page - 1)
-                    . '&s=' . urlencode($sort_type)
-                    . '&o=' . urlencode($order)
-                    ?>"><?= ($page - 1) ?></a>
+                <li>
+                    <a href="<?= $defaultPage . '&pg=' . ($page - 1) ?>">
+                        <?= ($page - 1) ?>
+                    </a>
                 </li>
             <?php } ?>
 
             <li class="active">
-                <a href="library.php?<?=
-                'q=' . urlencode($searchQuery)
-                . '&p=' . $page
-                . '&s=' . urlencode($sort_type)
-                . '&o=' . urlencode($order)
-                ?>"><?= $page ?></a>
+                <a href="<?= $defaultPage . '&pg=' . $page ?>">
+                    <?= $page ?>
+                </a>
             </li>
 
             <?php if ($page + 1 <= $total_pages) { ?>
-                <li><a href="library.php?<?=
-                    'q=' . urlencode($searchQuery)
-                    . '&p=' . ($page + 1)
-                    . '&s=' . urlencode($sort_type)
-                    . '&o=' . urlencode($order)
-                    ?>"><?= ($page + 1) ?></a>
+                <li>
+                    <a href="<?= $defaultPage . '&pg=' . ($page + 1) ?>">
+                        <?= ($page + 1) ?>
+                    </a>
                 </li>
             <?php } ?>
 
             <?php if ($page + 2 <= $total_pages) { ?>
-                <li><a href="library.php?<?=
-                    'q=' . urlencode($searchQuery)
-                    . '&p=' . ($page + 2)
-                    . '&s=' . urlencode($sort_type)
-                    . '&o=' . urlencode($order)
-                    ?>"><?= ($page + 2) ?></a>
+                <li>
+                    <a href="<?= $defaultPage . '&pg=' . ($page + 2) ?>">
+                        <?= ($page + 2) ?>
+                    </a>
                 </li>
             <?php } ?>
 
             <li class="next <?= ($page + 1) > $total_pages ? "disabled" : "" ?>">
-                <a href="library.php?<?=
-                'q=' . urlencode($searchQuery)
-                . '&p=' . ($page + 1)
-                . '&s=' . urlencode($sort_type)
-                . '&o=' . urlencode($order)
-                ?>"><i class="icon-next"></i>
+                <a href="<?= $defaultPage . '&pg=' . ($page + 1) ?>">
+                    <i class="icon-next"></i>
                 </a>
             </li>
-            
+
             <li class="last">
-                <a href="library.php?<?=
-                'q=' . urlencode($searchQuery)
-                . '&p=' . $total_pages
-                . '&s=' . urlencode($sort_type)
-                . '&o=' . urlencode($order)
-                ?>"><i class="icon-last-2"></i>
+                <a href="<?= $defaultPage . '&pg=' . $total_pages ?>">
+                    <i class="icon-last-2"></i>
                 </a>
             </li>
         </ul>
