@@ -101,7 +101,7 @@ limitations under the License.
         <title>NACOSS UNN : Library</title>        
     </head>
     <body class="metro" style="background-image: url(img/bg.jpg); background-repeat: repeat;">
-        <div class="container bg-white">            
+        <div class="container bg-white" id="wrapper">            
             <?php require_once './header.php'; ?>
             <div class="padding20 grid">
                 <h1 class="fg-dark">Library</h1>

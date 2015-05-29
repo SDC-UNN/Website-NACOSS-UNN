@@ -56,7 +56,7 @@ limitations under the License.
         <title>NACOSS UNN : Home</title>        
     </head>
     <body class="metro" style="background-image: url(img/bg.jpg); background-repeat: repeat;">
-        <div class="container bg-white">            
+        <div class="container bg-white" id="wrapper">            
             <?php require_once './header.php'; ?>
             <div class=" bg-dark" style="height: 400px">
 
@@ -220,8 +220,9 @@ limitations under the License.
                         </div>
                     </div>
                 </div>
-                <?php require_once './footer.php'; ?>
+                <br/>
             </div>
+            <?php require_once './footer.php'; ?>
         </div>
     </body>
 </html>

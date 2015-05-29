@@ -1,4 +1,4 @@
-<div class="bg-dark">
+<div class="bg-dark" id="footer">
     <div class="container tertiary-text bg-dark fg-white" style="padding: 10px">
         &copy; <a href="<?= NDG_HOMEPAGE ?>" target="_blank" class="fg-white fg-hover-yellow fg-active-amber">NACOSS UNN Developers Group (NDG)</a>
         <div class="place-right compact">
