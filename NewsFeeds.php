@@ -92,6 +92,7 @@ class NewsFeeds {
     public function getTopNews() {
         $sortedNews = $this->news;
         $topHits = array();
+        $hits = array();
         foreach ($sortedNews as $key => $row) {
             $hits[$key] = $row['hits'];
         }

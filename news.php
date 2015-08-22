@@ -1,5 +1,5 @@
 <?php
-require_once './class_lib.php';
+require_once 'class_lib.php';
 $news = new NewsFeeds();
 ?>
 <!DOCTYPE html>
@@ -21,55 +21,29 @@ limitations under the License.
 
 <html>
     <head>
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-        <meta name="description" content="NACOSS UNN official website">
-        <meta name="author" content="NACOSS UNN Developers">
-        <meta name="keywords" content=" metro ui, NDG, NACOSS UNN">
-        <link rel="icon" href="favicon.ico" type="image/x-icon" />
-        <link rel="shortcut icon" href="favicon.ico" type="image/x-icon" />
+        <?php require_once 'default_head_tags.php'; ?>
 
-        <link href="css/metro-bootstrap.css" rel="stylesheet">
-        <link href="css/metro-bootstrap-responsive.css" rel="stylesheet">
-        <link href="css/iconFont.css" rel="stylesheet">
-        <link href="js/prettify/prettify.css" rel="stylesheet">
-
-        <script src="js/metro/metro.min.js"></script>
-
-        <!-- Load JavaScript Libraries -->
-        <script src="js/jquery/jquery.min.js"></script>
-        <script src="js/jquery/jquery.widget.min.js"></script>
-        <script src="js/jquery/jquery.mousewheel.js"></script>
-        <script src="js/prettify/prettify.js"></script>
-
-        <!-- Metro UI CSS JavaScript plugins -->
-        <script src="js/load-metro.js"></script>
-
-        <!-- Local JavaScript -->
-        <script src="js/docs.js"></script>
-        <script src="js/github.info.js"></script>
-        
         <!-- Page Title -->
         <title>NACOSS UNN : News</title>      
 
     </head>
     <body class="metro" style="background-image: url(img/bg.jpg); background-repeat: repeat;">
         <div class="container bg-white" id="wrapper">            
-            <?php require_once './header.php'; ?>
+            <?php require_once 'header.php'; ?>
             <div class="padding20">
-                <h1>News / Events</h1>
-                <?php
-                $allNews = $news->getAllNews();
-                $topNews = $news->getTopNews();
-                if (empty($allNews)) {
-                    ?>
-                    <p>no post</p>
+                <div class="grid fluid">
+                    <h1>News / Events</h1>
                     <?php
-                } else {
-                    ?>
-                    <div class="grid">
-                        <div class="row">
-                            <div class="span8 listview-outlook">
+                    $allNews = $news->getAllNews();
+                    $topNews = $news->getTopNews();
+                    if (empty($allNews)) {
+                        ?>
+                        <p>no post</p>
+                        <?php
+                    } else {
+                        ?>
+                        <div class="row ntm">
+                            <div class="span8 ntm listview-outlook">
                                 <?php
                                 foreach ($allNews as $value) {
                                     ?>
@@ -106,13 +80,12 @@ limitations under the License.
                                 ?>
                             </div> 
                         </div>
-                    </div>
-                    <?php
-                }
-                ?>
+
+                        <?php
+                    }
+                    ?></div>
             </div>
-            <br/>
-            <?php require_once './footer.php'; ?>
+            <?php require_once 'footer.php'; ?>
         </div>
 
     </body>

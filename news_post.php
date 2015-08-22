@@ -33,33 +33,7 @@ limitations under the License.
 
 <html>
     <head>
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-        <meta name="description" content="NACOSS UNN official website">
-        <meta name="author" content="NACOSS UNN Developers">
-        <meta name="keywords" content=" metro ui, NDG, NACOSS UNN">
-        <link rel="icon" href="favicon.ico" type="image/x-icon" />
-        <link rel="shortcut icon" href="favicon.ico" type="image/x-icon" />
-
-        <link href="css/metro-bootstrap.css" rel="stylesheet">
-        <link href="css/metro-bootstrap-responsive.css" rel="stylesheet">
-        <link href="css/iconFont.css" rel="stylesheet">
-        <link href="js/prettify/prettify.css" rel="stylesheet">
-
-        <script src="js/metro/metro.min.js"></script>
-
-        <!-- Load JavaScript Libraries -->
-        <script src="js/jquery/jquery.min.js"></script>
-        <script src="js/jquery/jquery.widget.min.js"></script>
-        <script src="js/jquery/jquery.mousewheel.js"></script>
-        <script src="js/prettify/prettify.js"></script>
-
-        <!-- Metro UI CSS JavaScript plugins -->
-        <script src="js/load-metro.js"></script>
-
-        <!-- Local JavaScript -->
-        <script src="js/docs.js"></script>
-        <script src="js/github.info.js"></script>
+        <?php require_once 'default_head_tags.php'; ?>
 
         <!-- Page Title -->
         <title><?= $news['title'] ?></title>        
@@ -67,21 +41,24 @@ limitations under the License.
     <body class="metro" style="background-image: url(img/bg.jpg); background-repeat: repeat;">
         <div class="container bg-white" id="wrapper">            
             <?php require_once './header.php'; ?>
-            <br/>
             <div class="padding20">
-                <h2><?= $news['title']; ?></h2>
-                <h5><?= "Posted on: " . $news['time_of_post']; ?></h5>
-                <hr>
-                <h6 style="text-align: center;"><a href="news.php">
-                        - Go to news page</a>&nbsp;&nbsp;||&nbsp;&nbsp;<a href="index.php">Return to Home-</a>
-                </h6>
-                <div style='text-align:justify'>
-                    <?= $news['content']; ?>
+                <div class="grid fluid">
+                    <h2><?= $news['title']; ?></h2>
+                    <h5><?= strftime("Posted on %A %#d, %B %Y by %H:%M ", strtotime($news['time_of_post'])) ?></h5>
+                    <hr>
+                    <div class="row">
+                        <a class="link span2" href="news.php">Back</a>
+                        <a class="link span2" href="index.php">Home</a>
+                    </div>
+                    <div class="row">
+                        <?= $news['content']; ?>
+                    </div>
+                    <div class="row">
+                        <a class="link span2" href="news.php">Back</a>
+                        <a class="link span2" href="index.php">Home</a>
+                    </div>
                 </div>
-                <h6 style="text-align: center;"><a href="news.php">- Go to news page</a>&nbsp;&nbsp;||&nbsp;&nbsp;<a href="index.php">Return to Home-</a></h6>
-
             </div>
-            <br/>
             <?php require_once './footer.php'; ?>
         </div>
     </body>

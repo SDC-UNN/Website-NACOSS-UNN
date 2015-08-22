@@ -23,5 +23,7 @@ define("DEFAULT_DB_NAME", "nacoss_db"); //Default database name (Assuming there 
 define("DB_HOSTNAME", "localhost"); //Database hostname
 define("DB_USERNAME", "root"); //Database username
 define("DB_PASSWORD", ""); //Database password
-define("HOSTNAME", "http://localhost/Website-NACOSS-UNN/"); //Location of this project in your computer (relative to localhost)
+define("HOSTNAME", "http://localhost/Website-NACOSS-UNN/");
+define("ROOT", $_SERVER["DOCUMENT_ROOT"] . "Website-NACOSS-UNN/");
 define("NDG_HOMEPAGE", HOSTNAME . "ndg/"); //NDG Homepage
+define("ALUMNI_HOMEPAGE", HOSTNAME . "alumni/"); //Alumni Homepage

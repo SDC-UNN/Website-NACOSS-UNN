@@ -16,12 +16,11 @@
  */
 
 $array = UserUtility::getResults($user->getUserID());
-
 ?>
 <div>
     <h2>Results</h2>
     <div class="row bg-grayLighter">
-        <div class="padding5 grid">
+        <div class="padding5">
             <?php if (empty($array)) { ?>
                 <h3>No results available.</h3>
                 <?php
@@ -44,7 +43,7 @@ $array = UserUtility::getResults($user->getUserID());
                     ?>
                     <!--Display Image-->
                     <div class="image-container">
-                        <img class="image span4" src="<?= $array['img_url'] ?>" alt=""/>
+                        <img class="image" src="<?= $array['img_url'] ?>" alt=""/>
                         <div class="overlay-fluid">page <?= $array['page_no'] ?></div>
                     </div>
                     <?php

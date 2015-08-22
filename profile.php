@@ -1,5 +1,5 @@
 <?php
-require_once './class_lib.php';
+require_once 'class_lib.php';
 $user = new User();
 
 if ($user->isLoggedIn()) {
@@ -93,33 +93,7 @@ limitations under the License.
 
 <html>
     <head>
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-        <meta name="description" content="NACOSS UNN official website">
-        <meta name="author" content="NACOSS UNN Developers">
-        <meta name="keywords" content=" metro ui, NDG, NACOSS UNN">
-        <link rel="icon" href="favicon.ico" type="image/x-icon" />
-        <link rel="shortcut icon" href="favicon.ico" type="image/x-icon" />
-
-        <link href="css/metro-bootstrap.css" rel="stylesheet">
-        <link href="css/metro-bootstrap-responsive.css" rel="stylesheet">
-        <link href="css/iconFont.css" rel="stylesheet">
-        <link href="js/prettify/prettify.css" rel="stylesheet">
-
-        <script src="js/metro/metro.min.js"></script>
-
-        <!-- Load JavaScript Libraries -->
-        <script src="js/jquery/jquery.min.js"></script>
-        <script src="js/jquery/jquery.widget.min.js"></script>
-        <script src="js/jquery/jquery.mousewheel.js"></script>
-        <script src="js/prettify/prettify.js"></script>
-
-        <!-- Metro UI CSS JavaScript plugins -->
-        <script src="js/load-metro.js"></script>
-
-        <!-- Local JavaScript -->
-        <script src="js/docs.js"></script>
-        <script src="js/github.info.js"></script>
+        <?php require_once 'default_head_tags.php'; ?>
 
         <!-- Page Title -->
         <title>NACOSS UNN : <?= $user->getDisplayName() ?></title>        
@@ -127,36 +101,34 @@ limitations under the License.
     <body class="metro" style="background-image: url(img/bg.jpg); background-repeat: repeat;">
         <div class="container bg-white" id="wrapper">            
             <?php require_once './header.php'; ?>
-            <br/>
             <div class="padding20">
-
-                <div class="grid">
+                <div class="grid fluid">
                     <div class="row">
-                        <div class="span3">
+                        <div class="span4">
                             <nav class="sidebar">
                                 <ul class="">
                                     <li class="<?= $page == 1 || $page == 2 ? "stick bg-NACOSS-UNN" : "" ?>">
-                                        <a class="dropdown-toggle" href="#"><i class="icon-user"></i>Profile</a>
+                                        <a class="dropdown-toggle" href="#">Profile</a>
                                         <ul class="dropdown-menu" data-role="dropdown">
                                             <li><a href="profile.php?p=1">View Profile</a></li>
                                             <li><a href="profile.php?p=2">Edit Profile</a></li>
                                             <li><a href="profile.php?p=6">Change Password</a></li>
-                                            <li><a href="logout.php">Logout</a></li>
+                                            <li><a href="logout.php?url=<?= urlencode($_SERVER["PHP_SELF"]) ?>">Logout</a></li>
                                         </ul>
                                     </li>
 
                                     <li class="<?= $page == 3 ? "stick bg-NACOSS-UNN" : "" ?>">
-                                        <a href="profile.php?p=3"><i class="icon-file"></i> Results</a>
+                                        <a href="profile.php?p=3">Results</a>
                                     </li>
                                     <li class="<?= $page == 4 ? "stick bg-NACOSS-UNN" : "" ?>">
-                                        <a href="profile.php?p=4"><i class="icon-dollar-2"></i> Payments</a>
+                                        <a href="profile.php?p=4">Payments</a>
                                     </li>
                                 </ul>
                             </nav>
                             <a href="profile.php?p=5">report a bug</a>
                         </div>
 
-                        <div class="span9">
+                        <div class="span8">
                             <?php if ($user->isUserDeleted()) { ?>
                                 <h2>This account no longer exist, please contact site admin if this is an error</h2>
                             <?php } else if ($user->isUserSuspended()) {
@@ -190,7 +162,6 @@ limitations under the License.
                     </div>
                 </div>
             </div>
-            <br/>
             <?php require_once './footer.php'; ?>
         </div>
     </body>

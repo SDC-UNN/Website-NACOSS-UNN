@@ -4,20 +4,6 @@ html {
 body {
     font-size: 1.4rem;
 }
-
-//Stick footer to the bottom of page #start
-#wrapper {
-    min-height:100%;
-    position:relative;
-}
-
-#footer{
-    width: 100%;
-    position: absolute;
-    bottom: 0;
-}
-//Stick footer to the bottom of page #end
-
 html,
 body {
     padding: 0;

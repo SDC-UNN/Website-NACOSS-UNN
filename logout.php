@@ -16,10 +16,11 @@
  * limitations under the License.
  */
 
-require_once './class_lib.php';
+require_once 'class_lib.php';
 $user = new User();
 if ($user->logoutUser()) {
-    header("location: profile.php");
+    $url = filter_input(INPUT_GET, "url");
+    header("Location: " . urldecode($url));
 } else {
     echo '<h1>Server error<h1>';
 }

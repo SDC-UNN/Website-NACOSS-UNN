@@ -59,7 +59,7 @@ if (isset($array["addExecutive"])) {
         <form action="<?= $defaultPage ?>" method="post">
 
             <a  class="button" href="index.php?p=6&url=<?= urlencode($defaultPage) ?>">
-                Select User
+                Select Student
             </a>                       
             <div class="row">
                 <label class="">Name</label>
@@ -68,7 +68,7 @@ if (isset($array["addExecutive"])) {
             <div class="row">
                 <label class="">Reg. Number</label>
                 <label class=""><small><?= empty($regno) ? "No user selected. Select a user" : $regno ?></small></label>
-                <input name="user_id" hidden="" value="<?= $regno ?>" required="" type="text"/> 
+                <input name="user_id" hidden="" value="<?= empty($regno) ? "" : $regno ?>" required="" type="text"/> 
             </div>
             <div class="row">
                 <label class="span1">Post</label>

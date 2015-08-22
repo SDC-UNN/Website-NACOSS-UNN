@@ -1,5 +1,5 @@
 <?php
-require_once './class_lib.php';
+require_once 'class_lib.php';
 $user = new User();
 $library = new Collections();
 //Initializing fields with default values
@@ -69,93 +69,99 @@ limitations under the License.
 
 <html>
     <head>
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-        <meta name="description" content="NACOSS UNN official website">
-        <meta name="author" content="NACOSS UNN Developers">
-        <meta name="keywords" content=" metro ui, NDG, NACOSS UNN">
-        <link rel="icon" href="favicon.ico" type="image/x-icon" />
-        <link rel="shortcut icon" href="favicon.ico" type="image/x-icon" />
-
-        <link href="css/metro-bootstrap.css" rel="stylesheet">
-        <link href="css/metro-bootstrap-responsive.css" rel="stylesheet">
-        <link href="css/iconFont.css" rel="stylesheet">
-        <link href="js/prettify/prettify.css" rel="stylesheet">
-
-        <script src="js/metro/metro.min.js"></script>
-
-        <!-- Load JavaScript Libraries -->
-        <script src="js/jquery/jquery.min.js"></script>
-        <script src="js/jquery/jquery.widget.min.js"></script>
-        <script src="js/jquery/jquery.mousewheel.js"></script>
-        <script src="js/prettify/prettify.js"></script>
-
-        <!-- Metro UI CSS JavaScript plugins -->
-        <script src="js/load-metro.js"></script>
-
-        <!-- Local JavaScript -->
-        <script src="js/docs.js"></script>
-        <script src="js/github.info.js"></script>
+        <?php require_once 'default_head_tags.php'; ?>
 
         <!-- Page Title -->
         <title>NACOSS UNN : Library</title>        
     </head>
     <body class="metro" style="background-image: url(img/bg.jpg); background-repeat: repeat;">
         <div class="container bg-white" id="wrapper">            
-            <?php require_once './header.php'; ?>
-            <div class="padding20 grid">
+            <?php require_once 'header.php'; ?>
+            <div class="padding20 grid fluid">
                 <h1 class="fg-dark">Library</h1>
-                <br/>
-                <form method="post" action="library.php" class="grid">
+                <form method="post" action="library.php" class="bg-grayLighter padding5 row ntm">
                     <div class="input-control text" data-role="input-control">
                         <input type="text" value="<?= $searchQuery ?>" placeholder="Search Library" name="search"/>
                         <button class="btn-search" name="submit" type="submit"></button>
                     </div>
 
                     <div class="row ntm">
-                        <div class="span5">
-                            <label class="span1">Sort by: </label>
-                            <div class="span4">
-                                <input type="radio" name="sort_type" 
-                                <?=
-                                isset($sort_type) ?
-                                        ($sort_type == Collections::SORT_TYPE_TITLE ? "checked" : "") :
-                                        "checked"
-                                ?>
-                                       value="<?= Collections::SORT_TYPE_TITLE ?>"/> Title
-                                <input type="radio" name="sort_type"
-                                <?=
-                                isset($sort_type) ?
-                                        ($sort_type == Collections::SORT_TYPE_AUTHOR ? "checked" : "") :
-                                        ""
-                                ?>
-                                       value="<?= Collections::SORT_TYPE_AUTHOR ?>"/> Author
-                                <input type="radio" name="sort_type"
-                                <?=
-                                isset($sort_type) ?
-                                        ($sort_type == Collections::SORT_TYPE_DATE_ADDED ? "checked" : "") :
-                                        ""
-                                ?>
-                                       value="<?= Collections::SORT_TYPE_DATE_ADDED ?>"/> Date Added
+                        <!--                        <div class="input-control radio">
+                                                        <label>
+                                                            <input type="radio" />
+                                                            <span class="check"></span>
+                                                            Check me out
+                                                        </label>
+                                                    </div>-->
+
+                        <div class="row ntm">
+                            <label class="span2">Sort by: </label>
+                            <div class="input-control radio span3">
+                                <label>
+                                    <input type="radio" name="sort_type" 
+                                    <?=
+                                    isset($sort_type) ?
+                                            ($sort_type == Collections::SORT_TYPE_TITLE ? "checked" : "") :
+                                            "checked"
+                                    ?> value="<?= Collections::SORT_TYPE_TITLE ?>"/>
+                                    <span class="check"></span>
+                                    Title
+                                </label>
+                            </div>
+                            <div class="input-control radio span3">
+                                <label>
+                                    <input type="radio" name="sort_type"
+                                    <?=
+                                    isset($sort_type) ?
+                                            ($sort_type == Collections::SORT_TYPE_AUTHOR ? "checked" : "") :
+                                            ""
+                                    ?> value="<?= Collections::SORT_TYPE_AUTHOR ?>"/>
+                                    <span class="check"></span>
+                                    Author
+                                </label>
+                            </div>
+                            <div class="input-control radio span3">
+                                <label>
+                                    <input class="span1" type="radio" name="sort_type"
+                                    <?=
+                                    isset($sort_type) ?
+                                            ($sort_type == Collections::SORT_TYPE_DATE_ADDED ? "checked" : "") :
+                                            ""
+                                    ?> value="<?= Collections::SORT_TYPE_DATE_ADDED ?>"/>
+                                    <span class="check"></span>
+                                    Date Added
+                                </label>
                             </div>
                         </div>
-                        <div class="span4">
-                            <label class="span1">Order: </label>
-                            <div class="span3">
-                                <input type="radio" name="sort_order"
-                                <?= isset($order) ? ($order == SORT_ASC ? "checked" : "") : "checked" ?>
-                                       value="<?= SORT_ASC ?>"/> Ascending
-                                <input type="radio" name="sort_order"
-                                <?= isset($order) ? ($order == SORT_DESC ? "checked" : "") : "" ?>
-                                       value="<?= SORT_DESC ?>"/> Descending
+
+                        <div class="row ntm">
+                            <label class="span2">Order: </label>
+                            <div class="input-control radio span3">
+                                <label>
+                                    <input type="radio" name="sort_order"
+                                    <?= isset($order) ? ($order == SORT_ASC ? "checked" : "") : "checked" ?>
+                                           value="<?= SORT_ASC ?>"/>
+                                    <span class="check"></span>
+                                    Ascending
+                                </label>
                             </div>
+                            <div class="input-control radio span3">
+                                <label>
+                                    <input type="radio" name="sort_order"
+                                    <?= isset($order) ? ($order == SORT_DESC ? "checked" : "") : "" ?>
+                                           value="<?= SORT_DESC ?>"/>
+                                    <span class="check"></span>
+                                    Descending
+                                </label>
+                            </div>                                      
                         </div>
+
                     </div>
                 </form>
 
-                <?php include './library_pagination.php'; ?>
+                <?php include 'library_pagination.php'; ?>
 
-                <table class="table grid hovered striped">
+                <table class="table hovered striped">
                     <?php
                     if (empty($array)) {
                         echo '<div class="text-center">';
@@ -205,9 +211,9 @@ limitations under the License.
                     ?>
                 </table>
 
-                <?php include './library_pagination.php'; ?>
+                <?php include 'library_pagination.php'; ?>
             </div>
-            <?php require_once './footer.php'; ?>
+            <?php require_once 'footer.php'; ?>
         </div>
     </body>
 </html>

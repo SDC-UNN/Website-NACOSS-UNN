@@ -13,7 +13,7 @@ if (isset($array['delete_button']) && isset($array['checkbox'])) {
 } elseif (isset($array['addImage'])) {
     try {
         $addPerformed = true;
-        $success = $admin->newHomePageImage(strip_tags($array['image']), $array['href'], $array['caption'], $array['size']);
+        $success = $admin->createNewHomePageImage('image', $array['href'], $array['caption'], $array['size']);
         if (!$success) {
             $error_message = "Oops! Something went wrong";
         }
@@ -23,7 +23,6 @@ if (isset($array['delete_button']) && isset($array['checkbox'])) {
 
         $caption = $array['caption'];
         $size = $array['size'];
-        $image = $array['image'];
         $href = $array['href'];
     }
 } else {
@@ -31,7 +30,6 @@ if (isset($array['delete_button']) && isset($array['checkbox'])) {
     $id = urldecode(filter_input(INPUT_GET, "id"));
     $caption = urldecode(filter_input(INPUT_GET, "caption"));
     $size = urldecode(filter_input(INPUT_GET, "size"));
-    $image = urldecode(filter_input(INPUT_GET, "image"));
     $href = urldecode(filter_input(INPUT_GET, "href"));
 }
 //Get large and small home page images
@@ -98,7 +96,7 @@ limitations under the License.
                                 <tr>
                                     <th class="text-left"></th>
                                     <th class="text-left">ID</th>
-                                    <th class="text-left">URL</th>
+                                    <th class="text-left">IMAGE URL</th>
                                     <th class="text-left">HREF</th>
                                     <th class="text-left">Caption</th>
                                     <th class="text-left">Size</th>
@@ -113,7 +111,7 @@ limitations under the License.
                                         <td class="text-left"><input type="checkbox" name="checkbox[]" value="<?= $value['id'] ?>"/></td>
                                         <td class="text-left"><?= $value['id'] ?></td>
                                         <td class="text-left">
-                                            <a href="<?= $value['img_url'] ?>" target="_blank">
+                                            <a href="<?= HOSTNAME . $value['img_url'] ?>" target="_blank">
                                                 <?= $value['img_url'] ?>
                                             </a>
                                         </td>
@@ -136,7 +134,7 @@ limitations under the License.
                                         <td class="text-left"><input type="checkbox" name="checkbox[]" value="<?= $value['id'] ?>"/></td>
                                         <td class="text-left"><?= $value['id'] ?></td>
                                         <td class="text-left">
-                                            <a href="<?= $value['img_url'] ?>" target="_blank">
+                                            <a href="<?= HOSTNAME . $value['img_url'] ?>" target="_blank">
                                                 <?= $value['img_url'] ?>
                                             </a>
                                         </td>
@@ -193,100 +191,59 @@ limitations under the License.
                         }
                     }
                     ?>
-                    <form action="index.php?p=2#new" method="post">
-                        <a  class="button large" href="index.php?p=21&image=<?= urlencode($image) ?>&size=<?= $size ?>&href=<?= urlencode($href) ?>&caption=<?= urlencode($caption) ?>">
-                            Select post
+                    <form action="index.php?p=2#new" method="post" enctype="multipart/form-data">
+                        <a  class="button default" href="index.php?p=21&size=<?= empty($size) ? "" : $size ?>&href=<?= empty($href) ? "" : urlencode($href) ?>&caption=<?= empty($caption) ? "" : urlencode($caption) ?>">
+                            <?= empty($caption) ? "Select a post first!" : "Change post" ?>
                         </a>                       
-                        <div class="row ntm">
-                            <label class="">Image Caption</label>
+                        <div class="row">
+                            <label class="label">Image Caption</label>
                             <label class=""><small><?= empty($caption) ? "No caption yet. Select a post" : $caption ?></small></label>
-                            <input name="caption" hidden="" value="<?= $caption ?>" required="" type="text" style="width: 500px"/> 
+                            <input name="caption" hidden="" value="<?= empty($caption) ? "" : $caption ?>" required="" type="text" style="width: 500px"/> 
                         </div>
                         <div class="row ntm">
-                            <label class="">Image Reference</label>
+                            <label class="label">Reference</label>
                             <label class=""><small><?= empty($href) ? "No reference yet. Select a post" : $href ?></small></label>
-                            <input name="href" hidden="" value="<?= $href ?>" required="" type="text" style="width: 500px"/> 
+                            <input name="href" hidden="" value="<?= empty($href) ? "" : $href ?>" required="" type="text" style="width: 500px"/> 
                         </div>
+                        <label class="label" >Size</label>
                         <div class="row ntm">
-                            <label class="">Size</label>
-                            <select name="size" required="" class="" style="width: 200px">
+                            <select name="size" required="" class="span2" style="width: 200px">
                                 <?php
+                                $size = isset($size) ? $size : "";
                                 if (count($largeImages) < 4) { //max 4 large images  
                                     ?>
-                                    <option <?= strcasecmp($size, "LARGE") === 0 ? "checked" : "" ?>>LARGE</option>
+                                    <option id="large" <?= strcasecmp($size, "LARGE") === 0 ? "checked" : "" ?> >LARGE</option>
                                     <?php
                                 }
                                 if (count($smallImages) < 6) { //max 6 small images  
                                     ?>
-                                    <option <?= strcasecmp($size, "SMALL") === 0 ? "checked" : "" ?>>SMALL</option>
+                                    <option  id="small" <?= strcasecmp($size, "SMALL") === 0 ? "checked" : "" ?>>SMALL</option>
                                 <?php } ?>
                             </select>
                         </div>
-                        <div class="row">
-                            <div class="notice marker-on-top bg-NACOSS-UNN" style="width: 350px">
-                                <small>
-                                    <strong>LARGE:</strong> Landscape, width >= 700px, height >= 400px<br/>
-                                    <strong>SMALL:</strong> Square, width and height >= 230px
-                                </small>
+                        <Script Language="javascript">
+                            $("#large").click(function () {
+                                $("#hint").show();
+                                $("#hint_text").html('<strong>Description :</strong> This image appears on homepage sliders.<br/>\n\
+                         Specification: Landscape, width >= 700px, height >= 400px');
+                            });
+                            $("#small").click(function () {
+                                $("#hint").show();
+                                $("#hint_text").html('<strong>Description :</strong> Square, width and height greater or equal to 230px');
+                            });
+                        </script>
+                        <div id="hint" hidden="">
+                            <div class="row" >
+                                <div class="notice marker-on-top bg-NACOSS-UNN span3">
+                                    <small id="hint_text"> </small>
+                                </div>
                             </div>
                         </div>
+                        <br/>
+                        <label class="label">Image</label> 
                         <div class="row ntm">
-                            <label class="">Image URL</label>
-
-                            <input name="docFld" hidden="" type="text" id="docFld" style="width: 400px" />  
-                            <?php
-                            $editor = new CuteEditor();
-                            $editor->ID = "image";
-                            $editor->Text = "$image";
-                            $editor->ShowBottomBar = false;
-                            $editor->AutoConfigure = "None";
-                            $editor->ThemeType = "OfficeXp";
-                            $editor->FilesGalleryPath = SITE_FOLDER . "/uploads/news/files/";
-                            $editor->Width = 500;
-                            $editor->Height = 40;
-                            $editor->MaxImageSize = "500";
-                            $editor->MaxDocumentSize = "500";
-                            $ClientID = $editor->ClientID();
-                            $editor->Draw();
-                            $editor = null;
-
-                            //use $_POST["image"]to retrieve the data
-                            ?>
-
-                            <input name="Change" class="button" id="Change" type="button" value="Choose Image" onclick="callInsertImage()" /> 
-                            <Script Language="javascript">
-                                function callInsertImage()
-                                {
-                                    var editor1 = document.getElementById('<?php echo $ClientID; ?>');
-                                    editor1.FocusDocument();
-                                    var editdoc = editor1.GetDocument();
-                                    editdoc.body.innerHTML = "";
-                                    editor1.ExecCommand('insertdocument');
-                                    InputURL();
-                                    document.getElementById("docFld").focus();
-                                }
-
-                                function InputURL()
-                                {
-                                    var editor1 = document.getElementById('<?php echo $ClientID; ?>');
-                                    var editdoc = editor1.GetDocument();
-                                    var links = editdoc.getElementsByTagName("a");
-                                    if (links.length > 0 && links[links.length - 1].href != "")
-                                    {
-                                        document.getElementById("docFld").value = links[links.length - 1].href;
-                                    }
-                                    else
-                                    {
-                                        setTimeout(InputURL, 500);
-                                    }
-                                }
-                            </script>
-                        </div>
-                        <div class="row">
-                            <div class="notice marker-on-top bg-NACOSS-UNN" style="width: 350px">
-                                <small>
-                                    copy the url of the selected file to this form if it does not automatically appear
-                                </small>
+                            <div class="span4">
+                                <input name="image" class="" style="width: inherit" type="file" />
                             </div>
                         </div>
                         <div class="row">

@@ -50,7 +50,7 @@ if (isset($array["reportBugForm"])) {
     <h2>Report a Bug</h2>
     <div class="padding5">
         <?php if (isset($success)) { ?>
-            <div class="row container">
+            <div class="row">
                 <div class="label">
                     <?php if ($success) { ?>
                         <h2 class="fg-green">Thank You!</h2>
@@ -64,34 +64,30 @@ if (isset($array["reportBugForm"])) {
             </div>
         <?php }
         ?>
-        <form method="post" action="profile.php?p=2">
+        <form class="row ntm" method="post" action="profile.php?p=2">
 
             <div class="row" >
                 <label class="span2">Subject<span class="fg-red">*</span></label>
-                <div class="span6">
+                <div class="span10">
                     <input name='subject' required="" style="width: inherit" type='text' 
                            <?= isset($array['subject']) ? "value='" . $array['subject'] . "'" : ""; ?>  tabindex='6'  />
                 </div>
             </div>
             <div class="row" >
                 <label class="span2">Comment<span class="fg-red">*</span></label>
-                <div class="span6">
+                <div class="span10">
                     <textarea name='comment' required="" style="width: inherit; height: 200px"
                               tabindex='6'><?= isset($array['comment']) ? $array['comment'] : ""; ?></textarea>
                 </div>
             </div>
-            <div class="row no-phone offset2">
-                <input class="button default bg-NACOSS-UNN bg-hover-dark" type='submit'
-                       name='reportBugForm' value='Send' tabindex='9'/>
-            </div>
-            <div class="on-phone no-tablet no-desktop padding20 ntp nbp">
-                <input class="button default bg-NACOSS-UNN bg-hover-dark" type='submit'
+            <div class="row">
+                <input class="offset2 button default bg-NACOSS-UNN bg-hover-dark" type='submit'
                        name='reportBugForm' value='Send' tabindex='9'/>
             </div>
         </form>
 
 
-        <div class="panel">
+        <div class="panel row">
             <div class="panel-header">Reports By you</div>
             <div class="panel-content">
                 <?php

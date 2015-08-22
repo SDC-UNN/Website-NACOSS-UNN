@@ -16,8 +16,6 @@
  * limitations under the License.
  * 
  */
-
-
 //Modify this constant values to suit your settings
 //Do not commit this file afterwards
 
@@ -28,5 +26,5 @@ define("DB_PASSWORD", ""); //Database password
 define("HOSTNAME", "http://localhost/Website-NACOSS-UNN/"); //Location of this project
 define("SITE_FOLDER", "/Website-NACOSS-UNN/"); //Location of this project relative to localhost
 define("CPANEL_URL", "http://localhost/Website-NACOSS-UNN/cpanel/"); //Location of cpanel in your computer (relative to localhost)
-define("NDG_HOMEPAGE", "http://localhost/ndg/"); //NDG Homepage
-define("LIBRARY_UPLOAD_DIR", HOSTNAME.'uploads/');
+define("NDG_HOMEPAGE", HOSTNAME . "ndg/"); //NDG Homepage
+define("LIBRARY_UPLOAD_DIR", HOSTNAME . 'uploads/');

@@ -1,35 +1,41 @@
 <?php
 require_once './class_lib.php';
-
 $admin = new Admin();
 $isFormRequest = filter_input(INPUT_POST, "submit");
+$url = filter_input(INPUT_GET, "url");
 if (isset($isFormRequest)) {
     $id = html_entity_decode(filter_input(INPUT_POST, "id"));
     $password = html_entity_decode(filter_input(INPUT_POST, "password"));
+    $url = filter_input(INPUT_POST, "url");
 
     //Login
     try {
         $success = $admin->loginAdmin($id, $password);
         if ($success) {
-            switch ($admin->getAdminType()) {
-                case Admin::WEBMASTER:
-                    header("location: webmaster/");
-                    break;
-                case Admin::TREASURER:
-                    header("location: treasurer/");
-                    break;
-                case Admin::PRO:
-                    header("location: pro/");
-                    break;
-                case Admin::LIBRARIAN:
-                    header("location: librarian/");
-                    break;
-                case Admin::CLASS_REP:
-                    header("location: class_rep/");
-                    break;
-                default:
-                    $admin->logoutAdmin();
-                    break;
+            if (!empty($url)) {
+                header("location: " . $url);
+            } else {
+                switch ($admin->getAdminType()) {
+
+                    case Admin::WEBMASTER:
+                        header("location: webmaster/");
+                        break;
+                    case Admin::TREASURER:
+                        header("location: treasurer/");
+                        break;
+                    case Admin::PRO:
+                        header("location: pro/");
+                        break;
+                    case Admin::LIBRARIAN:
+                        header("location: librarian/");
+                        break;
+                    case Admin::CLASS_REP:
+                        header("location: class_rep/");
+                        break;
+                    default:
+                        $admin->logoutAdmin();
+                        break;
+                }
             }
         } else {
             $error_message = "Error occurred while trying to login, please try again";
@@ -42,26 +48,36 @@ if (isset($isFormRequest)) {
 
 if ($admin->isLoggedIn()) {
 //If session still active
-    switch ($admin->getAdminType()) {
-        case Admin::WEBMASTER:
-            header("location: webmaster/");
-            break;
-        case Admin::TREASURER:
-            header("location: treasurer/");
-            break;
-        case Admin::PRO:
-            header("location: pro/");
-            break;
-        case Admin::LIBRARIAN:
-            header("location: librarian/");
-            break;
-        case Admin::CLASS_REP:
-            header("location: class_rep/");
-            break;
-        default:
-            $admin->logoutAdmin();
-            break;
+    if (!empty($url)) {
+        header("location: " . urldecode($url));
+    } else {
+        switch ($admin->getAdminType()) {
+            case Admin::WEBMASTER:
+                header("location: webmaster/");
+                break;
+            case Admin::TREASURER:
+                header("location: treasurer/");
+                break;
+            case Admin::PRO:
+                header("location: pro/");
+                break;
+            case Admin::LIBRARIAN:
+                header("location: librarian/");
+                break;
+            case Admin::CLASS_REP:
+                header("location: class_rep/");
+                break;
+            default:
+                $admin->logoutAdmin();
+                break;
+        }
     }
+}
+
+//Handle pssword reset request
+$reset = filter_input(INPUT_GET, "reset");
+if ($reset) {
+    $passwordResetMessage = filter_input(INPUT_GET, "msg");
 }
 ?>
 <!DOCTYPE html>
@@ -83,34 +99,31 @@ limitations under the License.
 
 <html>
     <head>
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-        <link rel="icon" href="../favicon.ico" type="image/x-icon" />
-        <link rel="shortcut icon" href="../favicon.ico" type="image/x-icon" />
-
-        <link href="../css/metro-bootstrap.css" rel="stylesheet">
-        <link href="../css/metro-bootstrap-responsive.css" rel="stylesheet">
-        <link href="../css/iconFont.css" rel="stylesheet">
-        <link href="../js/prettify/prettify.css" rel="stylesheet">
-
-        <script src="../js/metro/metro.min.js"></script>
-
-        <!-- Load JavaScript Libraries -->
-        <script src="../js/jquery/jquery.min.js"></script>
-        <script src="../js/jquery/jquery.widget.min.js"></script>
-        <script src="../js/jquery/jquery.mousewheel.js"></script>
-        <script src="../js/prettify/prettify.js"></script>
-
-        <!-- Metro UI CSS JavaScript plugins -->
-        <script src="../js/metro.min.js"></script>
-
-        <!-- Local JavaScript -->
-        <script src="../js/docs.js"></script>
-        <script src="../js/github.info.js"></script>
+        <?php require_once 'default_head_tags.php'; ?>
 
         <!-- Page Title -->
         <title>CPanel</title>      
-
+        <script>
+            $(function () {
+                $(".requestIDButton").on('click', function () {
+                    $.Dialog({
+                        overlay: true,
+                        shadow: true,
+                        flat: true,
+                        icon: '<img src="../favicon.ico">',
+                        title: 'Forgot Password',
+                        content: '<form class="span3" action="reset_password.php" method="GET">' +
+                                '<label>Enter ID</label>' +
+                                '<div class="input-control text"><input type="text" required name="id">' +
+                                '<button class = "btn-clear" > </button></div > ' +
+                                '<div class="form-actions">' +
+                                '<button class="button bg-NACOSS-UNN">Reset Password</button></div>' +
+                                '</form>',
+                        padding: 10
+                    });
+                });
+            });
+        </script>
     </head>
     <body class="metro">
         <div class="">
@@ -121,6 +134,11 @@ limitations under the License.
                     <br/>
                     <br/>
                     <br/>
+                    <?php if (isset($passwordResetMessage)) { ?>
+                        <div class="panel bg-amber text-center shadow">
+                            <p class="padding5"><?= $passwordResetMessage ?></p>
+                        </div>
+                    <?php } ?>
                     <br/>
                     <div style="margin-left: auto; margin-right: auto;" class="span6 panel shadow">
                         <h2 class="panel-header bg-grayDark fg-white">
@@ -135,6 +153,7 @@ limitations under the License.
                             <form method='post' action='index.php'>
                                 <!--Login form-->
                                 <div class="grid">
+                                    <input hidden="" name="url" value="<?= empty($url) ? "" : urldecode($url) ?>"/>
                                     <div class="row ntm">
                                         <label class="span1">ID</label>
                                         <div class="span4">
@@ -152,7 +171,7 @@ limitations under the License.
                                         <input class="button default bg-NACOSS-UNN bg-hover-dark" style="width: 300px" type='submit'
                                                name='submit' value='Login' tabindex='3'/>
                                         <br/>
-                                        <a href="<?= HOSTNAME ?>reset_password.php" class=""> &nbsp;&nbsp;forgot password?</a>
+                                        <button class="link requestIDButton"> &nbsp;&nbsp;forgot password?</button>
                                     </div>
                                 </div>
                             </form>

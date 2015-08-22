@@ -18,42 +18,39 @@
 <div>
     <h2>Change Password</h2>
     <div class="padding5">
-        <?php if (isset($array["changePasswordForm"])) {
+        <?php
+        if (isset($array["changePasswordForm"])) {
             if ($success) {
                 ?>
                 <p class="fg-NACOSS-UNN">Password changed</p>
             <?php } else { ?>
                 <p class="fg-red"><?= $error_message ?></p>
-            <?php
+                <?php
             }
         }
         ?>
-        <form method="post" action="profile.php?p=6">
+        <form class="row" method="post" action="profile.php?p=6">
             <div class="row" >
                 <label class="span2">Old Password<span class="fg-red">*</span></label>
-                <div class="span4">
+                <div class="span10">
                     <input class="password" name='password' style="width: inherit" type='password' tabindex='2' />
                 </div>
             </div>
             <div class="row" >
                 <label class="span2">New Password<span class="fg-red">*</span></label>
-                <div class="span4">
+                <div class="span10">
                     <input class="password" name='password1' style="width: inherit" type='password' tabindex='2' />
                 </div>
             </div>
             <div class="row" >
                 <label class="span2">Confirm Password<span class="fg-red">*</span></label>
-                <div class="span4">
+                <div class="span10">
                     <input class="password" name='password2' style="width: inherit" type='password' tabindex='2' />
                 </div>
             </div>
 
-            <div class="row no-phone offset2">
-                <input class="button default bg-NACOSS-UNN bg-hover-dark" type='submit'
-                       name='changePasswordForm' value='Change' tabindex='9'/>
-            </div>
-            <div class="on-phone no-tablet no-desktop padding20 ntp nbp">
-                <input class="button default bg-NACOSS-UNN bg-hover-dark" type='submit'
+            <div class="row">
+                <input class="offset2 button default bg-NACOSS-UNN bg-hover-dark" type='submit'
                        name='changePasswordForm' value='Change' tabindex='9'/>
             </div>
         </form>

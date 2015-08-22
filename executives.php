@@ -45,75 +45,46 @@ limitations under the License.
 
 <html>
     <head>
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-        <meta name="description" content="NACOSS UNN official website">
-        <meta name="author" content="NACOSS UNN Developers">
-        <meta name="keywords" content=" metro ui, NDG, NACOSS UNN">
-        <link rel="icon" href="favicon.ico" type="image/x-icon" />
-        <link rel="shortcut icon" href="favicon.ico" type="image/x-icon" />
-
-        <link href="css/metro-bootstrap.css" rel="stylesheet">
-        <link href="css/metro-bootstrap-responsive.css" rel="stylesheet">
-        <link href="css/iconFont.css" rel="stylesheet">
-        <link href="js/prettify/prettify.css" rel="stylesheet">
-
-        <script src="js/metro/metro.min.js"></script>
-
-        <!-- Load JavaScript Libraries -->
-        <script src="js/jquery/jquery.min.js"></script>
-        <script src="js/jquery/jquery.widget.min.js"></script>
-        <script src="js/jquery/jquery.mousewheel.js"></script>
-        <script src="js/prettify/prettify.js"></script>
-
-        <!-- Metro UI CSS JavaScript plugins -->
-        <script src="js/load-metro.js"></script>
-
-        <!-- Local JavaScript -->
-        <script src="js/docs.js"></script>
-        <script src="js/github.info.js"></script>
+        <?php require_once 'default_head_tags.php'; ?>
 
         <!-- Page Title -->
         <title>NACOSS UNN : Executives</title>        
     </head>
     <body class="metro" style="background-image: url(img/bg.jpg); background-repeat: repeat;">
         <div class="container bg-white" id="wrapper">            
-            <?php require_once './header.php'; ?>
+            <?php require_once 'header.php'; ?>
             <div class="padding20">
-                <h1>Executives</h1>
-                <?php if (empty($executives) && empty($session)) { ?>
-                    <br/>
-                    <p>Not available at the moment</p>
-                <?php } else { ?>
-                    <div>
-                        <div class="place-right">
-                            <form class="grid" method="post" action="executives.php">
-                                <div class="row">
-                                    <p class="span1">Session</p>
-                                    <select name="session" class="span4">
-                                        <option></option>
-                                        <?php
-                                        $year = date("Y");
-                                        $endYear = "2014";
-                                        while ($year >= $endYear) {
-                                            $nextSession = ($year - 1) . "/" . ($year);
-                                            echo "<option "
-                                            . (strcasecmp($session, $nextSession) === 0 ? "selected" : "")
-                                            . ">"
-                                            . $nextSession
-                                            . "</option>";
-                                            $year--;
-                                        }
-                                        ?>
-                                    </select>
-                                    <input class="bg-NACOSS-UNN fg-white bg-hover-dark span2" name="switchSession" type="submit" value="View Session"/>
-                                </div>
-                            </form>
+                <div class="grid fluid">
+                    <h1>Executives</h1>
+                    <?php if (empty($executives) && empty($session)) { ?>
+                        <div class="row">
+                            <p>Not available at the moment</p>
                         </div>
-                        <br/>
-                        <div class="">
-                            <?php include './pagination.php'; ?>
-                            <table class="table grid hovered striped">
+                    <?php } else { ?>
+
+                        <form class="row" method="post" action="executives.php">
+                            <p class="span2">Session</p>
+                            <select name="session" class="select span3">
+                                <option></option>
+                                <?php
+                                $year = date("Y");
+                                $endYear = "2014";
+                                while ($year >= $endYear) {
+                                    $nextSession = ($year - 1) . "/" . ($year);
+                                    echo "<option "
+                                    . (strcasecmp($session, $nextSession) === 0 ? "selected" : "")
+                                    . ">"
+                                    . $nextSession
+                                    . "</option>";
+                                    $year--;
+                                }
+                                ?>
+                            </select>
+                            <input class="span4 bg-NACOSS-UNN fg-white bg-hover-dark" name="switchSession" type="submit" value="View Session"/>
+                        </form>
+                        <div class="row">
+                            <?php include 'pagination.php'; ?>
+                            <table class="table hovered striped">
                                 <?php
                                 if (empty($executives)) {
                                     echo '<tr class="">
@@ -134,9 +105,9 @@ limitations under the License.
                                                 <div class="row ntm nbm">
                                                     <div class="span2 shadow">
                                                         <?php
-                                                        if (file_exists($executives[$index]['pic_url'])) {
+                                                        if (file_exists(ROOT . $executives[$index]['pic_url'])) {
                                                             ?>
-                                                            <img src="<?= $executives[$index]['pic_url'] ?>" alt="Icon"/>
+                                                            <img src="<?= HOSTNAME . $executives[$index]['pic_url'] ?>" alt="Icon"/>
                                                             <?php
                                                         } else {
                                                             ?>
@@ -145,7 +116,7 @@ limitations under the License.
                                                         }
                                                         ?>
                                                     </div>
-                                                    <div class="span4">
+                                                    <div class="span10">
                                                         <h4>
                                                             <a class="" href="user_profile.php?id=<?= $executives[$index]['regno'] ?>&url=<?= $defaultPage ?>">
                                                                 <?=
@@ -173,14 +144,14 @@ limitations under the License.
                                 }
                                 ?>
                             </table>
-                            <?php include './pagination.php'; ?>
+                            <?php include 'pagination.php'; ?>
                         </div>
-                    </div>
-                <?php } ?>
 
+                    <?php } ?>
+
+                </div>
             </div>
-            <br/>
-            <?php require_once './footer.php'; ?>
+            <?php require_once 'footer.php'; ?>
         </div>
     </body>
 </html>

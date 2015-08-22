@@ -280,8 +280,7 @@ function createThumbnail($img_url) {
     $jpeg_quality = 90; //jpeg quality
     ##########################################
 
-    $image_temp = filter_input(INPUT_SERVER, "DOCUMENT_ROOT") . $img_url;
-    $image_size_info = getimagesize($image_temp); //get image size
+    $image_size_info = getimagesize($img_url); //get image size
 
     if (!empty($img_url)) {
         if ($image_size_info) {
@@ -299,13 +298,13 @@ function createThumbnail($img_url) {
     //as well as creates new image from given file 
     switch ($image_type) {
         case 'image/png':
-            $image_res = imagecreatefrompng($image_temp);
+            $image_res = imagecreatefrompng($img_url);
             break;
         case 'image/gif':
-            $image_res = imagecreatefromgif($image_temp);
+            $image_res = imagecreatefromgif($img_url);
             break;
-        case 'image/jpeg': case 'image/pjpeg':
-            $image_res = imagecreatefromjpeg($image_temp);
+        case 'image/jpeg': case 'image/pjpeg': case 'image/jpg':
+            $image_res = imagecreatefromjpeg($img_url);
             break;
         default:
             $image_res = false;
@@ -313,7 +312,7 @@ function createThumbnail($img_url) {
 
     if ($image_res) {
         //Get file extension and name to construct new file name 
-        $image_info = pathinfo($image_temp);
+        $image_info = pathinfo($img_url);
         $image_extension = strtolower($image_info["extension"]); //image extension
         $image_name_only = strtolower($image_info["filename"]); //file name only, no extension
         //create a name for new image (Eg: thumbPrefix_fileName.jpg) ;
@@ -335,13 +334,13 @@ function createThumbnail($img_url) {
 }
 
 function checkDimension($img_url, $size) {
-    $image_temp = filter_input(INPUT_SERVER, "DOCUMENT_ROOT") . $img_url;
     if (!empty($img_url)) {
-        $image_size_info = getimagesize($image_temp); //get image size
+        $image_size_info = getimagesize($img_url); //get image size
 
         if ($image_size_info) {
             $image_width = $image_size_info[0]; //image width
             $image_height = $image_size_info[1]; //image height
+            $image_type = $image_size_info['mime']; //image type
         } else {
             throw new Exception("Make sure image file is valid!");
         }
@@ -351,18 +350,47 @@ function checkDimension($img_url, $size) {
 
     switch ($size) {
         case "SMALL" :
-            if ($image_width === $image_height) { //Square image
-                return $image_width >= 230; //Minimum of 230px
+            if ($image_width >= 230) {//Minimum of 230px
+                $max_image_size = 250;
+                $image_width = 230;
+                $image_height = 230;
+                $jpeg_quality = 90;
+            } else {
+                throw new Exception("Image do not meet the specifications for $size<br/>"
+                . "Must have width and height greater or equal to 230px");
             }
+            break;
         case "LARGE":
-            if ($image_width > $image_height + 100) { //Landscape image
-                return $image_width >= 700 && $image_height >= 400; //Minimum width 700 and height 400
+            if (($image_width > $image_height + 100) && //Landscape image
+                    $image_width >= 700 && $image_height >= 400) { //Minimum width 700 and height 400
+                $max_image_size = 900;
+                $image_width = 700;
+                $image_height = 400;
+                $jpeg_quality = 90;
+            } else {
+                throw new Exception("Image do not meet the specifications for $size<br/>"
+                . "Must be Landscape, width >= 700px, height >= 400px");
             }
+            break;
         default :
             throw new Exception("Invalid size");
     }
 
-    return false;
+    switch ($image_type) {
+        case 'image/png':
+            $image_res = imagecreatefrompng($img_url);
+            break;
+        case 'image/gif':
+            $image_res = imagecreatefromgif($img_url);
+            break;
+        case 'image/jpeg': case 'image/pjpeg': case 'image/jpg':
+            $image_res = imagecreatefromjpeg($img_url);
+            break;
+        default:
+            $image_res = false;
+    }
+    //call normal_resize_image() function to proportionally resize image
+    normal_resize_image($image_res, $img_url, $image_type, $max_image_size, $image_width, $image_height, $jpeg_quality);
 }
 
 #####  This function will proportionally resize image ##### 

@@ -47,9 +47,14 @@ if ($admin->activateLogin()) {
         }
         //Further processing is done in the page to which the request was directed to
     }
-
 } else {
-    header("location: ../index.php");
+    //Set page number
+    $page = filter_input(INPUT_GET, "p");
+    if (empty($page)) {
+        $page = 1;
+    }
+    $url = urlencode(CPANEL_URL . "class_rep/?p=" . $page);
+    header("location: ../index.php?url=" . $url);
 }
 ?>
 
@@ -72,107 +77,84 @@ limitations under the License.
 
 <html>
     <head>
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-        <link rel="icon" href="<?= HOSTNAME ?>favicon.ico" type="image/x-icon" />
-        <link rel="shortcut icon" href="<?= HOSTNAME ?>favicon.ico" type="image/x-icon" />
-
-        <link href="<?=HOSTNAME?>css/metro-bootstrap.css" rel="stylesheet">
-        <link href="<?=HOSTNAME?>css/metro-bootstrap-responsive.css" rel="stylesheet">
-        <link href="<?=HOSTNAME?>css/iconFont.css" rel="stylesheet">
-        <link href="<?=HOSTNAME?>js/prettify/prettify.css" rel="stylesheet">
-
-        <script src="<?=HOSTNAME?>js/metro/metro.min.js"></script>
-
-        <!-- Load JavaScript Libraries -->
-        <script src="<?=HOSTNAME?>js/jquery/jquery.min.js"></script>
-        <script src="<?=HOSTNAME?>js/jquery/jquery.widget.min.js"></script>
-        <script src="<?=HOSTNAME?>js/jquery/jquery.mousewheel.js"></script>
-        <script src="<?=HOSTNAME?>js/prettify/prettify.js"></script>
-
-        <!-- Metro UI CSS JavaScript plugins -->
-        <script src="<?=HOSTNAME?>js/metro.min.js"></script>
-
-        <!-- Local JavaScript -->
-        <script src="<?=HOSTNAME?>js/docs.js"></script>
-        <script src="<?=HOSTNAME?>js/github.info.js"></script>
+        <?php require_once '../default_head_tags.php'; ?>
 
         <!-- Page Title -->
         <title>CPanel</title>        
     </head>
     <body class="metro">
-            <div class="bg-white">            
-                <?php require_once '../header.php'; ?>
-                <div class="padding20">
-                    <h2>CLASS REP.</h2>
-                    <div class="grid">
-                        <div class="row">
-                            <div class="span3">
-                                <nav class="sidebar light">
-                                    <ul class="">
-                                        <li class="<?= $page == 1 ? "stick bg-darkBlue" : "" ?>">
-                                            <a href="index.php?p=1"><i class="icon-image"></i>Class List</a>
-                                        </li>
-                                        <li class="<?= $page == 2 || ($page >= 21 and $page <= 25) ? "stick bg-darkBlue " : "" ?>">
-                                            <a class="dropdown-toggle" href="#"><i class="icon-broadcast"></i>Messenger</a>
-                                            <ul class="dropdown-menu" data-role="dropdown">
-                                                <li><a href="index.php?p=2">Compose Message</a></li>
-                                                <li><a href="index.php?p=22">Contacts/Group</a></li>
-                                                <li><a href="index.php?p=24">Message Logs</a></li>
-                                                <li><a href="index.php?p=25">Status</a></li>
-                                            </ul>
-                                        </li>
-                                        <li class="<?= $page == 3 ? "stick bg-darkBlue" : "" ?>">
-                                            <a href="index.php?p=3"><i class="icon-tools"></i>Settings</a>
-                                        </li>
-                                    </ul>
-                                    <br/>
-                                    <div class="panel no-border">
-                                        <div class="panel-header">Statistics</div>
-                                        <div class="panel-content">
-                                            <p>Number in Class</p>
-                                            <p><? ?>-</p>
-                                            <p>Males</p>
-                                            <p><? ?>-</p>
-                                            <p>Females</p>
-                                            <p><? ?>-</p>
-                                        </div>
+        <div class="bg-white">            
+            <?php require_once '../header.php'; ?>
+            <div class="padding20">
+                <h2>CLASS REP.</h2>
+                <div class="grid">
+                    <div class="row">
+                        <div class="span3">
+                            <nav class="sidebar light">
+                                <ul class="">
+                                    <li class="<?= $page == 1 ? "stick bg-darkBlue" : "" ?>">
+                                        <a href="index.php?p=1"><i class="icon-image"></i>Class List</a>
+                                    </li>
+                                    <li class="<?= $page == 2 || ($page >= 21 and $page <= 25) ? "stick bg-darkBlue " : "" ?>">
+                                        <a class="dropdown-toggle" href="#"><i class="icon-broadcast"></i>Messenger</a>
+                                        <ul class="dropdown-menu" data-role="dropdown">
+                                            <li><a href="index.php?p=2">Compose Message</a></li>
+                                            <li><a href="index.php?p=22">Contacts/Group</a></li>
+                                            <li><a href="index.php?p=24">Message Logs</a></li>
+                                            <li><a href="index.php?p=25">Status</a></li>
+                                        </ul>
+                                    </li>
+                                    <li class="<?= $page == 3 ? "stick bg-darkBlue" : "" ?>">
+                                        <a href="index.php?p=3"><i class="icon-tools"></i>Settings</a>
+                                    </li>
+                                </ul>
+                                <br/>
+                                <div class="panel no-border">
+                                    <div class="panel-header">Statistics</div>
+                                    <div class="panel-content">
+                                        <p>Number in Class</p>
+                                        <p><? ?>-</p>
+                                        <p>Males</p>
+                                        <p><? ?>-</p>
+                                        <p>Females</p>
+                                        <p><? ?>-</p>
                                     </div>
-                                </nav>
-                            </div>
+                                </div>
+                            </nav>
+                        </div>
 
-                            <div class="span12">
-                                <?php
-                                switch ($page) {
-                                    case 1: require_once '_class_list.php';
-                                        break;
-                                    case 2: require_once '_messenger_new_sms.php';
-                                        break;
-                                    case 21: require_once '_messenger_new_mail.php';
-                                        break;
-                                    case 22: require_once '_messenger_contacts_all.php';
-                                        break;
-                                    case 23: require_once '_messenger_contacts_groups.php';
-                                        break;
-                                    case 24: require_once '_messenger_logs.php';
-                                        break;
-                                    case 25: require_once '_messenger_status.php';
-                                        break;
-									case 26: require_once '_messenger_select_recipients.php';
-										break;
-                                    case 3: require_once '_settings.php';
-                                        break;
-                                    default : require_once '_class_list.php';
-                                        break;
-                                }
-                                ?>
-                            </div>
+                        <div class="span12">
+                            <?php
+                            switch ($page) {
+                                case 1: require_once '_class_list.php';
+                                    break;
+                                case 2: require_once '_messenger_new_sms.php';
+                                    break;
+                                case 21: require_once '_messenger_new_mail.php';
+                                    break;
+                                case 22: require_once '_messenger_contacts_all.php';
+                                    break;
+                                case 23: require_once '_messenger_contacts_groups.php';
+                                    break;
+                                case 24: require_once '_messenger_logs.php';
+                                    break;
+                                case 25: require_once '_messenger_status.php';
+                                    break;
+                                case 26: require_once '_messenger_select_recipients.php';
+                                    break;
+                                case 3: require_once '_settings.php';
+                                    break;
+                                default : require_once '_class_list.php';
+                                    break;
+                            }
+                            ?>
                         </div>
                     </div>
-
                 </div>
-                <br/>
-                <?php require_once '../footer.php'; ?>
+
             </div>
+            <br/>
+            <?php require_once '../footer.php'; ?>
+        </div>
     </body>
 </html>

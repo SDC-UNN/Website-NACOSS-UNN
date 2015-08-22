@@ -31,7 +31,6 @@ if (isset($array['search_button'])) {  //$array from index.php
 }
 
 //URL for back link
-$image = urldecode(filter_input(INPUT_GET, "image"));
 $caption = urldecode(filter_input(INPUT_GET, "caption"));
 $size = urldecode(filter_input(INPUT_GET, "size"));
 $href = urldecode(filter_input(INPUT_GET, "href"));
@@ -57,7 +56,7 @@ limitations under the License.
 <div>
     <h4>SELECT POST</h4>
     <div class="row">
-        <a href="index.php?p=2?image=<?= urlencode($image) ?>&size=<?= $size ?>&href=<?= urlencode($href) ?>&caption=<?= urlencode($caption) ?>#new">
+        <a href="index.php?p=2?size=<?= $size ?>&href=<?= urlencode($href) ?>&caption=<?= urlencode($caption) ?>#new">
             <i class="icon-arrow-left-2"></i> Back
         </a>
     </div>
@@ -133,7 +132,7 @@ limitations under the License.
                                 <tr>                            
                                     <td class="text-left"><?= $posts[$index]['time_of_post'] ?></td>
                                     <td class="text-left">
-                                        <a href="index.php?p=2?image=<?= urlencode($image) ?>&size=<?= $size ?>&id=<?= $posts[$index]['id'] ?>#new">
+                                        <a href="index.php?p=2?size=<?= $size ?>&id=<?= $posts[$index]['id'] ?>#new">
                                             <?= $posts[$index]['title'] ?>
                                         </a>
                                     </td>
@@ -141,7 +140,7 @@ limitations under the License.
                                     <td class="text-left"><?= $posts[$index]['expire_time'] ?></td>
                                     <td class="text-left"><?= $posts[$index]['hits'] ?></td>
                                     <td class="text-left">
-                                        <a href="index.php?p=2?image=<?= urlencode($image) ?>&size=<?= $size ?>&id=<?= $posts[$index]['id'] ?>#new">
+                                        <a href="index.php?p=2?size=<?= $size ?>&id=<?= $posts[$index]['id'] ?>#new">
                                             select
                                         </a>
                                     </td>

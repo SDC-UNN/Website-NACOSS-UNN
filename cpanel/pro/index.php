@@ -2,9 +2,6 @@
 require_once '../class_lib.php';
 require_once 'functions.php';
 require_once 'NewsAdmin.php';
-//Including Cute Editor files
-//Author: http://cutesoft.net
-include_once("../cuteeditor_files/include_CuteEditor.php");
 
 $admin = new NewsAdmin();
 if ($admin->activateLogin()) {
@@ -40,7 +37,7 @@ if ($admin->activateLogin()) {
         foreach ($array as $key => $value) {
             if (is_array($array[$key])) {
                 foreach ($array[$key] as $subkey => $subvalue) {
-                    $subvalue[$subkey] = html_entity_decode($subvalue[$subkey]);
+                    $array[$key][$subkey] = html_entity_decode($array[$key][$subkey]);
                 }
             } else {
                 $array[$key] = html_entity_decode($array[$key]);
@@ -49,7 +46,13 @@ if ($admin->activateLogin()) {
         //Further processing is done in the page to which the request was directed to
     }
 } else {
-    header("location: ../index.php");
+    //Set page number
+    $page = filter_input(INPUT_GET, "p");
+    if (empty($page)) {
+        $page = 1;
+    }
+    $url = urlencode(CPANEL_URL . "pro/?p=" . $page);
+    header("location: ../index.php?url=" . $url);
 }
 ?>
 <!DOCTYPE html>
@@ -71,30 +74,10 @@ limitations under the License.
 
 <html>
     <head>
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-        <link rel="icon" href="<?= HOSTNAME ?>favicon.ico" type="image/x-icon" />
-        <link rel="shortcut icon" href="<?= HOSTNAME ?>favicon.ico" type="image/x-icon" />
+        <?php require_once '../default_head_tags.php'; ?>
 
-        <link href="<?= HOSTNAME ?>css/metro-bootstrap.css" rel="stylesheet">
-        <link href="<?= HOSTNAME ?>css/metro-bootstrap-responsive.css" rel="stylesheet">
-        <link href="<?= HOSTNAME ?>css/iconFont.css" rel="stylesheet">
-        <link href="<?= HOSTNAME ?>js/prettify/prettify.css" rel="stylesheet">
-
-        <!--<script src="<?= HOSTNAME ?>js/metro/metro.min.js"></script>-->
-
-        <!-- Load JavaScript Libraries -->
-        <script src="<?= HOSTNAME ?>js/jquery/jquery.min.js"></script>
-        <script src="<?= HOSTNAME ?>js/jquery/jquery.widget.min.js"></script>
-        <script src="<?= HOSTNAME ?>js/jquery/jquery.mousewheel.js"></script>
-        <script src="<?= HOSTNAME ?>js/prettify/prettify.js"></script>
-
-        <!-- Metro UI CSS JavaScript plugins -->
-        <script src="<?= HOSTNAME ?>js/metro.min.js"></script>
-
-        <!-- Local JavaScript -->
-        <script src="<?= HOSTNAME ?>js/docs.js"></script>
-        <script src="<?= HOSTNAME ?>js/github.info.js"></script>
+        <!--Text Editor-->
+        <script src="../ckeditor/ckeditor.js"></script>
 
         <!-- Page Title -->
         <title>CPanel</title>        

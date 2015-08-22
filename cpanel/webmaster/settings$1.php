@@ -15,7 +15,6 @@
  * limitations under the License.
  */
 
-//If request was sent to settings$1.php
 if (isset($array['settings$1'])) {
     //Handle request
     $isPasswordChangeRequest = true;
@@ -48,7 +47,7 @@ if (isset($array['settings$1'])) {
             }
         }
         ?>
-        <form method="post" action="index.php?p=8">
+        <form method="post" action="index.php?p=71">
             <div class="row" >
                 <label class="span2">Old Password<span class="fg-red">*</span></label>
                 <div class="span4">

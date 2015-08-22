@@ -150,9 +150,9 @@ class Admin {
 
     private function validatePassword($password) {
         if (strlen($password) >= 8) {
-            $regex = "#([A-Z]+[a-z]*[0-9]*\S*)([A-Z]*[a-z]+[0-9]*\S*)([A-Z]*[a-z]*[0-9]+\S*)#";
+            $regex = "#(\w*[\s\S]*[A-Z]+)+#";
             if (!preg_match($regex, $password)) {
-                throw new Exception("Invalid password: try switching letter cases, adding numbers and special characters");
+                throw new Exception("Invalid password: try switching letter cases");
             }
         } else {
             throw new Exception("Password should be up to 8 characters long");

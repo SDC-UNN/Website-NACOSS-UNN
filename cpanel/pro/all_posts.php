@@ -64,14 +64,15 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -->
 <script>
-    function warn() {
+//    function warn() {
 //        var ok = confirm("Are you sure?");
-//        if (ok === false) {
+//        if (ok === true) {
 //            //Cancel request
-//            window.stop();
+//            var f = document.getElementsByName("form");
+//            f.submit();
 //        }
-    }
-    ;
+//    }
+//    ;
 </script>
 
 <div>
@@ -142,7 +143,7 @@ limitations under the License.
             }
             ?>
             <div id="top">
-                <form action="index.php?p=1" method="post">
+                <form action="index.php?p=1" method="post" name="form">
                     <input class="span1" name="search" hidden value="<?= $searchQuery ?>"/>
                     <input class="span1" name="sort_type" hidden value="<?= $sort_type ?>"/>
                     <input class="span1" name="sort_order" hidden value="<?= $order ?>"/>
@@ -181,7 +182,7 @@ limitations under the License.
                                         <td class="text-left"><?= $posts[$index]['expire_time'] ?></td>
                                         <td class="text-left"><?= $posts[$index]['hits'] ?></td>
                                         <td class="text-left">
-                                            <a href="index.php?p=12&url=<?= urlencode(CPANEL_URL . 'pro/?p=1&pg=' . $page . '&q=' . urlencode($searchQuery) . '&s=' . $sort_type . '&o=' . $order) ?>&id=<?= $posts[$index]['id'] ?>">
+                                            <a href="index.php?p=12&url=<?= urlencode($_SERVER['PHP_SELF'] . '/?p=1&pg=' . $page . '&q=' . urlencode($searchQuery) . '&s=' . $sort_type . '&o=' . $order) ?>&id=<?= $posts[$index]['id'] ?>">
                                                 Modify
                                             </a>
                                         </td>

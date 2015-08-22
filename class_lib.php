@@ -1,6 +1,6 @@
 <?php
 
-/* 
+/*
  * Copyright 2015 NACOSS UNN Developers Group (NDG).
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -17,6 +17,7 @@
  */
 
 require_once 'constants.php';
+require_once 'functions.php';
 require_once 'UserUtility.php';
 require_once 'User.php';
 require_once 'Collections.php';

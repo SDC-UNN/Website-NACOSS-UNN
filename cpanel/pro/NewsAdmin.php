@@ -127,6 +127,13 @@ class NewsAdmin extends Admin {
             $check_result = mysqli_query($link, $check_query);
             if ($check_result) {
                 $row = mysqli_fetch_array($check_result);
+                $image_url = filter_input(INPUT_SERVER, "DOCUMENT_ROOT") . SITE_FOLDER . $row["img_url"];
+                if (is_file($image_url)) {
+                    $deleted = unlink($image_url);
+                    if (!$deleted) {
+                        throw new Exception("Home page image with id = $value could not be deleted");
+                    }
+                }
                 $thumb_url = filter_input(INPUT_SERVER, "DOCUMENT_ROOT") . SITE_FOLDER . $row["thumb_url"];
                 if (is_file($thumb_url)) {
                     $deleted = unlink($thumb_url);
@@ -150,8 +157,37 @@ class NewsAdmin extends Admin {
         return mysqli_commit($link);
     }
 
-    public function newHomePageImage($img, $href, $caption, $size) {
-        $img_url = "http://" . filter_input(INPUT_SERVER, 'HTTP_HOST') . "/$img";
+    public function createNewHomePageImage($img_name, $href, $caption, $size) {
+        if (isset($_FILES[$img_name])) {
+            $target_dir = "/uploads/news/";
+            switch ($_FILES[$img_name]["type"]) {
+                case "image/gif":
+                    $file_ext = ".gif";
+                    break;
+                case "image/jpeg":
+                    $file_ext = ".jpeg";
+                    break;
+                case "image/jpg":
+                    $file_ext = ".jpg";
+                    break;
+                case "image/pjpeg":
+                    $file_ext = ".jpeg";
+                    break;
+                case "image/png":
+                    $file_ext = ".png";
+                    break;
+                default:
+                    $file_ext = "";
+                    break;
+            }
+            if (empty($file_ext)) {
+                throw new Exception("Unknown file format");
+            }
+            $img_url = $target_dir . uniqid("img_") . $file_ext;
+            $target_file = filter_input(INPUT_SERVER, "DOCUMENT_ROOT") . SITE_FOLDER . $img_url;
+        } else {
+            throw new Exception("No image set");
+        }
         $link = AdminUtility::getDefaultDBConnection();
         //Check if exists
         $check_query = "select * from home_page_images where img_url='" . mysqli_escape_string($link, $img_url) . "' "
@@ -170,13 +206,27 @@ class NewsAdmin extends Admin {
             throw new Exception("Link or caption is empty");
         }
 
-        //Check image dimension
-        $size_ok = checkDimension($img, $size);
-        if (!$size_ok) {
-            throw new Exception("Image do not meet the specifications for $size");
+
+        //upload
+        if (isset($_FILES[$img_name])) {
+            if (!move_uploaded_file($_FILES[$img_name]["tmp_name"], $target_file)) {
+                throw new Exception("Upload failed");
+            }
+        } else {
+            throw new Exception("Upload empty");
         }
+
+        //Check image dimension
+        try {
+            checkDimension($target_file, $size);
+        } catch (Exception $exc) {
+            unlink($target_file);
+            throw new Exception($exc->getMessage());
+        }
+
+
         //Create thumbnail
-        $thumb_url = createThumbnail($img);
+        $thumb_url = createThumbnail($target_file);
 
         $query = "insert into home_page_images set "
                 . "img_url='" . mysqli_escape_string($link, $img_url) . "', "
@@ -224,7 +274,7 @@ class NewsAdmin extends Admin {
         if (empty($post) || empty($session) || empty($ID)) {
             throw new Exception("Invalid parameter");
         }
-        
+
         $match = preg_match("#\d{4}/\d{4}#", $session);
         if ($match === 1) {
             $years = explode("/", $session);

@@ -79,25 +79,7 @@ if (isset($array['post_button'])) {
                 </div>
             </div>
             <br/>
-            <?php
-            //Cute editor Settings
-            $editor = new CuteEditor();
-            $editor->ID = "content";
-            $editor->Text = isset($array['content']) ? $array['content'] : "";
-            $editor->EditorBodyStyle = "font:normal 12px arial;";
-            $editor->EditorWysiwygModeCss = "php.css";
-//            $editor->AutoConfigure = "Simple";
-            $editor->Height = 560;
-            $editor->Width = 960;
-            $editor->MaxImageSize = "200";
-            $editor->ImageGalleryPath = SITE_FOLDER . "/uploads/news/images/";
-            $editor->FilesGalleryPath = SITE_FOLDER . "/uploads/news/files/";
-            $editor->FlashGalleryPath = SITE_FOLDER . "/uploads/news/flash/";
-            $editor->MediaGalleryPath = SITE_FOLDER . "/uploads/news/media/";
-            $editor->TemplateGalleryPath = SITE_FOLDER . "/uploads/news/templates/";
-            $editor->Draw();
-            $editor = null;
-            ?>
+            <textarea class="ckeditor" name="content"><?= isset($array['content']) ? $array['content'] : "" ?></textarea>
             <div class="row ">
                 <div class="">
                     <input class="button bg-blue bg-hover-dark fg-white" name='post_button' type='submit' tabindex='4' value="Post" />

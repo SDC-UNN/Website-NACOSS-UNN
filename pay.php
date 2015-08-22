@@ -1,3 +1,4 @@
+<?php require_once 'class_lib.php'; ?>
 <!DOCTYPE html>
 <!--
 Copyright 2015 NACOSS UNN Developers Group (NDG).
@@ -17,49 +18,23 @@ limitations under the License.
 
 <html>
     <head>
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-        <meta name="description" content="NACOSS UNN official website">
-        <meta name="author" content="NACOSS UNN Developers">
-        <meta name="keywords" content=" metro ui, NDG, NACOSS UNN">
-        <link rel="icon" href="favicon.ico" type="image/x-icon" />
-        <link rel="shortcut icon" href="favicon.ico" type="image/x-icon" />
-        
-        <link href="css/metro-bootstrap.css" rel="stylesheet">
-        <link href="css/metro-bootstrap-responsive.css" rel="stylesheet">
-        <link href="css/iconFont.css" rel="stylesheet">
-        <link href="js/prettify/prettify.css" rel="stylesheet">
+        <?php require_once 'default_head_tags.php'; ?>
 
-        <script src="js/metro/metro.min.js"></script>
-
-        <!-- Load JavaScript Libraries -->
-        <script src="js/jquery/jquery.min.js"></script>
-        <script src="js/jquery/jquery.widget.min.js"></script>
-        <script src="js/jquery/jquery.mousewheel.js"></script>
-        <script src="js/prettify/prettify.js"></script>
-
-        <!-- Metro UI CSS JavaScript plugins -->
-        <script src="js/load-metro.js"></script>
-
-        <!-- Local JavaScript -->
-        <script src="js/docs.js"></script>
-        <script src="js/github.info.js"></script>
-        
         <!-- Page Title -->
-        <title>NACOSS UNN : Title</title>        
+        <title>NACOSS UNN : Payments</title>        
     </head>
     <body class="metro" style="background-image: url(img/bg.jpg); background-repeat: repeat;">
         <div class="container bg-white" id="wrapper">            
-            <?php require_once './header.php';?>
+            <?php require_once './header.php'; ?>
             <div class="padding20">
-            
-            <!--Your code goes here-->
-            <h2>Sorry, this service is not available at the moment.</h2>
-            <a href="profile.php?p=4" class="link">back to profile</a>
-            
+
+                <!--Your code goes here-->
+                <h2>Sorry, this service is not available at the moment.</h2>
+                <a href="profile.php?p=4" class="link">back to profile</a>
+
             </div>
             <br/>
-            <?php require_once './footer.php';?>
+            <?php require_once './footer.php'; ?>
         </div>
     </body>
 </html>

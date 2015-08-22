@@ -170,7 +170,6 @@ class UserUtility {
      * @return connection
      */
     private static function getConnection() {
-        require_once './constants.php';
         $link = mysqli_connect(DB_HOSTNAME, DB_USERNAME, DB_PASSWORD);
         return $link;
     }
