@@ -25,7 +25,8 @@ if ($op == "feedback") {
             . "ip_address='{$_SERVER["REMOTE_ADDR"]}', "
             . "message='$msg' "
             . "on duplicate key update "
-            . "message='$msg'";
+            . "message='$msg', "
+            . "seen=0";
     echo mysqli_query($link, $query) ? "OK" : "FAILED";
 } else {
     echo 'INVALID REQUEST';
