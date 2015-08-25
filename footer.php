@@ -33,8 +33,7 @@
     });
 
     function sendFeedBack() {
-        var msg = document.getElementById("feedBackMessage").innerHTML;
-        alert(msg);
+        var msg = document.getElementById("feedBackMessage").value;
         if (msg !== "") {
             var xmlHttp;
             if (window.XMLHttpRequest) {

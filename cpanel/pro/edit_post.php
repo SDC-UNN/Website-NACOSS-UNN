@@ -56,7 +56,7 @@ if (empty($array)) {
                 <i class="icon-arrow-left-2"></i> Back
             </a>
         </div>
-        <div class="grid">
+        <div class="row">
             <?php
             if (isset($success)) {
                 if ($success) {
@@ -72,8 +72,8 @@ if (empty($array)) {
                 <input name="url" hidden value="<?= $url ?>"/>
                 <input name="id" hidden value="<?= $id ?>"/>
                 <div class="row ntm">
-                    <label class="span1">Title</label>
-                    <div class="span7">
+                    <label class="span2">Title</label>
+                    <div class="span10">
                         <input class="text" required name='title' value="<?= isset($array['title']) ? $array['title'] : "" ?>" maxlength="60" style="width: inherit" required type='text' tabindex='1' />
                     </div>
                 </div>
@@ -86,20 +86,24 @@ if (empty($array)) {
                 }
                 ?>
                 <div class="row" >
-                    <label class="span1">Expire Date</label>
-                    <div class="span7">
-                        <!--old data-format="dddd, mmmm d, yyyy"-->
-                        <div class="input-control text span2" data-role="datepicker"
-                             data-date="<?= $time[0] ?>"
-                             data-format="yyyy-mm-dd"
-                             data-position="bottom"
-                             data-effect="slide">
-                            <input type="text" required name="exp_date">
-                            <button type="button" class="btn-date"></button>
-                        </div>
-                        <div class="span5">
-                            <label class="span2">Expire Time <small>(hh:mm:ss)</small></label>
-                            <input type="time" required="" placeholder="hh:mm:ss" value="<?= $time[1] ?>" name="exp_time">
+                    <label class="span2">Expire Date</label>
+                    <div class="span10">
+                        <div class="row ntm">
+                            <!--old data-format="dddd, mmmm d, yyyy"-->
+                            <div class="input-control text span3" data-role="datepicker"
+                                 data-date="<?= $time[0] ?>"
+                                 data-format="yyyy-mm-dd"
+                                 data-position="bottom"
+                                 data-effect="slide">
+                                <input type="text" required name="exp_date">
+                                <button type="button" class="btn-date"></button>
+                            </div>
+                            <div class="span7">
+                                <div class="row ntm">
+                                    <label class="span5">Expire Time <small>(hh:mm:ss)</small></label>
+                                    <input class="span7" type="time" required="" placeholder="hh:mm:ss" value="<?= $time[1] ?>" name="exp_time">
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>

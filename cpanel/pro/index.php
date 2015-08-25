@@ -89,7 +89,7 @@ limitations under the License.
                 <?php require_once '../header.php'; ?>
                 <div class="padding20">
                     <h2>PRO</h2>
-                    <div class="grid">
+                    <div class="grid fluid">
                         <div class="row">
                             <div class="span3">
                                 <nav class="sidebar light">
@@ -137,7 +137,7 @@ limitations under the License.
                                 </nav>
                             </div>
 
-                            <div class="span12">
+                            <div class="span9">
                                 <?php
                                 switch ($page) {
                                     case 1: require_once 'all_posts.php';

@@ -55,7 +55,7 @@ if (empty($array)) {
                 <i class="icon-arrow-left-2"></i> Back
             </a>
         </div>
-        <div class="grid">
+        <div class="row">
             <?php
             if (isset($success)) {
                 if ($success) {
@@ -71,20 +71,20 @@ if (empty($array)) {
                 <input name="url" hidden value="<?= $url ?>"/>
                 <input name="id" hidden value="<?= $id ?>"/>
                 <div class="row ntm">
-                    <label class="span1">Question</label>
-                    <div class="span7">
+                    <label class="span2">Question</label>
+                    <div class="span10">
                         <textarea class="text" name='question' style="width: inherit; height: 100px" required tabindex='1'><?= isset($array['question']) ? $array['question'] : "" ?></textarea>
                     </div>
                 </div>
                 <div class="row">
-                    <label class="span1">Answer</label>
-                    <div class="span7">
+                    <label class="span2">Answer</label>
+                    <div class="span10">
                         <textarea class="" name='answer' style="width: inherit; height: 200px" required tabindex='2' ><?= isset($array['answer']) ? $array['answer'] : "" ?></textarea>
                     </div>
                 </div>
                 <div class="row">
                     <div class="">
-                        <input class="offset1 button bg-blue bg-hover-dark fg-white" name='faq_edit_button' type='submit' tabindex='3' value="Update" />
+                        <input class="offset2 button bg-blue bg-hover-dark fg-white" name='faq_edit_button' type='submit' tabindex='3' value="Update" />
                     </div>
                 </div>
             </form>

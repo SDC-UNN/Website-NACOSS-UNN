@@ -68,7 +68,7 @@ if (isset($array['type']) and ( isset($array['next']) or isset($array['send']) )
                 if ($sms->send()) {
                     $units_used = $sms->get_unitsUsed();
                     $q2 = "update messenger_sms_biller set units_used=(units_used + " . $units_used . ") where user_id='" . $admin->getAdminID() . "'";
-                    $q3 = "insert into messenger_log values(NULL,'" . $admin->getAdminID() . "','$message_body','$recipients'," . mktime() . ",1," . mktime() . "," . $units_used . ")";
+                    $q3 = "insert into messenger_log values(NULL,'" . $admin->getAdminID() . "','$message_body','$recipients'," . time() . ",1," . time() . "," . $units_used . ")";
                     $result2 = mysqli_query($link, $q2);
                     AdminUtility::logMySQLError($link);
                     $result3 = mysqli_query($link, $q3);
@@ -107,7 +107,7 @@ if (isset($array['type']) and ( isset($array['next']) or isset($array['send']) )
         } else {
             ?>
             <h4>MESSENGER: SELECT RECIPIENTS</h4>
-            <div class="row"><strong class="span9" style="color:red"><?= $responce; ?></strong></div>
+            <div class="row"><strong class="span12" style="color:red"><?= $responce; ?></strong></div>
             <form action="index.php?p=26" method="post">
                 <input name="type" value="<?= $array['type']; ?>" type="hidden"/>
                 <input name="send" value="1" type="hidden"/>
@@ -202,14 +202,9 @@ if (isset($array['type']) and ( isset($array['next']) or isset($array['send']) )
                     </div>
                 </div>
 
-                <div class="row no-phone text-right">
+                <div class="row text-right">
                     <input class="button default bg-NACOSS-UNN bg-hover-dark" type='reset' value='Reset'/>
                     <input class="button default bg-NACOSS-UNN bg-hover-dark" type='submit' name="send1" value='Send'/>
-                </div>
-
-                <div class="row on-phone no-tablet no-desktop padding20 ntp nbp">
-                    <input class="button default bg-NACOSS-UNN bg-hover-dark"  type='reset' value='Reset'/>
-                    <input class="button default bg-NACOSS-UNN bg-hover-dark" type='submit' name="send2" value='Send'/>
                 </div>
             </form>
             <?php

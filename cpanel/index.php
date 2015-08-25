@@ -2,11 +2,11 @@
 require_once './class_lib.php';
 $admin = new Admin();
 $isFormRequest = filter_input(INPUT_POST, "submit");
-$url = filter_input(INPUT_GET, "url");
+$url = html_entity_decode(filter_input(INPUT_GET, "url"));
 if (isset($isFormRequest)) {
     $id = html_entity_decode(filter_input(INPUT_POST, "id"));
     $password = html_entity_decode(filter_input(INPUT_POST, "password"));
-    $url = filter_input(INPUT_POST, "url");
+    $url = html_entity_decode(filter_input(INPUT_POST, "url"));
 
     //Login
     try {
@@ -77,7 +77,7 @@ if ($admin->isLoggedIn()) {
 //Handle pssword reset request
 $reset = filter_input(INPUT_GET, "reset");
 if ($reset) {
-    $passwordResetMessage = filter_input(INPUT_GET, "msg");
+    $passwordResetMessage = html_entity_decode(filter_input(INPUT_GET, "msg"));
 }
 ?>
 <!DOCTYPE html>
@@ -171,7 +171,7 @@ limitations under the License.
                                         <input class="button default bg-NACOSS-UNN bg-hover-dark" style="width: 300px" type='submit'
                                                name='submit' value='Login' tabindex='3'/>
                                         <br/>
-                                        <button class="link requestIDButton"> &nbsp;&nbsp;forgot password?</button>
+                                        <a class="button small span4 bg-transparent fg-lightBlue requestIDButton"> &nbsp;&nbsp;forgot password?</a>
                                     </div>
                                 </div>
                             </form>

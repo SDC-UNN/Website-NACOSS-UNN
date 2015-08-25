@@ -33,7 +33,7 @@ if (isset($array['post_button'])) {
 
 <div>
     <h4>NEW POST</h4>
-    <div class="grid">
+    <div class="">
         <?php
         if (isset($success)) {
             if ($success) {
@@ -47,8 +47,8 @@ if (isset($array['post_button'])) {
         ?>
         <form method="post" enctype="multipart/post-data" action="index.php?p=11">
             <div class="row ntm">
-                <label class="span1">Title</label>
-                <div class="span7">
+                <label class="span2">Title</label>
+                <div class="span10">
                     <input class="text" name='title' required value="<?= isset($array['title']) ? $array['title'] : "" ?>" maxlength="60" style="width: inherit" required type='text' tabindex='1' />
                 </div>
             </div>
@@ -61,10 +61,10 @@ if (isset($array['post_button'])) {
             }
             ?>
             <div class="row" >
-                <label class="span1">Expire Date</label>
-                <div class="span7">
+                <label class="span2">Expire Date</label>
+                <div class="span10">
                     <!--old data-format="dddd, mmmm d, yyyy"-->
-                    <div class="input-control text span2" data-role="datepicker"
+                    <div class="input-control text span3" data-role="datepicker"
                          data-date="<?= $time[0] ?>"
                          data-format="yyyy-mm-dd"
                          data-position="bottom"
@@ -72,9 +72,9 @@ if (isset($array['post_button'])) {
                         <input type="text" required name="exp_date">
                         <button type="button" class="btn-date"></button>
                     </div>
-                    <div class="span5">
-                        <label class="span2">Expire Time <small>(hh:mm:ss)</small></label>
-                        <input type="time" required="" placeholder="hh:mm:ss" value="<?= $time[1] ?>" name="exp_time">
+                    <div class="span7">
+                        <label class="span5">Expire Time <small>(hh:mm:ss)</small></label>
+                        <input class="span7" type="time" required="" placeholder="hh:mm:ss" value="<?= $time[1] ?>" name="exp_time">
                     </div>
                 </div>
             </div>

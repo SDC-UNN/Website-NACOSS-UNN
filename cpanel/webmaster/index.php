@@ -90,26 +90,26 @@ limitations under the License.
                 <?php require_once '../header.php'; ?>
                 <div class="padding20">
                     <h2>Web Master</h2>
-                    <div class="grid">
+                    <div class="grid fluid">
                         <div class="row">
                             <div class="span3">
                                 <nav class="sidebar light">
                                     <ul class="">
                                         <li class="<?= $page == 1 || $page == 11 || $page == 12 ? "stick bg-darkBlue" : "" ?>">
-                                            <a href="?p=1">Users</a>
+                                            <a href="?p=1"><i class="icon-user"></i>Users</a>
                                         </li>
                                         <li class="<?= $page == 2 ? "stick bg-darkBlue" : "" ?>">
-                                            <a href="?p=2">Class Representatives</a>
+                                            <a href="?p=2"><i class="icon-user-3"></i>Class Representatives</a>
                                         </li>
                                         <li class="<?= $page == 3 ? "stick bg-darkBlue" : "" ?>">
-                                            <a href="?p=3">Results</a>
+                                            <a href="?p=3"><i class="icon-bookmark-4"></i>Results</a>
                                         </li>
                                         <li class="<?= $page == 5 ? "stick bg-darkBlue" : "" ?>">
                                             <?php
                                             $numberOfUnseenErrorReports = getNumberOfUnseenErrorReports();
                                             if ($numberOfUnseenErrorReports > 0) {
                                                 ?>
-                                                <a href="?p=5">Error Reports 
+                                                <a href="?p=5"><i class="icon-warning"></i>Error Reports 
                                                     <small class="bg-red fg-white" style="padding: 2px">
                                                         <?= $numberOfUnseenErrorReports ?>
                                                     </small>
@@ -117,7 +117,7 @@ limitations under the License.
                                                 <?php
                                             } else {
                                                 ?>
-                                                <a href="?p=5">Error Reports</a>
+                                                <a href="?p=5"><i class="icon-warning"></i>Error Reports</a>
                                                 <?php
                                             }
                                             ?>
@@ -127,7 +127,7 @@ limitations under the License.
                                             $numberOfUnfixedError = getNumberOfUnfixedError();
                                             if ($numberOfUnfixedError > 0) {
                                                 ?>
-                                                <a href="?p=6">Log 
+                                                <a href="?p=6"><i class="icon-clipboard-2"></i>Log 
                                                     <small class="bg-red fg-white" style="padding: 2px">
                                                         <?= $numberOfUnfixedError ?>
                                                     </small>
@@ -135,13 +135,31 @@ limitations under the License.
                                                 <?php
                                             } else {
                                                 ?>
-                                                <a href="?p=6">Log</a>
+                                                <a href="?p=6"><i class="icon-clipboard-2"></i>Log</a>
+                                                <?php
+                                            }
+                                            ?>
+                                        </li>
+                                        <li class="<?= $page == 8 ? "stick bg-darkBlue" : "" ?>">
+                                            <?php
+                                            $numberOfFeedBacks = getNumberOfUnseenFeedBacks();
+                                            if ($numberOfFeedBacks > 0) {
+                                                ?>
+                                                <a href="?p=8"><i class="icon-reply-2"></i>Feedbacks 
+                                                    <small class="bg-red fg-white" style="padding: 2px">
+                                                        <?= $numberOfFeedBacks ?>
+                                                    </small>
+                                                </a>
+                                                <?php
+                                            } else {
+                                                ?>
+                                                <a href="?p=8"><i class="icon-reply-2"></i>Feedbacks</a>
                                                 <?php
                                             }
                                             ?>
                                         </li>
                                         <li class="<?= $page == 7 || $page == 71 ? "stick bg-darkBlue" : "" ?>">
-                                            <a href="?p=7">Settings</a>
+                                            <a href="?p=7"><i class="icon-tools"></i>Settings</a>
                                         </li>
                                     </ul>
                                     <br/>
@@ -159,7 +177,7 @@ limitations under the License.
                                 </nav>
                             </div>
 
-                            <div class="span12">
+                            <div class="span9">
                                 <?php
                                 switch ($page) {
                                     case 1:
@@ -191,6 +209,9 @@ limitations under the License.
                                         break;
                                     case 71:
                                         include_once './settings$1.php';
+                                        break;
+                                    case 8:
+                                        include_once './feedbacks.php';
                                         break;
                                     default :
                                         include_once './users.php';

@@ -76,7 +76,7 @@ limitations under the License.
 
 <div>
     <h4>FAQs</h4>
-    
+
     <div class="row">
         <a class="place-right button default bg-lightBlue fg-white" href="index.php?p=41">
             <i class="icon-plus"></i> New FAQ
@@ -96,34 +96,54 @@ limitations under the License.
                     </div>
 
                     <div class="row ntm">
-                        <div class="span5">
-                            <label class="span1">Sort by: </label>
-                            <div class="span4">
-                                <input type="radio" name="sort_type" 
-                                <?=
-                                isset($sort_type) ?
-                                        ($sort_type == SORT_FAQ_TYPE_QUESTION ? "checked" : "") :
-                                        "checked"
-                                ?>
-                                       value="<?= SORT_FAQ_TYPE_QUESTION ?>"/> Question
-                                <input type="radio" name="sort_type"
-                                <?=
-                                isset($sort_type) ?
-                                        ($sort_type == SORT_FAQ_TYPE_ANSWER ? "checked" : "") :
-                                        ""
-                                ?>
-                                       value="<?= SORT_FAQ_TYPE_ANSWER ?>"/> Answer
+                        <div class="span8">
+                            <label class="">Sort by: </label>
+                            <div class="input-control radio">
+                                <label>
+                                    <input type="radio" name="sort_type" 
+                                    <?=
+                                    isset($sort_type) ?
+                                            ($sort_type == SORT_FAQ_TYPE_QUESTION ? "checked" : "") :
+                                            "checked"
+                                    ?>
+                                           value="<?= SORT_FAQ_TYPE_QUESTION ?>"/>
+                                    <span class="check"></span>
+                                    Question
+                                </label>
+                            </div>
+                            <div class="input-control radio">
+                                <label>
+                                    <input type="radio" name="sort_type"
+                                    <?=
+                                    isset($sort_type) ?
+                                            ($sort_type == SORT_FAQ_TYPE_ANSWER ? "checked" : "") :
+                                            ""
+                                    ?>
+                                           value="<?= SORT_FAQ_TYPE_ANSWER ?>"/>
+                                    <span class="check"></span>
+                                    Answer
+                                </label>
                             </div>
                         </div>
-                        <div class="span3">
-                            <label class="span1">Order: </label>
-                            <div class="span2">
-                                <input type="radio" name="sort_order"
-                                <?= isset($order) ? ($order == ORDER_ASC ? "checked" : "") : "checked" ?>
-                                       value="<?= ORDER_ASC ?>"/> Asc
-                                <input type="radio" name="sort_order"
-                                <?= isset($order) ? ($order == ORDER_DESC ? "checked" : "") : "" ?>
-                                       value="<?= ORDER_DESC ?>"/> Desc
+                        <div class="span4">
+                            <label class="">Order: </label>
+                            <div class="input-control radio">
+                                <label>
+                                    <input type="radio" name="sort_order"
+                                    <?= isset($order) ? ($order == ORDER_ASC ? "checked" : "") : "checked" ?>
+                                           value="<?= ORDER_ASC ?>"/>
+                                    <span class="check"></span>
+                                    Asc
+                                </label>
+                            </div>
+                            <div class="input-control radio">
+                                <label>
+                                    <input type="radio" name="sort_order"
+                                    <?= isset($order) ? ($order == ORDER_DESC ? "checked" : "") : "" ?>
+                                           value="<?= ORDER_DESC ?>"/>
+                                    <span class="check"></span>
+                                    Desc
+                                </label>
                             </div>
                         </div>
                     </div>
@@ -143,9 +163,9 @@ limitations under the License.
             ?>
             <div id="top">
                 <form action="index.php?p=4" method="post">
-                    <input class="span1" name="search" hidden value="<?= $searchQuery ?>"/>
-                    <input class="span1" name="sort_type" hidden value="<?= $sort_type ?>"/>
-                    <input class="span1" name="sort_order" hidden value="<?= $order ?>"/>
+                    <input class="" name="search" hidden value="<?= $searchQuery ?>"/>
+                    <input class="" name="sort_type" hidden value="<?= $sort_type ?>"/>
+                    <input class="" name="sort_order" hidden value="<?= $order ?>"/>
                     <div class="row">
                         <input class="" onclick="warn()" name="delete_button" type="submit" value="Delete"/>
                     </div>

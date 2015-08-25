@@ -107,9 +107,9 @@ limitations under the License.
             $(function () {
                 $(".requestRegnoButton").on('click', function () {
                     $.Dialog({
-                        overlay: false,
+                        overlay: true,
                         shadow: true,
-                        flat: false,
+                        flat: true,
                         icon: '<img src="favicon.ico">',
                         title: 'Forgot Password',
                         content: '<form class="span3" action="reset_password.php" method="GET">' +

@@ -101,42 +101,73 @@ limitations under the License.
                     </div>
 
                     <div class="row ntm">
-                        <div class="span5">
-                            <label class="span1">Sort by: </label>
-                            <div class="span4">
-                                <input type="radio" name="sort_type" 
-                                <?=
-                                isset($sort_type) ?
-                                        ($sort_type == SORT_LIBRARY_TYPE_TITLE ? "checked" : "") :
-                                        "checked"
-                                ?>
-                                       value="<?= SORT_LIBRARY_TYPE_TITLE ?>"/> Title
-                                <input type="radio" name="sort_type"
-                                <?=
-                                isset($sort_type) ?
-                                        ($sort_type == SORT_LIBRARY_TYPE_AUTHOR ? "checked" : "") :
-                                        ""
-                                ?>
-                                       value="<?= SORT_LIBRARY_TYPE_AUTHOR ?>"/> Author
-                                <input type="radio" name="sort_type"
-                                <?=
-                                isset($sort_type) ?
-                                        ($sort_type == SORT_LIBRARY_TYPE_FILE_TYPE ? "checked" : "") :
-                                        ""
-                                ?>
-                                       value="<?= SORT_LIBRARY_TYPE_FILE_TYPE ?>"/> File Type
+                        <div class="span9">
+                            <label class="">Sort by: </label>
+                            <div class="input-control radio">
+                                <label>
+                                    <input type="radio" name="sort_type" 
+                                    <?=
+                                    isset($sort_type) ?
+                                            ($sort_type == SORT_LIBRARY_TYPE_TITLE ? "checked" : "") :
+                                            "checked"
+                                    ?>
+                                           value="<?= SORT_LIBRARY_TYPE_TITLE ?>"/>
+                                    <span class="check"></span>
+                                    Title
+                                </label>
+                            </div>
+                            <div class="input-control radio">
+                                <label>
+                                    <input type="radio" name="sort_type"
+                                    <?=
+                                    isset($sort_type) ?
+                                            ($sort_type == SORT_LIBRARY_TYPE_AUTHOR ? "checked" : "") :
+                                            ""
+                                    ?>
+                                           value="<?= SORT_LIBRARY_TYPE_AUTHOR ?>"/>
+                                    <span class="check"></span>
+                                    Author
+                                </label>
+                            </div>
+                            <div class="input-control radio">
+                                <label>
+                                    <input type="radio" name="sort_type"
+                                           <input type="radio" name="sort_type"
+                                           <?=
+                                           isset($sort_type) ?
+                                                   ($sort_type == SORT_LIBRARY_TYPE_FILE_TYPE ? "checked" : "") :
+                                                   ""
+                                           ?>
+                                           value="<?= SORT_LIBRARY_TYPE_FILE_TYPE ?>"/>
+                                    <span class="check"></span>
+                                    File Type
+                                </label>
                             </div>
                         </div>
                         <div class="span3">
-                            <label class="span1">Order: </label>
-                            <div class="span2">
-                                <input type="radio" name="sort_order"
-                                <?= isset($order) ? ($order == ORDER_LIBRARY_ASC ? "checked" : "") : "checked" ?>
-                                       value="<?= ORDER_LIBRARY_ASC ?>"/> Asc
-                                <input type="radio" name="sort_order"
-                                <?= isset($order) ? ($order == ORDER_LIBRARY_DESC ? "checked" : "") : "" ?>
-                                       value="<?= ORDER_LIBRARY_DESC ?>"/> Desc
+                            <label class="">Order: </label>
+                            <div class="input-control radio">
+                                <label>
+                                    <input type="radio" name="sort_type"
+                                           <input type="radio" name="sort_order"
+                                           <?= isset($order) ? ($order == ORDER_LIBRARY_ASC ? "checked" : "") : "checked" ?>
+                                           value="<?= ORDER_LIBRARY_ASC ?>"/>
+                                    <span class="check"></span>
+                                    Asc
+                                </label>
                             </div>
+                            <div class="input-control radio">
+                                <label>
+                                    <input type="radio" name="sort_type"
+                                           <input type="radio" name="sort_order"
+                                           <?= isset($order) ? ($order == ORDER_LIBRARY_DESC ? "checked" : "") : "" ?>
+                                           value="<?= ORDER_LIBRARY_DESC ?>"/>
+                                    <span class="check"></span>
+                                    Desc
+                                </label>
+                            </div>
+
+
                         </div>
                     </div>
                 </form>
@@ -155,9 +186,9 @@ limitations under the License.
             ?>
             <div id="top">
                 <form action="index.php?p=1&sh=<?= $on_shelf; ?>" method="post">
-                    <input class="span1" name="search" hidden value="<?= $searchQuery ?>"/>
-                    <input class="span1" name="sort_type" hidden value="<?= $sort_type ?>"/>
-                    <input class="span1" name="sort_order" hidden value="<?= $order ?>"/>
+                    <input class="" name="search" hidden value="<?= $searchQuery ?>"/>
+                    <input class="" name="sort_type" hidden value="<?= $sort_type ?>"/>
+                    <input class="" name="sort_order" hidden value="<?= $order ?>"/>
                     <div class="row">
                         <?php if ($on_shelf) { ?>
                             <input class="" onclick="warn()" name="suspend_button" type="submit" value="Take Off Shelf"/>

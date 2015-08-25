@@ -87,13 +87,13 @@ limitations under the License.
             <?php require_once '../header.php'; ?>
             <div class="padding20">
                 <h2>CLASS REP.</h2>
-                <div class="grid">
+                <div class="grid fluid">
                     <div class="row">
                         <div class="span3">
                             <nav class="sidebar light">
                                 <ul class="">
                                     <li class="<?= $page == 1 ? "stick bg-darkBlue" : "" ?>">
-                                        <a href="index.php?p=1"><i class="icon-image"></i>Class List</a>
+                                        <a href="index.php?p=1"><i class="icon-clipboard-2"></i>Class List</a>
                                     </li>
                                     <li class="<?= $page == 2 || ($page >= 21 and $page <= 25) ? "stick bg-darkBlue " : "" ?>">
                                         <a class="dropdown-toggle" href="#"><i class="icon-broadcast"></i>Messenger</a>
@@ -113,17 +113,17 @@ limitations under the License.
                                     <div class="panel-header">Statistics</div>
                                     <div class="panel-content">
                                         <p>Number in Class</p>
-                                        <p><? ?>-</p>
+                                        <p><?= getNumberOfStudents($admin->getField("level")) ?></p>
                                         <p>Males</p>
-                                        <p><? ?>-</p>
+                                        <p><?= getNumberOfStudents($admin->getField("level"), "M") ?></p>
                                         <p>Females</p>
-                                        <p><? ?>-</p>
+                                        <p><?= getNumberOfStudents($admin->getField("level"), "F") ?></p>
                                     </div>
                                 </div>
                             </nav>
                         </div>
 
-                        <div class="span12">
+                        <div class="span9">
                             <?php
                             switch ($page) {
                                 case 1: require_once '_class_list.php';

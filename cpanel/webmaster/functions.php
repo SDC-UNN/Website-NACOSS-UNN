@@ -22,11 +22,12 @@ function getNumberOfActiveUsers() {
     $result = mysqli_query($link, $query);
     if ($result) {
         return mysqli_num_rows($result);
-    }
-    //Log error
-    AdminUtility::logMySQLError($link);
+    } else {
+        //Log error
+        AdminUtility::logMySQLError($link);
 
-    return 0;
+        return 0;
+    }
 }
 
 function getNumberOfSuspendedUsers() {
@@ -35,11 +36,12 @@ function getNumberOfSuspendedUsers() {
     $result = mysqli_query($link, $query);
     if ($result) {
         return mysqli_num_rows($result);
-    }
-    //Log error
-    AdminUtility::logMySQLError($link);
+    } else {
+        //Log error
+        AdminUtility::logMySQLError($link);
 
-    return 0;
+        return 0;
+    }
 }
 
 function getNumberOfDeletedUsers() {
@@ -48,10 +50,11 @@ function getNumberOfDeletedUsers() {
     $result = mysqli_query($link, $query);
     if ($result) {
         return mysqli_num_rows($result);
+    } else {
+        //Log error
+        AdminUtility::logMySQLError($link);
+        return 0;
     }
-    //Log error
-    AdminUtility::logMySQLError($link);
-    return 0;
 }
 
 function getNumberOfUnseenErrorReports() {
@@ -60,10 +63,24 @@ function getNumberOfUnseenErrorReports() {
     $result = mysqli_query($link, $query);
     if ($result) {
         return mysqli_num_rows($result);
+    } else {
+        //Log error
+        AdminUtility::logMySQLError($link);
+        return 0;
     }
-    //Log error
-    AdminUtility::logMySQLError($link);
-    return 0;
+}
+
+function getNumberOfUnseenFeedBacks() {
+    $query = "select * from feedbacks where seen = 0";
+    $link = AdminUtility::getDefaultDBConnection();
+    $result = mysqli_query($link, $query);
+    if ($result) {
+        return mysqli_num_rows($result);
+    } else {
+        //Log error
+        AdminUtility::logMySQLError($link);
+        return 0;
+    }
 }
 
 function getNumberOfUnfixedError() {
@@ -72,10 +89,11 @@ function getNumberOfUnfixedError() {
     $result = mysqli_query($link, $query);
     if ($result) {
         return mysqli_num_rows($result);
+    } else {
+        //Log error
+        AdminUtility::logMySQLError($link);
+        return 0;
     }
-    //Log error
-    AdminUtility::logMySQLError($link);
-    return 0;
 }
 
 function getAllErrorReports() {
@@ -90,6 +108,24 @@ function getAllErrorReports() {
     }
     //Log error
     AdminUtility::logMySQLError($link);
+
+    return $array;
+}
+
+function getAllFeedBacks() {
+    $array = array();
+    $query = "select * from feedbacks order by time_of_post DESC";
+    $link = AdminUtility::getDefaultDBConnection();
+    $result = mysqli_query($link, $query);
+    if ($result) {
+        while ($row = mysqli_fetch_array($result)) {
+            array_push($array, $row);
+        }
+    }
+    //Log error
+    AdminUtility::logMySQLError($link);
+    //Set all feedback to seen
+    mysqli_query($link, "update feedbacks set seen = 1");
 
     return $array;
 }

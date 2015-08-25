@@ -32,7 +32,7 @@ if (isset($array['faq_button'])) {
 
 <div>
     <h4>NEW FAQ</h4>
-    <div class="grid">
+    <div class="">
         <?php
         if (isset($success)) {
             if ($success) {
@@ -46,20 +46,20 @@ if (isset($array['faq_button'])) {
         ?>
         <form method="post" action="index.php?p=41">
             <div class="row ntm">
-                <label class="span1">Question</label>
-                <div class="span7">
+                <label class="span2">Question</label>
+                <div class="span10">
                     <textarea class="text" name='question' style="width: inherit; height: 100px" required tabindex='1'><?= isset($array['question']) ? $array['question'] : "" ?></textarea>
                 </div>
             </div>
             <div class="row">
-                <label class="span1">Answer</label>
-                <div class="span7">
+                <label class="span2">Answer</label>
+                <div class="span10">
                     <textarea class="" name='answer' style="width: inherit; height: 200px" required tabindex='2' ><?= isset($array['answer']) ? $array['answer'] : "" ?></textarea>
                 </div>
             </div>
             <div class="row">
                 <div class="">
-                    <input class="offset1 button bg-blue bg-hover-dark fg-white" name='faq_button' type='submit' tabindex='3' value="Post" />
+                    <input class="offset2 button bg-blue bg-hover-dark fg-white" name='faq_button' type='submit' tabindex='3' value="Post" />
                 </div>
             </div>
         </form>

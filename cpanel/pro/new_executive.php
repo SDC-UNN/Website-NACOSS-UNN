@@ -34,7 +34,7 @@ if (isset($array["addExecutive"])) {
 <div>
     <h4>ADD EXECUTIVE</h4>
     <br/>
-    <div  class="grid">
+    <div  class="">
         <?php
         if (isset($addPerformed)) {
             if (!$success) {
@@ -71,8 +71,8 @@ if (isset($array["addExecutive"])) {
                 <input name="user_id" hidden="" value="<?= empty($regno) ? "" : $regno ?>" required="" type="text"/> 
             </div>
             <div class="row">
-                <label class="span1">Post</label>
-                <select name="post" required="" class="span4">
+                <label class="span2">Post</label>
+                <select name="post" required="" class="span8">
                     <option></option>
                     <?php
                     $posts = getExecutivePosts();
@@ -87,8 +87,8 @@ if (isset($array["addExecutive"])) {
                 </select>
             </div>
             <div class="row">
-                <label class="span1">Session</label>
-                <select name="session" required="" class="span4">
+                <label class="span2">Session</label>
+                <select name="session" required="" class="span8">
                     <option></option>
                     <?php
                     $year = date("Y");

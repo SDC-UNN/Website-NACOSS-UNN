@@ -53,7 +53,7 @@ if ($admin->activateLogin()) {
     if (empty($page)) {
         $page = 1;
     }
-    $url = urlencode(CPANEL_URL . "ibrarian/?p=" . $page);
+    $url = urlencode(CPANEL_URL . "librarian/?p=" . $page);
     header("location: ../index.php?url=" . $url);
 }
 ?>
@@ -88,22 +88,22 @@ limitations under the License.
                 <?php require_once '../header.php'; ?>
                 <div class="padding20">
                     <h2>Librarian</h2>
-                    <div class="grid">
+                    <div class="grid fluid">
                         <div class="row">
                             <div class="span3">
                                 <nav class="sidebar light">
                                     <ul class="">
                                         <li class="<?= $page == 1 ? "stick bg-darkBlue active" : "" ?>">
-                                            <a href="?p=1">View Ebooks</a>
+                                            <a href="?p=1"><i class="icon-book"></i>View Ebooks</a>
                                         </li>
                                         <li class="<?= $page == 2 ? "stick bg-darkBlue active" : "" ?>">
-                                            <a href="?p=2">Video Gallery</a>
+                                            <a href="?p=2"><i class="icon-image"></i>Video Gallery</a>
                                         </li>
                                         <li class="<?= $page == 3 ? "stick bg-darkBlue active" : "" ?>">
-                                            <a href="?p=3">New Library Entry&hellip;</a>
+                                            <a href="?p=3"><i class="icon-new"></i>New Library Entry&hellip;</a>
                                         </li>
                                         <li class="<?= $page == 4 || $page == 41 ? "stick bg-darkBlue active" : "" ?>">
-                                            <a href="?p=4">Settings</a>
+                                            <a href="?p=4"><i class="icon-tools"></i>Settings</a>
                                         </li>
                                     </ul>
                                     <br/>
@@ -123,7 +123,7 @@ limitations under the License.
                                 </nav>
                             </div>
 
-                            <div class="span12">
+                            <div class="span9">
                                 <?php
                                 switch ($page) {
                                     case 1:

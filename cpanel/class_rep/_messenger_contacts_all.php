@@ -55,7 +55,7 @@ if (isset($array['add_to_group']) and isset($array['group']) and isset($array['r
     <h4>CONTACTS: ALL</h4>
     <div class="row">
         <div class="span4"><?= $message; ?></div>
-        <div class="span5">
+        <div class="span8">
             <a href="index.php?p=23" class="button bg-blue bg-hover-dark fg-white place-right">MY GROUPS</a>
             <a href="index.php?p=22" class="button disabled place-right"> ALL CONTACTS </a>
         </div>

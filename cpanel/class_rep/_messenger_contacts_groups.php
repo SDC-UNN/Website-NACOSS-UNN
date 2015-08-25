@@ -36,7 +36,7 @@ $groups = getStudentsList_contactGroups($admin);
     <h4>CONTACTS: GROUPS</h4>
     <div class="row">
         <div class="span4"><?= $message; ?></div>
-        <div class="span5">
+        <div class="span8">
             <a href="index.php?p=23" class="button disabled place-right">MY GROUPS</a>
             <a href="index.php?p=22" class="button bg-blue bg-hover-dark fg-white place-right"> ALL CONTACTS </a>
         </div>

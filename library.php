@@ -86,14 +86,6 @@ limitations under the License.
                     </div>
 
                     <div class="row ntm">
-                        <!--                        <div class="input-control radio">
-                                                        <label>
-                                                            <input type="radio" />
-                                                            <span class="check"></span>
-                                                            Check me out
-                                                        </label>
-                                                    </div>-->
-
                         <div class="row ntm">
                             <label class="span2">Sort by: </label>
                             <div class="input-control radio span3">

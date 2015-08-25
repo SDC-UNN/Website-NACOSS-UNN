@@ -59,7 +59,7 @@ $executives = getExecutives($session);
             <div class="bg-grayLighter padding5">
                 <form method="post" action="<?= $defaultPage ?>">
                     <div class="row">
-                        <select name="session" class="span4">
+                        <select name="session" class="span7">
                             <option></option>
                             <?php
                             $year = date("Y");
@@ -75,7 +75,7 @@ $executives = getExecutives($session);
                             }
                             ?>
                         </select>
-                        <input class="btn-search span2" name="switchSession" type="submit" value="View Session"/>
+                        <input class="btn-search span5" name="switchSession" type="submit" value="View Session"/>
                     </div>
                 </form>
             </div>

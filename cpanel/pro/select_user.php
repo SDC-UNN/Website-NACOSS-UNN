@@ -60,41 +60,68 @@ limitations under the License.
                     </div>
 
                     <div class="row ntm">
-                        <div class="span5">
-                            <label class="span1">Sort by: </label>
-                            <div class="span4">
-                                <input type="radio" name="sort_type" 
-                                <?=
-                                isset($sort_type) ?
-                                        ($sort_type == AdminUtility::SORT_USER_TYPE_REGNO ? "checked" : "") :
-                                        "checked"
-                                ?>
-                                       value="<?= AdminUtility::SORT_USER_TYPE_REGNO ?>"/> Reg. no
-                                <input type="radio" name="sort_type"
-                                <?=
-                                isset($sort_type) ?
-                                        ($sort_type == AdminUtility::SORT_USER_TYPE_LASTNAME ? "checked" : "") :
-                                        ""
-                                ?>
-                                       value="<?= AdminUtility::SORT_USER_TYPE_LASTNAME ?>"/> Last Name
-                                <input type="radio" name="sort_type"
-                                <?=
-                                isset($sort_type) ?
-                                        ($sort_type == AdminUtility::SORT_USER_TYPE_LEVEL ? "checked" : "") :
-                                        ""
-                                ?>
-                                       value="<?= AdminUtility::SORT_USER_TYPE_LEVEL ?>"/> Level
+                        <div class="span8">
+                            <label class="">Sort by: </label>
+
+                            <div class="input-control radio">
+                                <label>
+                                    <input type="radio" name="sort_type" 
+                                    <?=
+                                    isset($sort_type) ?
+                                            ($sort_type == AdminUtility::SORT_USER_TYPE_REGNO ? "checked" : "") :
+                                            "checked"
+                                    ?>
+                                           value="<?= AdminUtility::SORT_USER_TYPE_REGNO ?>"/>
+                                    <span class="check"></span>
+                                    Reg. no
+                                </label>
+                            </div>
+                            <div class="input-control radio">
+                                <label>
+                                    <input type="radio" name="sort_type"
+                                    <?=
+                                    isset($sort_type) ?
+                                            ($sort_type == AdminUtility::SORT_USER_TYPE_LASTNAME ? "checked" : "") :
+                                            ""
+                                    ?>
+                                           value="<?= AdminUtility::SORT_USER_TYPE_LASTNAME ?>"/>
+                                    <span class="check"></span>
+                                    Last Name
+                                </label>
+                            </div>
+                            <div class="input-control radio">
+                                <label>
+                                    <input type="radio" name="sort_type"
+                                    <?=
+                                    isset($sort_type) ?
+                                            ($sort_type == AdminUtility::SORT_USER_TYPE_LEVEL ? "checked" : "") :
+                                            ""
+                                    ?>
+                                           value="<?= AdminUtility::SORT_USER_TYPE_LEVEL ?>"/>
+                                    <span class="check"></span>
+                                    Level
+                                </label>
                             </div>
                         </div>
-                        <div class="span3">
-                            <label class="span1">Order: </label>
-                            <div class="span2">
-                                <input type="radio" name="sort_order"
-                                <?= isset($order) ? ($order == AdminUtility::ORDER_ASC ? "checked" : "") : "checked" ?>
-                                       value="<?= AdminUtility::ORDER_ASC ?>"/> Asc
-                                <input type="radio" name="sort_order"
-                                <?= isset($order) ? ($order == AdminUtility::ORDER_DESC ? "checked" : "") : "" ?>
-                                       value="<?= AdminUtility::ORDER_DESC ?>"/> Desc
+                        <div class="span4">
+                            <label class="">Order: </label>
+                            <div class="input-control radio">
+                                <label>
+                                    <input type="radio" name="sort_order"
+                                    <?= isset($order) ? ($order == AdminUtility::ORDER_ASC ? "checked" : "") : "checked" ?>
+                                           value="<?= AdminUtility::ORDER_ASC ?>"/>
+                                    <span class="check"></span>
+                                    Asc
+                                </label>
+                            </div>
+                            <div class="input-control radio">
+                                <label>
+                                    <input type="radio" name="sort_order"
+                                    <?= isset($order) ? ($order == AdminUtility::ORDER_DESC ? "checked" : "") : "" ?>
+                                           value="<?= AdminUtility::ORDER_DESC ?>"/>
+                                    <span class="check"></span>
+                                    Desc
+                                </label>
                             </div>
                         </div>
                     </div>

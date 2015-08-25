@@ -33,53 +33,62 @@ limitations under the License.
             <?php
             require_once './header.php';
             //Detect browser type
-            require_once 'detect.php';
-            if (!empty($slides) && $browser_t !== "mobile") {
-                ?>
-                <!--large home page images-->
-                <div class="bg-dark" >
-                    <div class="carousel">
-                        <div class="bg-transparent no-overflow" id="carousel">
-                            <?php
-                            foreach ($slides as $value) {
-                                ?>
-                                <a class="slide image-container" href="<?= $value['href'] ?>">
-                                    <img src="<?= HOSTNAME . $value['img_url'] ?>" alt="" class="image"/>
-                                    <div class="overlay">
-                                        <h2 class="fg-white">
-                                            <?= $value['caption'] ?> 
-                                        </h2>
-                                    </div>
-                                </a>
-                                <?php
-                            }
-                            ?> 
-                            <a class="controls left fg-white"><i class="icon-arrow-left-5"></i></a>
-                            <a class="controls right  fg-white"><i class="icon-arrow-right-5"></i></a>
-                        </div>
-                    </div>
-                </div>
-                <script>
-                    $(function () {
-                        $("#carousel").carousel({
-                            period: 5000,
-                            duration: 1000,
-                            effect: 'fade',
-                            height: <?= $browser_t === "web" ? 400 : 240 ?>,
-                            controls: true,
-                            markers: {
-                                show: true,
-                                type: "default",
-                                position: "bottom-right"
-                            }
-                        });
-                    });
-                </script>
-            <?php } ?>
-            <div class="padding10">
-                <div class="grid fluid">
+            ?>
+            <div class="grid fluid">
+                <div class="row ntm">
                     <div class="row ntm">
+                        <?php
+                        require_once 'detect.php';
+                        if ($browser_t !== "mobile") {
+                            $defaultSlideImage = array("img_url" => "img/defaultSlideImage.jpg", "href" => "#", "caption" => "Networking the world...!");
+                            array_push($slides, $defaultSlideImage);
+                            ?>
+                            <!--large home page images-->
+                            <div class="bg-dark" >
+                                <div class="carousel">
+                                    <div class="bg-transparent no-overflow" id="carousel">
+                                        <?php
+                                        foreach ($slides as $value) {
+                                            ?>
+                                            <a class="slide image-container" href="<?= $value['href'] ?>">
+                                                <img  src="<?= HOSTNAME . $value['img_url'] ?>" alt="" class="image"/>
+                                                <div class="overlay">
+                                                    <h2 class="fg-white">
+                                                        <?= $value['caption'] ?> 
+                                                    </h2>
+                                                </div>
+                                            </a>
+                                            <?php
+                                        }
+                                        ?> 
+                                        <a class="controls left fg-white"><i class="icon-arrow-left-5"></i></a>
+                                        <a class="controls right  fg-white"><i class="icon-arrow-right-5"></i></a>
+                                    </div>
+                                </div>
+                            </div>
+                            <script>
+                                $(function () {
+                                    $("#carousel").carousel({
+                                        period: 5000,
+                                        duration: 1000,
+                                        effect: 'fade',
+                                        height: <?= $browser_t === "web" ? 500 : 220 ?>,
+                                        controls: false,
+                                        markers: {
+                                            show: true,
+                                            type: "default",
+                                            position: "bottom-right"
+                                        }
+                                    });
+                                });
+                            </script>
+                        <?php } ?>
+                    </div>
+                    <div class="row padding10 ntm">
                         <!--smaller home page images-->
+                        <?php
+                        $mark; //This is a mark for the html div below
+                        ?>
                         <div class="span9">
                             <?php
                             //Add default images
@@ -96,7 +105,7 @@ limitations under the License.
                                 }
                                 ?>
 
-                                <div class="span3 image-container bg-transparent">
+                                <div class="span4 image-container bg-transparent">
                                     <a href="<?= $links[$i]['href'] ?>">
                                         <img class="image" src="<?= HOSTNAME . $links[$i]['img_url'] ?>" alt=""/>
                                     </a>
@@ -108,34 +117,36 @@ limitations under the License.
                             echo '</div>';
                             ?>
                         </div>
+
                         <div class="span3">
                             <div class="row">
-                                <div class="image-container bg-orange span1"  >
+                                <div class="image-container bg-orange span3"  >
                                     <a href="news.php">
                                         <img class="image" src="img/social10.png" alt=""/>
                                     </a>
                                     <div class="overlay-fluid"><a class="fg-white" href="news.php">News and Events</a></div>
                                 </div>
-                                <div class="image-container bg-green span1"  >
+                                <div class="image-container bg-green span3"  >
                                     <a href="faq.php">
                                         <img class="image" src="img/question3.png" alt=""/>
                                     </a>
                                     <div class="overlay-fluid"><a class="fg-white" href="faq.php">Get Help</a></div>
                                 </div>
-                                <div class="image-container bg-lightRed span1">
+                                <div class="image-container bg-lightRed span3">
                                     <a href="login.php?s=2">
                                         <img class="image" src="img/locked59.png" alt=""/>
                                     </a>
                                     <div class="overlay-fluid"><a class="fg-white" href="login.php?s=2">Register</a></div>
                                 </div>
-                                <div class="image-container bg-blue span1">
+                                <div class="image-container bg-blue span3">
                                     <a href="contact.php">
                                         <img class="image" src="img/telephone1.png" alt=""/>
                                     </a>
                                     <div class="overlay-fluid"><a class="fg-white" href="contact.php">Contact</a></div>
                                 </div>
                             </div>
-                            <div  class="row listview-outlook">
+
+                            <div  class="row ntm ">
                                 <h4 class="padding5 bg-NACOSS-UNN fg-white">Latest Stories</h4>
                                 <?php
                                 $allNews = $news->getAllNews();
@@ -143,11 +154,14 @@ limitations under the License.
                                     $length = min(array(5, count($allNews)));
                                     for ($index = 0; $index < $length; $index++) {
                                         ?>
-                                        <a href="news_post.php?id=<?= $allNews[$index]['id'] ?>" class="list">
-                                            <div class="list-content">
-                                                <span class="list-title fg-lightBlue"><?= $allNews[$index]['title'] ?></span>
-                                            </div>
-                                        </a>
+                                        <div class="row ntm">
+                                            <a href="news_post.php?id=<?= $allNews[$index]['id'] ?>" class="span12">
+                                                <span class="icon-arrow-right-3 fg-dark span1"></span>
+                                                <span class="fg-lightBlue fg-hover-dark span11"> 
+                                                    <?= $allNews[$index]['title'] ?>
+                                                </span>
+                                            </a>
+                                        </div>
                                         <?php
                                     }
                                     ?>
@@ -155,11 +169,9 @@ limitations under the License.
                                     <?php
                                 } else {
                                     ?>
-                                    <a href="#" class="list">
-                                        <div class="list-content">
-                                            <span class="list-title fg-lightBlue">No latest stories</span>
-                                        </div>
-                                    </a>
+                                    <div class="">
+                                        <span class="fg-lightBlue">No latest stories</span>
+                                    </div>
                                     <?php
                                 }
                                 ?>
@@ -169,26 +181,28 @@ limitations under the License.
                                 if (!empty($topNews)) {
                                     foreach ($topNews as $value) {
                                         ?>
-                                        <a href="news_post.php?id=<?= $value['id'] ?>" class="list">
-                                            <div class="list-content">
-                                                <span class="list-title fg-lightBlue"><?= $value['title'] ?></span>
-                                            </div>
-                                        </a>
+                                        <div class="row ntm">
+                                            <a href="news_post.php?id=<?= $value['id'] ?>" class="span12">
+                                                <span class="icon-arrow-right-3 fg-dark span1"></span> 
+                                                <span class="fg-lightBlue fg-hover-dark span11"> 
+                                                    <?= $value['title'] ?>
+                                                </span>
+                                            </a>
+                                        </div>
                                         <?php
                                     }
                                 } else {
                                     ?>
-                                    <a href="#" class="list">
-                                        <div class="list-content">
-                                            <span class="list-title fg-lightBlue">No top stories</span>
-                                        </div>
-                                    </a>
+                                    <div class="">
+                                        <span class="fg-lightBlue">No top stories</span>
+                                    </div>
                                     <?php
                                 }
                                 ?>
                             </div>  
                         </div>
                     </div>
+
                 </div>
             </div>
             <div class="bg-grayLighter">

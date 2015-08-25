@@ -174,13 +174,27 @@ class Admin {
                 AdminUtility::logMySQLError($link);
                 //Reload data
                 $this->adminInfo = $this->getAdminData();
-                $ok = $this->setAdminCookies($this->adminInfo['username'], $this->adminInfo['password'], $this->adminInfo['type']);
-                return $ok;
             } else {
                 throw new Exception("Passwords do not match");
             }
         } else {
             throw new Exception("Wrong password");
+        }
+    }
+
+    public function changeEmail($email) {
+        if (filter_var($email, FILTER_VALIDATE_EMAIL)) {
+            //Check password
+
+            $link = AdminUtility::getDefaultDBConnection();
+            $query = "update admins set email='" . $email . "' where username='" . $this->getAdminID() . "'";
+            mysqli_query($link, $query);
+            //Log error
+            AdminUtility::logMySQLError($link);
+            //Reload data
+            $this->adminInfo = $this->getAdminData();
+        } else {
+            throw new Exception("Invalid mail");
         }
     }
 

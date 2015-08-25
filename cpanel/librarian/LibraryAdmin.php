@@ -33,7 +33,7 @@ class LibraryAdmin extends Admin{
 				  $extension = $var[sizeof($var)-1];
 				  //create library item with link field = $array['LinkInput']
 				  $array['contributor'] = new LibraryAdmin();
-				  $array['date_added'] = mktime();
+				  $array['date_added'] = time();
 				  $array['file_type'] = $extension;
 				  $array['link'] = $array['LinkInput'];
 				  //$array['num_of_downloads'] = 0; implicitly determined
@@ -46,11 +46,11 @@ class LibraryAdmin extends Admin{
 		  }elseif($array['file_source_type'] == 'FileInput' and isset($_FILES['FileInput']) ){
 			  $upload_dir = '../../uploads/';
 			  $file = in_array($array['media'], DocumentUploader::MIME() ) ?
-			  new DocumentUploader('FileInput', uniqid(mktime()), $upload_dir) :
-			  new VideoUploader('FileInput', uniqid(mktime()), $upload_dir);
+			  new DocumentUploader('FileInput', uniqid(time()), $upload_dir) :
+			  new VideoUploader('FileInput', uniqid(time()), $upload_dir);
   
 			  $array['contributor'] = new Admin();
-			  $array['date_added'] = mktime();
+			  $array['date_added'] = time();
 			  $array['file_type'] = $file->getExtension();
 			  $array['link'] = $file->getFileLink();
 			  //$array['num_of_downloads'] = 0; implicitly determined

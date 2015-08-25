@@ -36,7 +36,7 @@ $settings = getSettings();
     <h4>SETTINGS</h4>
     <div>
         <div class="row">
-            <a href="index.php?p=71" class="span2 button bg-blue bg-hover-dark fg-white">Change Password</a>
+            <a href="index.php?p=71" class="span3 button bg-blue bg-hover-dark fg-white">Change Password or Email</a>
         </div>
     </div>
     <br/>

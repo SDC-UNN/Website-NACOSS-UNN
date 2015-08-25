@@ -97,34 +97,54 @@ limitations under the License.
                     </div>
 
                     <div class="row ntm">
-                        <div class="span5">
-                            <label class="span1">Sort by: </label>
-                            <div class="span4">
-                                <input type="radio" name="sort_type" 
-                                <?=
-                                isset($sort_type) ?
-                                        ($sort_type == SORT_POST_TYPE_TIME_OF_POST ? "checked" : "") :
-                                        "checked"
-                                ?>
-                                       value="<?= SORT_POST_TYPE_TIME_OF_POST ?>"/> Time of Post
-                                <input type="radio" name="sort_type"
-                                <?=
-                                isset($sort_type) ?
-                                        ($sort_type == SORT_POST_TYPE_LAST_MODIFIED ? "checked" : "") :
-                                        ""
-                                ?>
-                                       value="<?= SORT_POST_TYPE_LAST_MODIFIED ?>"/> Modification Date
+                        <div class="span8">
+                            <label class="">Sort by: </label>
+                            <div class="input-control radio">
+                                <label>
+                                    <input type="radio" name="sort_type" 
+                                    <?=
+                                    isset($sort_type) ?
+                                            ($sort_type == SORT_POST_TYPE_TIME_OF_POST ? "checked" : "") :
+                                            "checked"
+                                    ?>
+                                           value="<?= SORT_POST_TYPE_TIME_OF_POST ?>"/>
+                                    <span class="check"></span>
+                                    Time of Post
+                                </label>
+                            </div>
+                            <div class="input-control radio">
+                                <label>
+                                    <input type="radio" name="sort_type"
+                                    <?=
+                                    isset($sort_type) ?
+                                            ($sort_type == SORT_POST_TYPE_LAST_MODIFIED ? "checked" : "") :
+                                            ""
+                                    ?>
+                                           value="<?= SORT_POST_TYPE_LAST_MODIFIED ?>"/>
+                                    <span class="check"></span>
+                                    Modification Date
+                                </label>
                             </div>
                         </div>
-                        <div class="span3">
-                            <label class="span1">Order: </label>
-                            <div class="span2">
-                                <input type="radio" name="sort_order"
-                                <?= isset($order) ? ($order == ORDER_ASC ? "checked" : "") : "checked" ?>
-                                       value="<?= ORDER_ASC ?>"/> Asc
-                                <input type="radio" name="sort_order"
-                                <?= isset($order) ? ($order == ORDER_DESC ? "checked" : "") : "" ?>
-                                       value="<?= ORDER_DESC ?>"/> Desc
+                        <div class="span4">
+                            <label class="">Order: </label>
+                            <div class="input-control radio">
+                                <label>
+                                    <input type="radio" name="sort_order"
+                                    <?= isset($order) ? ($order == ORDER_ASC ? "checked" : "") : "checked" ?>
+                                           value="<?= ORDER_ASC ?>"/>
+                                    <span class="check"></span>
+                                    Asc
+                                </label>
+                            </div>
+                            <div class="input-control radio">
+                                <label>
+                                    <input type="radio" name="sort_order"
+                                    <?= isset($order) ? ($order == ORDER_DESC ? "checked" : "") : "" ?>
+                                           value="<?= ORDER_DESC ?>"/>
+                                    <span class="check"></span>
+                                    Desc
+                                </label>
                             </div>
                         </div>
                     </div>

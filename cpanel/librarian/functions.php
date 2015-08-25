@@ -16,21 +16,23 @@
  * limitations under the License.
  */
 
-	  const SORT_LIBRARY_TYPE_TITLE = "title";
-	  const SORT_LIBRARY_TYPE_AUTHOR = "author";
-	  const SORT_LIBRARY_TYPE_KEYWORD = "keywords";
-	  const SORT_LIBRARY_TYPE_DATE_ADDED = "date_added";
-	  const SORT_LIBRARY_TYPE_FILE_TYPE = "file_type";
-	  const ORDER_LIBRARY_ASC = "ASC";
-	  const ORDER_LIBRARY_DESC = "DESC";
+        const SORT_LIBRARY_TYPE_TITLE = "title";
+        const SORT_LIBRARY_TYPE_AUTHOR = "author";
+        const SORT_LIBRARY_TYPE_KEYWORD = "keywords";
+        const SORT_LIBRARY_TYPE_DATE_ADDED = "date_added";
+        const SORT_LIBRARY_TYPE_FILE_TYPE = "file_type";
+        const ORDER_LIBRARY_ASC = "ASC";
+        const ORDER_LIBRARY_DESC = "DESC";
 
-	  const SETTINGS_FILE_TYPES_VIDEOS = "fileTypes_video";
-	  const SETTINGS_FILE_TYPES_EBOOKS = "fileTypes_ebook";
+        const SETTINGS_FILE_TYPES_VIDEOS = "fileTypes_video";
+        const SETTINGS_FILE_TYPES_EBOOKS = "fileTypes_ebook";
 
-function getNumberOfLibraryItems($media='ebook'){
-	$supported_media_types = getFileTypes($media);
+function getNumberOfLibraryItems($media = 'ebook') {
+    $supported_media_types = getFileTypes($media);
     $query = "select * from library ";
-	if(sizeof($supported_media_types)){$query .= "where (file_type = '".implode("' or file_type = '", $supported_media_types)."')";}
+    if (sizeof($supported_media_types)) {
+        $query .= "where (file_type = '" . implode("' or file_type = '", $supported_media_types) . "')";
+    }
     $link = AdminUtility::getDefaultDBConnection();
     $result = mysqli_query($link, $query);
     if ($result) {
@@ -42,16 +44,22 @@ function getNumberOfLibraryItems($media='ebook'){
     return 0;
 }
 
-function getNumberOfLibraryItemsDownloaded($media='ebook',$file_ID = null){
-	$supported_media_types = getFileTypes($media);
+function getNumberOfLibraryItemsDownloaded($media = 'ebook', $file_ID = null) {
+    $supported_media_types = getFileTypes($media);
     $query = "select num_of_downloads from library ";
-	if(sizeof($supported_media_types)){$query .= " where(file_type = '".implode("' or file_type = '", $supported_media_types)."')";}
-	if($file_ID !== null){$query .= " and id=".$file_ID;}
+    if (sizeof($supported_media_types)) {
+        $query .= " where(file_type = '" . implode("' or file_type = '", $supported_media_types) . "')";
+    }
+    if ($file_ID !== null) {
+        $query .= " and id=" . $file_ID;
+    }
     $link = AdminUtility::getDefaultDBConnection();
     $result = mysqli_query($link, $query);
     if ($result) {
-		$downloads = 0;
-		while($row = mysqli_fetch_array($result)){ $downloads += (int)$row['num_of_downloads']; } 
+        $downloads = 0;
+        while ($row = mysqli_fetch_array($result)) {
+            $downloads += (int) $row['num_of_downloads'];
+        }
         return $downloads;
     }
     //Log error
@@ -60,12 +68,13 @@ function getNumberOfLibraryItemsDownloaded($media='ebook',$file_ID = null){
     return 0;
 }
 
-
-function getLibraryItems($media='ebook', $on_shelf=1) {
-	$supported_media_types = getFileTypes($media);
+function getLibraryItems($media = 'ebook', $on_shelf = 1) {
+    $supported_media_types = getFileTypes($media);
     $items = array();
     $query = "select * from library where on_shelf = $on_shelf ";
-	if(sizeof($supported_media_types)){$query .= "and (file_type = '".implode("' or file_type = '", $supported_media_types)."')";}
+    if (sizeof($supported_media_types)) {
+        $query .= "and (file_type = '" . implode("' or file_type = '", $supported_media_types) . "')";
+    }
     $link = AdminUtility::getDefaultDBConnection();
     $result = mysqli_query($link, $query);
     if ($result) {
@@ -87,8 +96,8 @@ function getLibraryItems($media='ebook', $on_shelf=1) {
  * @param type $sort_order
  * @return array
  */
-function searchLibraryItems($search_query, $media='ebook',  $on_shelf=1, $sort_type = null, $sort_order = null){
-	$supported_media_types = getFileTypes($media);
+function searchLibraryItems($search_query, $media = 'ebook', $on_shelf = 1, $sort_type = null, $sort_order = null) {
+    $supported_media_types = getFileTypes($media);
     $items = array();
     $link = AdminUtility::getDefaultDBConnection();
     //process query
@@ -102,9 +111,11 @@ function searchLibraryItems($search_query, $media='ebook',  $on_shelf=1, $sort_t
             $query .= " or ";
         }
     }
-	$query .= ")";
-	if(sizeof($supported_media_types)){$query .= " and (file_type = '".implode("' or file_type = '", $supported_media_types)."')";}
-	//Search
+    $query .= ")";
+    if (sizeof($supported_media_types)) {
+        $query .= " and (file_type = '" . implode("' or file_type = '", $supported_media_types) . "')";
+    }
+    //Search
     $result = mysqli_query($link, $query);
     if ($result) {
         while ($row = mysqli_fetch_array($result)) {
@@ -148,17 +159,17 @@ function sortLibraryItems(array &$items, $sort_type, $sort_order) {
     }
 }
 
-function getFileTypes($media = 'ebook'){
-	$name = ($media == 'ebook')? SETTINGS_FILE_TYPES_EBOOKS : SETTINGS_FILE_TYPES_VIDEOS;
+function getFileTypes($media = 'ebook') {
+    $name = ($media == 'ebook') ? SETTINGS_FILE_TYPES_EBOOKS : SETTINGS_FILE_TYPES_VIDEOS;
     $types = array();
     $query = "select value from settings where name ='$name'";
     $link = AdminUtility::getDefaultDBConnection();
     $result = mysqli_query($link, $query);
     if ($result) {
         $row = mysqli_fetch_array($result);
-		$field = $row['value'];
+        $field = $row['value'];
         $types = explode(',', $field);
-        }
+    }
     //Log error
     AdminUtility::logMySQLError($link);
 
@@ -205,9 +216,9 @@ function deleteLibraryItems(array $IDs) {
             //Log error
             AdminUtility::logMySQLError($link);
             return FALSE;
-        }else{
-			//delete file from local server
-		}
+        } else {
+            //delete file from local server
+        }
     }
     return mysqli_commit($link);
 }

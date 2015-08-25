@@ -15,8 +15,7 @@
  * limitations under the License.
  */
 
-//If request was sent to settings$1.php
-if (isset($array['settings$1'])) {
+if (isset($array['settings$pwd'])) {
     //Handle request
     $isPasswordChangeRequest = true;
     try {
@@ -27,50 +26,97 @@ if (isset($array['settings$1'])) {
         $success = false;
         $error_message = $exc->getMessage();
     }
+} else if (isset($array['settings$email'])) {
+    //Handle request
+    $isEmailChangeRequest = true;
+    try {
+        $admin->changeEmail($array['email']);
+        $success = true;
+        $error_message = "";
+    } catch (Exception $exc) {
+        $success = false;
+        $error_message = $exc->getMessage();
+    }
 }
+$email = $admin->getAdminEmail();
 ?>
 <div>
-    <h4>CHANGE PASSWORD</h4>
-
+    <h4>CHANGE PASSWORD OR EMAIL</h4>
     <div class="row">
         <a href="index.php?p=4" class="link place-right"><i class="icon-arrow-left-2"></i> Back</a>
     </div>
-
     <div class="padding5 grid">
-        <?php
-        if (isset($isPasswordChangeRequest)) {
-            if ($success) {
-                ?>
-                <p class="fg-NACOSS-UNN">Password changed</p>
-            <?php } else { ?>
-                <p class="fg-red"><?= $error_message ?></p>
+        <div class="panel">
+            <div class="panel-header">Change Password</div>
+            <div class="panel-content">
                 <?php
-            }
-        }
-        ?>
-        <form method="post" action="index.php?p=41">
-            <div class="row" >
-                <label class="span2">Old Password<span class="fg-red">*</span></label>
-                <div class="span4">
-                    <input class="password" name='password' style="width: inherit" type='password' tabindex='2' />
-                </div>
-            </div>
-            <div class="row" >
-                <label class="span2">New Password<span class="fg-red">*</span></label>
-                <div class="span4">
-                    <input class="password" name='password1' style="width: inherit" type='password' tabindex='2' />
-                </div>
-            </div>
-            <div class="row" >
-                <label class="span2">Confirm Password<span class="fg-red">*</span></label>
-                <div class="span4">
-                    <input class="password" name='password2' style="width: inherit" type='password' tabindex='2' />
-                </div>
-            </div>
+                if (isset($isPasswordChangeRequest)) {
+                    if ($success) {
+                        ?>
+                        <p class="fg-NACOSS-UNN">Password changed</p>
+                    <?php } else { ?>
+                        <p class="fg-red"><?= $error_message ?></p>
+                        <?php
+                    }
+                }
+                ?>
+                <form class="row" method="post" action="index.php?p=41">
+                    <div class="row" >
+                        <label class="span2">Old Password<span class="fg-red">*</span></label>
+                        <div class="span10">
+                            <input class="password" name='password' style="width: inherit" type='password' tabindex='2' />
+                        </div>
+                    </div>
+                    <div class="row" >
+                        <label class="span2">New Password<span class="fg-red">*</span></label>
+                        <div class="span10">
+                            <input class="password" name='password1' style="width: inherit" type='password' tabindex='2' />
+                        </div>
+                    </div>
+                    <div class="row" >
+                        <label class="span2">Confirm Password<span class="fg-red">*</span></label>
+                        <div class="span10">
+                            <input class="password" name='password2' style="width: inherit" type='password' tabindex='2' />
+                        </div>
+                    </div>
 
-            <div class="row">
-                <input class="button bg-blue bg-hover-dark fg-white" type='submit' name='settings$1' value='Change' tabindex='9'/>
+                    <div class="row">
+                        <input class="button bg-blue bg-hover-dark fg-white" type='submit' name='settings$pwd' value='Change Password' tabindex='9'/>
+                    </div>
+                </form>
             </div>
-        </form>
+        </div>
+
+        <div class="panel">
+            <div class="panel-header">Change Email</div>
+            <div class="panel-content">
+                <?php
+                if (isset($isEmailChangeRequest)) {
+                    if ($success) {
+                        ?>
+                        <p class="fg-NACOSS-UNN">Email changed</p>
+                    <?php } else { ?>
+                        <p class="fg-red"><?= $error_message ?></p>
+                        <?php
+                    }
+                }
+                ?>
+                <form class="row" method="post" action="index.php?p=41">
+                    <div class="row" >
+                        <label class="">Current email: <?= $email ?></label>
+                    </div>
+                    <div class="row" >
+                        <label class="span2">Email<span class="fg-red">*</span></label>
+                        <div class="span10">
+                            <input class="email" placeholder="example@domain.com" value="<?= isset($array['email']) ? $array['email'] : "" ?>" name='email' style="width: inherit" type='email' tabindex='2' />
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <input class="button bg-blue bg-hover-dark fg-white" type='submit' name='settings$email' value='Change Email' tabindex='9'/>
+                    </div>
+                </form>
+            </div>
+        </div>
     </div>
 </div>

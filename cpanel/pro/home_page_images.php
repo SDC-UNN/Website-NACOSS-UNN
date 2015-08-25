@@ -167,7 +167,7 @@ limitations under the License.
         <?php
         if ((count($smallImages) + count($largeImages)) < 10) { //max 4 large images and 6 small images  
             ?>
-            <div class="panel grid" id="new">
+            <div class="panel" id="new">
                 <div class="panel-header">Add New</div>
                 <div class="panel-content">
                     <?php
@@ -207,7 +207,7 @@ limitations under the License.
                         </div>
                         <label class="label" >Size</label>
                         <div class="row ntm">
-                            <select name="size" required="" class="span2" style="width: 200px">
+                            <select name="size" required="" class="span6" style="width: 200px">
                                 <?php
                                 $size = isset($size) ? $size : "";
                                 if (count($largeImages) < 4) { //max 4 large images  
@@ -234,7 +234,7 @@ limitations under the License.
                         </script>
                         <div id="hint" hidden="">
                             <div class="row" >
-                                <div class="notice marker-on-top bg-NACOSS-UNN span3">
+                                <div class="notice marker-on-top bg-NACOSS-UNN span6">
                                     <small id="hint_text"> </small>
                                 </div>
                             </div>
@@ -242,7 +242,7 @@ limitations under the License.
                         <br/>
                         <label class="label">Image</label> 
                         <div class="row ntm">
-                            <div class="span4">
+                            <div class="span12">
                                 <input name="image" class="" style="width: inherit" type="file" />
                             </div>
                         </div>

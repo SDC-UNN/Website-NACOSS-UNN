@@ -127,14 +127,14 @@ class NewsAdmin extends Admin {
             $check_result = mysqli_query($link, $check_query);
             if ($check_result) {
                 $row = mysqli_fetch_array($check_result);
-                $image_url = filter_input(INPUT_SERVER, "DOCUMENT_ROOT") . SITE_FOLDER . $row["img_url"];
+                $image_url = ROOT . $row["img_url"];
                 if (is_file($image_url)) {
                     $deleted = unlink($image_url);
                     if (!$deleted) {
                         throw new Exception("Home page image with id = $value could not be deleted");
                     }
                 }
-                $thumb_url = filter_input(INPUT_SERVER, "DOCUMENT_ROOT") . SITE_FOLDER . $row["thumb_url"];
+                $thumb_url = ROOT . $row["thumb_url"];
                 if (is_file($thumb_url)) {
                     $deleted = unlink($thumb_url);
                     if (!$deleted) {
@@ -184,7 +184,7 @@ class NewsAdmin extends Admin {
                 throw new Exception("Unknown file format");
             }
             $img_url = $target_dir . uniqid("img_") . $file_ext;
-            $target_file = filter_input(INPUT_SERVER, "DOCUMENT_ROOT") . SITE_FOLDER . $img_url;
+            $target_file = ROOT . $img_url;
         } else {
             throw new Exception("No image set");
         }

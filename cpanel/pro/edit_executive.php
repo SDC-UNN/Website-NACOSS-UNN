@@ -57,11 +57,11 @@ $executive = getExecutive($id);
         }
         $name = $executive["last_name"] . " " . $executive["first_name"];
         $session = isset($modifyPerformed) ? $array["session"] : $executive["session"];
-        $post = isset($modifyPerformed) ? $array["post"] :  $executive["post"];
+        $post = isset($modifyPerformed) ? $array["post"] : $executive["post"];
         ?>
         <form action="<?= $defaultPage ?>" method="post">
-            <input class="span1" name="url" hidden value="<?= urlencode($url) ?>"/>                    
-            <input class="span1" name="id" hidden value="<?= $id ?>"/>                    
+            <input class="" name="url" hidden value="<?= urlencode($url) ?>"/>                    
+            <input class="" name="id" hidden value="<?= $id ?>"/>                    
             <div class="row">
                 <label class="">Name</label>
                 <label class=""><small><?= $name ?></small></label>
@@ -71,8 +71,8 @@ $executive = getExecutive($id);
                 <label class=""><small><?= $executive["regno"] ?></small></label>
             </div>
             <div class="row">
-                <label class="span1">Post</label>
-                <select name="post" required="" class="span4">
+                <label class="span2">Post</label>
+                <select name="post" required="" class="span10">
                     <option></option>
                     <?php
                     $posts = getExecutivePosts();
@@ -87,8 +87,8 @@ $executive = getExecutive($id);
                 </select>
             </div>
             <div class="row">
-                <label class="span1">Session</label>
-                <select name="session" required="" class="span4">
+                <label class="span2">Session</label>
+                <select name="session" required="" class="span10">
                     <option ></option>
                     <?php
                     $year = date("Y");
