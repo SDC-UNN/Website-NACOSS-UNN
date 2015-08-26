@@ -123,6 +123,12 @@ limitations under the License.
                                     <li class="<?= $page == 4 ? "stick bg-NACOSS-UNN" : "" ?>">
                                         <a href="profile.php?p=4">Payments</a>
                                     </li>
+                                    <?php if (isClassRep($user->getUserID())) {
+                                        ?>
+                                        <li class="bg-NACOSS-UNN">
+                                            <a href="<?= CPANEL_URL ?>" target="_blank">Class Room</a>
+                                        </li>
+                                    <?php } ?>
                                 </ul>
                             </nav>
                             <a href="profile.php?p=5">report a bug</a>

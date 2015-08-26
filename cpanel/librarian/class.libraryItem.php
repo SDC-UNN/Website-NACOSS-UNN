@@ -189,7 +189,7 @@ class LibraryItem{
 	}
 	
 	public function setDateAdded($mktime){
-		$this->date_added = $mktime > 0 ? date('Y-m-d h-i-s', $mktime) : date('Y-m-d h-i-s', mktime());
+		$this->date_added = $mktime > 0 ? date('Y-m-d h-i-s', $mktime) : date('Y-m-d h-i-s', time());
 	}
 	
 	public function getDateAdded(){

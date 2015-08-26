@@ -1,6 +1,6 @@
 <?php
 //Initializing variables with default values
-$defaultPage = "index.php?p=1";
+$defaultPage = "index.php?p=2";
         const MEDIA = "video";
 $sort_type = SORT_LIBRARY_TYPE_TITLE;
 $order = ORDER_LIBRARY_ASC;
@@ -94,7 +94,7 @@ limitations under the License.
         } else {
             ?>
             <div class="bg-grayLighter padding5">
-                <form method="post" action="index.php?p=1&sh=<?= $on_shelf; ?>">
+                <form method="post" action="index.php?p=2&sh=<?= $on_shelf; ?>">
                     <div class="input-control text" data-role="input-control">
                         <input type="text" value="<?= $searchQuery ?>" placeholder="Search Books" name="search"/>
                         <button class="btn-search" name="search_button" type="submit"></button>
@@ -180,7 +180,7 @@ limitations under the License.
             }
             ?>
             <div id="top">
-                <form action="index.php?p=1&sh=<?= $on_shelf; ?>" method="post">
+                <form action="index.php?p=2&sh=<?= $on_shelf; ?>" method="post">
                     <input class="span1" name="search" hidden value="<?= $searchQuery ?>"/>
                     <input class="span1" name="sort_type" hidden value="<?= $sort_type ?>"/>
                     <input class="span1" name="sort_order" hidden value="<?= $order ?>"/>
@@ -234,8 +234,8 @@ limitations under the License.
                         </table>
                     </div>
                     <div class="row">
-                        <a href="index.php?p=1&sh=0" class="<?= $on_shelf == 1 ? 'button bg-blue bg-hover-dark fg-white place-right' : 'button disabled place-right'; ?>">Off Shelf</a>
-                        <a href="index.php?p=1&sh=1" class="<?= $on_shelf == 0 ? 'button bg-blue bg-hover-dark fg-white place-right' : 'button disabled place-right'; ?>">On Shelf</a>
+                        <a href="index.php?p=2&sh=0" class="<?= $on_shelf == 1 ? 'button bg-blue bg-hover-dark fg-white place-right' : 'button disabled place-right'; ?>">Off Shelf</a>
+                        <a href="index.php?p=2&sh=1" class="<?= $on_shelf == 0 ? 'button bg-blue bg-hover-dark fg-white place-right' : 'button disabled place-right'; ?>">On Shelf</a>
                     </div>
                 </form>
             <?php } ?>

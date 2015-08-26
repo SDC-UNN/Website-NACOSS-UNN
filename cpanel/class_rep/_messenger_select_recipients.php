@@ -63,7 +63,7 @@ if (isset($array['type']) and ( isset($array['next']) or isset($array['send']) )
                 $settings = $admin->getSettings();
                 $gateway = $settings['sms_api_gatewayURL']['value'];
                 $username = $settings['sms_api_gatewayUsername']['value'];
-                $password = $settings['sms_api_gatewaPassword']['value'];
+                $password = $settings['sms_api_gatewayPassword']['value'];
                 $sms = new SMS($gateway, $username, $password, $sender_id, $message_body, $recipients);
                 if ($sms->send()) {
                     $units_used = $sms->get_unitsUsed();

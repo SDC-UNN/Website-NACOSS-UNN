@@ -1,8 +1,14 @@
 <?php
 $message = '';
-if (isset($array['rename']) and isset($array['group_id']) and isset($array['new_name'])) {
-    if ($admin->renameGroup($array['group_id'], $array['new_name'])) {
-        $message = '<span style="color:green">Successful</span>';
+if (isset($array['rename']) and isset($array['group_id'])) {
+    if (!empty($array['new_name'])) {
+        if ($admin->renameGroup($array['group_id'], $array['new_name'])) {
+            $message = '<span style="color:green">Successful</span>';
+        } else {
+            $message = '<span style="color:red">Oops! Something went wrong</span>';
+        }
+    } else {
+        $message = '<span style="color:red">New name not specified</span>';
     }
 }
 
@@ -10,13 +16,25 @@ if (isset($_GET['a'])) {
     if ($_GET['a'] == 'dg' and isset($_GET['g'])) {
         if ($admin->deleteGroup($_GET['g'])) {
             $message = '<span style="color:green">Successful</span>';
+        } else {
+            $message = '<span style="color:red">Oops! Something went wrong</span>';
         }
     }
 }
 
-if (isset($array['delete_m']) and isset($array['group_id']) and isset($array['regnos'])) {
-    if ($admin->removeFromGroup($array['group_id'], $array['regnos'])) {
-        $message = '<span style="color:green">Successful</span>';
+if (isset($array['delete_m']) and isset($array['group_id'])) {
+    if (!empty($array['regnos'])) {
+        try {
+            if ($admin->removeFromGroup($array['group_id'], $array['regnos'])) {
+                $message = '<span style="color:green">Successful</span>';
+            } else {
+                $message = '<span style="color:red">Oops! Something went wrong</span>';
+            }
+        } catch (Exception $exc) {
+            $message = "<span style='color:red'>{$exc->getMessage()}</span>";
+        }
+    } else {
+        $message = '<span style="color:red">No contact selected</span>';
     }
 }
 

@@ -43,38 +43,41 @@ limitations under the License.
                     } else {
                         ?>
                         <div class="row ntm">
-                            <div class="span8 ntm listview-outlook">
+                            <div class="span8 ntm">
                                 <?php
                                 foreach ($allNews as $value) {
                                     ?>
-                                    <a href="news_post.php?id=<?= $value['id'] ?>" class="list">
-                                        <div class="list-content text-left">
-                                            <h4 class="fg-lightBlue"><?= $value['title'] ?></h4>
-                                            <small class="">
+                                    <a href="news_post.php?id=<?= $value['id'] ?>" class="row ntm">
+                                        <div class="text-left">
+                                            <h4 class="fg-lightBlue fg-hover-dark"><?= $value['title'] ?></h4>
+                                            <small class="fg-dark">
                                                 <?php
                                                 $plain = strip_tags($value['content']); //get plain text
-                                                $preview = str_split($plain, 80)[0]; //get first 80 characters
-                                                echo $preview . "...";
+                                                $preview = str_split($plain, 180)[0]; //get first 80 characters
+                                                echo html_entity_decode($preview) . "...<br/>";
+                                                echo '<strong>Posted: ' . strftime("%A, %#d %B %Y", strtotime($value['time_of_post'])) . '</strong>';
                                                 ?>
-                                                <br/>
-                                                <strong>Posted: <?= $value['time_of_post'] ?></strong>
                                             </small>
                                         </div>
+                                        <hr/>
                                     </a>
                                     <?php
                                 }
                                 ?>
                             </div>
-                            <div class="span4 listview-outlook">
+                            <div class="span4">
                                 <h4 class="padding5 bg-NACOSS-UNN fg-white">Top Stories</h4>
                                 <?php
                                 foreach ($topNews as $value) {
                                     ?>
-                                    <a href="news_post.php?id=<?= $value['id'] ?>" class="list">
-                                        <div class="list-content">
-                                            <span class="list-title fg-lightBlue"><?= $value['title'] ?></span>
-                                        </div>
-                                    </a>
+                                    <div class="row ntm">
+                                        <a href="news_post.php?id=<?= $value['id'] ?>" class="span12">
+                                            <span class="fg-dark span1">&bullet;</span> 
+                                            <span class="fg-lightBlue fg-hover-dark span11"> 
+                                                <?= $value['title'] ?>
+                                            </span>
+                                        </a>
+                                    </div>
                                     <?php
                                 }
                                 ?>

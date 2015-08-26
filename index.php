@@ -156,7 +156,7 @@ limitations under the License.
                                         ?>
                                         <div class="row ntm">
                                             <a href="news_post.php?id=<?= $allNews[$index]['id'] ?>" class="span12">
-                                                <span class="icon-arrow-right-3 fg-dark span1"></span>
+                                                <span class="fg-dark span1">&bullet;</span> 
                                                 <span class="fg-lightBlue fg-hover-dark span11"> 
                                                     <?= $allNews[$index]['title'] ?>
                                                 </span>
@@ -183,7 +183,7 @@ limitations under the License.
                                         ?>
                                         <div class="row ntm">
                                             <a href="news_post.php?id=<?= $value['id'] ?>" class="span12">
-                                                <span class="icon-arrow-right-3 fg-dark span1"></span> 
+                                                <span class="fg-dark span1">&bullet;</span> 
                                                 <span class="fg-lightBlue fg-hover-dark span11"> 
                                                     <?= $value['title'] ?>
                                                 </span>
@@ -204,36 +204,38 @@ limitations under the License.
                     </div>
 
                 </div>
-            </div>
-            <div class="bg-grayLighter">
-                <div class="padding5 grid">
-                    <div class="row">
-                        <small class="span1" style="padding-top: 15px">Sponsors</small>
-                        <div class="span11">
-                            <div class="span1">
-                                <a href="http://unn.edu.ng" target="_blank">
-                                    <img src="img/sponsors/UNN_Logo.png" alt="" style="height: 50px; width: 50px"/>
-                                </a>
-                            </div>
-                            <div class="span1">
-                                <a href="http://ncs.org.ng" target="_blank">
-                                    <img src="img/sponsors/ncs.jpg" alt="" style="height: 50px; width: 50px"/>
-                                </a>
-                            </div>
-                            <div class="span1">
-                                <a href="http://www.ispon.org/" target="_blank">
-                                    <img src="img/sponsors/ispon.jpg" alt="" style="height: 50px; width: 50px"/>
-                                </a>
-                            </div>
-                            <div class="span1">
-                                <a href="http://cpn.gov.ng/" target="_blank">
-                                    <img src="img/sponsors/cpn.jpg" alt="" style="height: 50px; width: 50px"/>
-                                </a>
+                <div class="bg-grayLighter">
+                    <div class="padding5">
+                        <div class="row ntm">
+                            <small class="span1" style="padding-top: 15px">Sponsors</small>
+                            <div class="span11">
+                                <div class="row ntm">
+                                    <div class="span2">
+                                        <a href="http://unn.edu.ng" target="_blank">
+                                            <img src="img/sponsors/UNN_Logo.png" alt="" style="height: 50px; width: 50px"/>
+                                        </a>
+                                    </div>
+                                    <div class="span2">
+                                        <a href="http://ncs.org.ng" target="_blank">
+                                            <img src="img/sponsors/ncs.jpg" alt="" style="height: 50px; width: 50px"/>
+                                        </a>
+                                    </div>
+                                    <div class="span2">
+                                        <a href="http://www.ispon.org/" target="_blank">
+                                            <img src="img/sponsors/ispon.jpg" alt="" style="height: 50px; width: 50px"/>
+                                        </a>
+                                    </div>
+                                    <div class="span2">
+                                        <a href="http://cpn.gov.ng/" target="_blank">
+                                            <img src="img/sponsors/cpn.jpg" alt="" style="height: 50px; width: 50px"/>
+                                        </a>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
+                    <br/>
                 </div>
-                <br/>
             </div>
             <?php require_once './footer.php'; ?>
         </div>

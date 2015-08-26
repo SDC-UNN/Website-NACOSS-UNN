@@ -105,3 +105,14 @@ function resetAdminPassword($id, $newPassword) {
     //Log error
     AdminUtility::logMySQLError($link);
 }
+
+function isClassRep($regno) {
+    $query = "select * from admins where username = '" . $regno . "'";
+    $link = UserUtility::getDefaultDBConnection();
+    $result = mysqli_query($link, $query);
+    if ($result) {
+        return mysqli_num_rows($result) > 0;
+    } else {
+        return false;
+    }
+}

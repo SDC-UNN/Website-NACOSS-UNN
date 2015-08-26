@@ -60,7 +60,7 @@ require_once('../class.VideoUploader.php');
                     return false
                 } else if ($('#FileInput').val()) {
                     if (fsize > maxFileSize) {
-                        $("#requestResponse").html("<span class='fg-red'><b>" + bytesToSize(fsize) + "</b> Too big file! <br />File is too big, it should be less than " + bytesToSize(maxFileSize) + "</span>");
+                        $("#requestResponse").html("<span class='fg-red'><b>" + bytesToSize(fsize) + "</b>File is too big, it should be less than " + bytesToSize(maxFileSize) + "</span>");
                         return false;
                     }
                     if ($.inArray(ftype, supportedTypes) == -1) {
@@ -112,7 +112,7 @@ require_once('../class.VideoUploader.php');
 //function to format bites bit.ly/19yoIPO
         function bytesToSize(bytes) {
             var sizes = ['Bytes', 'KB', 'MB', 'GB', 'TB'];
-            if (bytes == 0)
+            if (bytes === 0)
                 return '0 Bytes';
             var i = parseInt(Math.floor(Math.log(bytes) / Math.log(1024)));
             return Math.round(bytes / Math.pow(1024, i), 2) + ' ' + sizes[i];
@@ -158,8 +158,6 @@ require_once('../class.VideoUploader.php');
     <h4>New Library Entry</h4>
     <div id="progressbox" ><div id="progressbar"></div ><div id="statustxt">0%</div></div>
     <form method="post" enctype="multipart/form-data" action="_processor.library.php" id="newLibItemForm" onreset='$("#requestResponse").html()'>
-
-
         <input type="hidden" value="<?= Uploader::uploadLimit(); ?>" id="max_Fsize"/>
         <input type="hidden" value="<?= implode(',', array_merge(DocumentUploader::MIME(), VideoUploader::MIME())); ?>" id="supportedFtypes"/>
 

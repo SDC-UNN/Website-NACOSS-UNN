@@ -1,6 +1,6 @@
 <?php
 
-/*
+/* 
  * Copyright 2015 NACOSS UNN Developers Group (NDG).
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -16,6 +16,4 @@
  * limitations under the License.
  */
 
-require_once filter_input(INPUT_SERVER, "DOCUMENT_ROOT") . 'Website-NACOSS-UNN/constants.php';
-require_once 'AdminUtility.php';
-require_once 'Admin.php';
+header("location: ../404.php");

@@ -29,15 +29,44 @@ if (isset($array['search_button'])) {
     }
 }
 
-if (isset($array['create_group']) and isset($array['new_group']) and isset($array['regnos'])) {
-    if ($admin->createGroup($array['new_group'], $array['regnos'])) {
-        $message = '<span style="color:green">Successful</span>';
+if (isset($array['create_group'])) {
+    if (!empty($array['new_group'])) {
+        if (!empty($array['regnos'])) {
+            try {
+                if ($admin->createGroup($array['new_group'], $array['regnos'])) {
+                    $message = '<span style="color:green">Successful</span>';
+                    unset($array);
+                } else {
+                    $message = '<span style="color:red">Oops! Something went wrong</span>';
+                }
+            } catch (Exception $exc) {
+                $message = "<span style='color:red'>{$exc->getMessage()}</span>";
+            }
+        } else {
+            $message = '<span style="color:red">No contact selected</span>';
+        }
+    } else {
+        $message = '<span style="color:red">Sorry, We were unable to create group, check group name</span>';
     }
 }
 
-if (isset($array['add_to_group']) and isset($array['group']) and isset($array['regnos'])) {
-    if ($admin->addToGroup($array['group'], $array['regnos'])) {
-        $message = '<span style="color:green">Successful</span>';
+if (isset($array['add_to_group'])) {
+    if (!empty($array['group'])) {
+        if (!empty($array['regnos'])) {
+            try {
+                if ($admin->addToGroup($array['group'], $array['regnos'])) {
+                    $message = '<span style="color:green">Successful</span>';
+                } else {
+                    $message = '<span style="color:red">Oops! Something went wrong</span>';
+                }
+            } catch (Exception $exc) {
+                $message = "<span style='color:red'>{$exc->getMessage()}</span>";
+            }
+        } else {
+            $message = '<span style="color:red">No contact selected</span>';
+        }
+    } else {
+        $message = '<span style="color:red">No group selected</span>';
     }
 }
 ?>
@@ -54,8 +83,8 @@ if (isset($array['add_to_group']) and isset($array['group']) and isset($array['r
 <div>
     <h4>CONTACTS: ALL</h4>
     <div class="row">
-        <div class="span4"><?= $message; ?></div>
-        <div class="span8">
+        <div class="span6"><?= $message; ?></div>
+        <div class="span6">
             <a href="index.php?p=23" class="button bg-blue bg-hover-dark fg-white place-right">MY GROUPS</a>
             <a href="index.php?p=22" class="button disabled place-right"> ALL CONTACTS </a>
         </div>
@@ -116,7 +145,7 @@ if (isset($array['add_to_group']) and isset($array['group']) and isset($array['r
                 <fieldset>
                     <legend>Create new group with selected contacts</legend>
                     <label class="span2">Group Name</label>
-                    <input name="new_group" placeholder="Name your new group" type="text" class="span5"/>
+                    <input name="new_group" value="<?= isset($array['new_group']) ? $array['new_group'] : "" ?>" placeholder="Name your new group" type="text" class="span5"/>
                     <input type="submit" name="create_group" value="Create Group" class="button bg-blue bg-hover-dark fg-white place-right"/>
                 </fieldset>
                 <fieldset>

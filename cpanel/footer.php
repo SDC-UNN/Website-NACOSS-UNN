@@ -1,6 +1,5 @@
 <?php
-
-/* 
+/*
  * Copyright 2015 NACOSS UNN Developers Group (NDG).
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -15,11 +14,9 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
-require_once 'constants.php';
 ?>
 <div class="bg-dark">
     <div class="container tertiary-text bg-dark fg-white" style="padding: 10px">
-        Powered by <a href="<?= NDG_HOMEPAGE?>" class="fg-white fg-hover-yellow fg-active-amber">NACOSS UNN Developers Group (NDG)</a>        
+        Powered by <a href="<?= NDG_HOMEPAGE ?>" class="fg-white fg-hover-yellow fg-active-amber">NACOSS UNN Developers Group (NDG)</a>        
     </div>
 </div>

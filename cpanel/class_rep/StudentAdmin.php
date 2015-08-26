@@ -92,8 +92,13 @@ class StudentAdmin extends Admin {
     }
 
     public function createGroup($group_name, $group_members, $is_temp = 0) {
-        if (strlen($group_name) and is_array($group_members) and sizeof($group_members) > 1) {
-            $query = "insert into messenger_contacts_groups values(NULL,'" . $this->getAdminID() . "','" . $group_name . "','" . implode(',', $group_members) . "'," . time() . "," . time() . "," . $is_temp . ")";
+        if (strlen($group_name) and is_array($group_members)) {
+            if (sizeof($group_members) <= 1) {
+                throw new Exception("Group members must be more than 1");
+            }
+
+            $query = "insert into messenger_contacts_groups "
+                    . "values(default,'{$this->getAdminID()}','$group_name','" . implode(',', $group_members) . "'," . time() . "," . time() . "," . $is_temp . ")";
             $link = AdminUtility::getDefaultDBConnection();
             $result = mysqli_query($link, $query);
             if ($result) {
@@ -103,13 +108,16 @@ class StudentAdmin extends Admin {
             AdminUtility::logMySQLError($link);
             return false;
         } else {
-            die('invalid input for function createGroup(String name, String[] members)');
+            throw new Exception('invalid input for function createGroup(String name, String[] members)');
         }
     }
 
     public function addToGroup($group_id, $new_members) {
         $row = getByCol('messenger_contacts_groups', 'id', $group_id);
-        if (is_array($row) and is_array($new_members) and sizeof($new_members) > 0) {
+        if (is_array($row) and is_array($new_members)) {
+            if (sizeof($new_members) < 1) {
+                throw new Exception("No new members selected");
+            }
             $group_members = explode(',', $row['group_members']);
             foreach ($new_members as $n) {
                 if (!in_array($n, $group_members)) {
@@ -126,13 +134,16 @@ class StudentAdmin extends Admin {
             AdminUtility::logMySQLError($link);
             return false;
         } else {
-            die('invalid input for function addToGroup(Integer name, String[] new_members)');
+            throw new Exception('invalid input for function addToGroup(Integer name, String[] new_members)');
         }
     }
 
     public function removeFromGroup($group_id, $del_members) {
         $row = getByCol('messenger_contacts_groups', 'id', $group_id);
-        if (is_array($row) and is_array($del_members) and sizeof($del_members) > 0) {
+        if (is_array($row) and is_array($del_members)) {
+            if (sizeof($del_members) < 1) {
+                throw new Exception("No members selected");
+            }
             $old_members = explode(',', $row['group_members']);
             $new_members = array();
             foreach ($old_members as $n) {
@@ -150,7 +161,7 @@ class StudentAdmin extends Admin {
             AdminUtility::logMySQLError($link);
             return false;
         } else {
-            die('invalid input for function removeFromGroup(Integer name, String[] new_members)');
+            throw new Exception('invalid input for function removeFromGroup(Integer name, String[] new_members)');
         }
     }
 

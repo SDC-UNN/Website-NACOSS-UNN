@@ -16,14 +16,19 @@
  * limitations under the License.
  * 
  */
-//Modify this constant values to suit your settings
-//Do not commit this file afterwards
-
 define("DEFAULT_DB_NAME", "nacoss_db"); //Default database name (Assuming there might be need for multiple databases)
 define("DB_HOSTNAME", "localhost"); //Database hostname
 define("DB_USERNAME", "root"); //Database username
 define("DB_PASSWORD", ""); //Database password
 define("HOSTNAME", "http://localhost/Website-NACOSS-UNN/");
+
+/* Document root
+ * If this change, 
+ * you should also check /cpanel/class_lib.php. Modify required constants.php path appropriately
+ */
 define("ROOT", filter_input(INPUT_SERVER, "DOCUMENT_ROOT") . "Website-NACOSS-UNN/");
+
 define("NDG_HOMEPAGE", HOSTNAME . "ndg/"); //NDG Homepage
+define("CPANEL_URL", HOSTNAME . "cpanel/"); //Location of cpanel
+define("LIBRARY_UPLOAD_DIR", HOSTNAME . 'uploads/');
 define("ALUMNI_HOMEPAGE", HOSTNAME . "alumni/"); //Alumni Homepage
