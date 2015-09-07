@@ -102,7 +102,7 @@ limitations under the License.
         <div class="container bg-white" id="wrapper">            
             <?php require_once './header.php'; ?>
             <div class="padding20">
-                <div class="grid fluid">
+                <div class="grid">
                     <div class="row">
                         <div class="span4">
                             <nav class="sidebar">

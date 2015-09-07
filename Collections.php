@@ -28,7 +28,7 @@ class Collections {
 
     function Collections() {
         $array = array();
-        $query = "select * from library order by title ASC";
+        $query = "select * from library where on_shelf = 1 order by title ASC";
         $link = UserUtility::getDefaultDBConnection();
         $result = mysqli_query($link, $query);
         if ($result) {

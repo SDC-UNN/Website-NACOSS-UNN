@@ -17,15 +17,33 @@
  */
 require_once 'class_lib.php';
 
-$op = filter_input(INPUT_GET, "op");
+$array = filter_input_array(INPUT_GET);
+if ($array !== FALSE && $array !== null) {
+    foreach ($array as $key => $value) {
+        if (is_array($array[$key])) {
+            foreach ($array[$key] as $subkey => $subvalue) {
+                $array[$key][$subkey] = html_entity_decode($array[$key][$subkey]);
+            }
+        } else {
+            $array[$key] = html_entity_decode($array[$key]);
+        }
+    }
+} else {
+    die('No data recieved');
+}
+
+if (empty($array["op"])) {
+    die('Operation not defined');
+}
+
+$op = $array["op"];
 if ($op == "feedback") {
-    $msg = filter_input(INPUT_GET, 'msg');
     $link = UserUtility::getDefaultDBConnection();
     $query = "insert into feedbacks set "
             . "ip_address='{$_SERVER["REMOTE_ADDR"]}', "
-            . "message='$msg' "
+            . "message='{$array['msg']}' "
             . "on duplicate key update "
-            . "message='$msg', "
+            . "message='{$array['msg']}', "
             . "seen=0";
     echo mysqli_query($link, $query) ? "OK" : "FAILED";
 } else {

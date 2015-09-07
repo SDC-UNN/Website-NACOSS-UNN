@@ -31,7 +31,7 @@ limitations under the License.
         <div class="container bg-white" id="wrapper">            
             <?php require_once 'header.php'; ?>
             <div class="padding20">
-                <div class="grid fluid">
+                <div class="grid">
                     <h1>News / Events</h1>
                     <?php
                     $allNews = $news->getAllNews();
@@ -72,8 +72,8 @@ limitations under the License.
                                     ?>
                                     <div class="row ntm">
                                         <a href="news_post.php?id=<?= $value['id'] ?>" class="span12">
-                                            <span class="fg-dark span1">&bullet;</span> 
-                                            <span class="fg-lightBlue fg-hover-dark span11"> 
+                                            <span class="fg-dark">&bullet; </span> 
+                                            <span class="fg-lightBlue fg-hover-dark"> 
                                                 <?= $value['title'] ?>
                                             </span>
                                         </a>

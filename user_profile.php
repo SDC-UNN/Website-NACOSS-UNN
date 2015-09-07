@@ -61,7 +61,7 @@ limitations under the License.
                     <?php
                 } else {
                     ?>
-                    <div>
+                    <div class="grid">
                         <h2><?= $array['last_name'] . " " . $array['first_name'] ?>'s Profile</h2>
                         <div class="row">
                             <a href="<?= $url ?>">
@@ -79,87 +79,85 @@ limitations under the License.
                             <?php
                         } else {
                             ?>
-                            <div class="grid fluid">
-                                <div class="row ntp ntm">
-                                    <div class="row">
-                                        <div class="span3 bg-grayLighter">
-                                            <img class="image shadow padding5" src="<?=
-                                            isset($array['pic_url']) && !empty($array['pic_url']) ?
-                                                    HOSTNAME . $array['pic_url'] :
-                                                    HOSTNAME . "img/picture5.png"
-                                            ?>" alt=""/>
-                                        </div>
-                                        <div class="span9 bg-grayLighter shadow">
-                                            <div class="padding10">
-                                                <!--Name-->
-                                                <h2>
-                                                    <?php
-                                                    echo strtoupper($array['first_name']) . " ";
-                                                    echo empty($array['last_name']) ? "" : strtoupper($array['other_names']) . " ";
-                                                    echo strtoupper($array['last_name'])
-                                                    ?>
-                                                </h2>
-                                                <!--Registration number-->
-                                                <p><?= $array['regno'] ?> 
-                                                    <!--Show verification status-->
-                                                    <?php
-                                                    if (isset($array['verified']) && $array['verified'] == 1) {
-                                                        echo '<i title="Verified" class="icon-checkmark fg-NACOSS-UNN"></i>';
-                                                    }
-                                                    ?>
-                                                </p>
-                                                <!--Department and level-->
-                                                <?php
-                                                if (isset($array['department']) && !empty($array['department'])) {
-                                                    echo "Department of " . ucwords($array['department']);
-                                                    echo '<br/>';
-                                                    echo ucwords($array['level']) . " Level, ";
-                                                    echo 'Class of ' . $array['entry_year'];
-                                                    echo '<br/>';
-                                                }
-                                                ?>
-                                            </div>
-                                        </div>
+                            <div class="row">
+                                <div class="span2 bg-grayLighter" style="padding: 3px">
+                                    <img class="image shadow" src="<?=
+                                    isset($array['pic_url']) && !empty($array['pic_url']) ?
+                                            HOSTNAME . $array['pic_url'] :
+                                            HOSTNAME . "img/picture5.png"
+                                    ?>" alt=""/>
+                                </div>
+                                <div class="span10 bg-grayLighter shadow">
+                                    <div class="padding10">
+                                        <!--Name-->
+                                        <h2>
+                                            <?php
+                                            echo strtoupper($array['first_name']) . " ";
+                                            echo empty($array['last_name']) ? "" : strtoupper($array['other_names']) . " ";
+                                            echo strtoupper($array['last_name'])
+                                            ?>
+                                        </h2>
+                                        <!--Registration number-->
+                                        <p><?= $array['regno'] ?> 
+                                            <!--Show verification status-->
+                                            <?php
+                                            if (isset($array['verified']) && $array['verified'] == 1) {
+                                                echo '<i title="Verified" class="icon-checkmark fg-NACOSS-UNN"></i>';
+                                            }
+                                            ?>
+                                        </p>
+                                        <!--Department and level-->
+                                        <?php
+                                        if (isset($array['department']) && !empty($array['department'])) {
+                                            echo "Department of " . ucwords($array['department']);
+                                            echo '<br/>';
+                                            echo ucwords($array['level']) . " Level, ";
+                                            echo 'Class of ' . $array['entry_year'];
+                                            echo '<br/>';
+                                        }
+                                        ?>
                                     </div>
                                 </div>
-                                <div class="row ntm">
-                                    <div class="">
-                                        <div class="panel no-border bg-transparent" data-role="panel">
-                                            <p class="panel-header">Personal Information</p>
-                                            <div class="panel-content bg-grayLighter">
-                                                <p><strong>Date of Birth:</strong> 
-                                                    <!--Displays date in the format: Saturday, 29 July-->
-                                                    <?= empty($array['dob']) ? "" : strftime("%A, %#d %B", strtotime($array['dob'])) ?>
-                                                </p>
-                                                <p><strong>Bio:</strong>
-                                                    <?php
-                                                    if (isset($array['bio']) && !empty($array['bio'])) {
-                                                        echo $array['bio'];
-                                                    }
-                                                    ?>
-                                                </p>
-                                            </div>                    
+
+                            </div>
+                            <div class="row ntm">
+                                <div class="">
+                                    <div class="panel no-border bg-transparent" data-role="panel">
+                                        <p class="panel-header">Personal Information</p>
+                                        <div class="panel-content bg-grayLighter">
+                                            <p><strong>Date of Birth:</strong> 
+                                                <!--Displays date in the format: Saturday, 29 July-->
+                                                <?= empty($array['dob']) ? "" : strftime("%A, %#d %B", strtotime($array['dob'])) ?>
+                                            </p>
+                                            <p><strong>Bio:</strong>
+                                                <?php
+                                                if (isset($array['bio']) && !empty($array['bio'])) {
+                                                    echo $array['bio'];
+                                                }
+                                                ?>
+                                            </p>
+                                        </div>                    
+                                    </div>
+                                    <br/>
+                                    <div class="panel no-border bg-transparent" data-role="panel">
+                                        <p class="panel-header">Contact Information</p>
+                                        <div class="panel-content bg-grayLighter">
+                                            <p><strong>Phone:</strong> <?= $array['phone'] ?></p>
+                                            <p><strong>Email:</strong> <?= $array['email'] ?></p>
+                                            <p><strong>Address 1:</strong> <?= $array['address1'] ?></p>
+                                            <p><strong>Address 2:</strong> <?= $array['address2'] ?></p>                    
                                         </div>
-                                        <br/>
-                                        <div class="panel no-border bg-transparent" data-role="panel">
-                                            <p class="panel-header">Contact Information</p>
-                                            <div class="panel-content bg-grayLighter">
-                                                <p><strong>Phone:</strong> <?= $array['phone'] ?></p>
-                                                <p><strong>Email:</strong> <?= $array['email'] ?></p>
-                                                <p><strong>Address 1:</strong> <?= $array['address1'] ?></p>
-                                                <p><strong>Address 2:</strong> <?= $array['address2'] ?></p>                    
-                                            </div>
-                                        </div>
-                                        <br/>
-                                        <div class="panel no-border bg-transparent" data-role="panel">
-                                            <p class="panel-header">Interests/Activities</p>
-                                            <div class="panel-content bg-grayLighter">
-                                                <p><strong>Interest:</strong> <?= $array['interests'] ?></p>                    
-                                            </div>
+                                    </div>
+                                    <br/>
+                                    <div class="panel no-border bg-transparent" data-role="panel">
+                                        <p class="panel-header">Interests/Activities</p>
+                                        <div class="panel-content bg-grayLighter">
+                                            <p><strong>Interest:</strong> <?= $array['interests'] ?></p>                    
                                         </div>
                                     </div>
                                 </div>
                             </div>
+
                         <?php } ?>
                     </div>
                 <?php } ?>

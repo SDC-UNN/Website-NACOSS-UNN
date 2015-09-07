@@ -32,21 +32,21 @@ limitations under the License.
         <div class="container bg-white" id="wrapper">            
             <?php
             require_once './header.php';
-            //Detect browser type
             ?>
-            <div class="grid fluid">
+            <div class="grid fluid nbm">
                 <div class="row ntm">
                     <div class="row ntm">
                         <?php
+                        //Detect browser type
                         require_once 'detect.php';
                         if ($browser_t !== "mobile") {
-                            $defaultSlideImage = array("img_url" => "img/defaultSlideImage.jpg", "href" => "#", "caption" => "Networking the world...!");
+                            $defaultSlideImage = array("img_url" => "img/defaultSlideImage.jpg", "href" => "#", "caption" => "Networking the world...");
                             array_push($slides, $defaultSlideImage);
                             ?>
                             <!--large home page images-->
                             <div class="bg-dark" >
                                 <div class="carousel">
-                                    <div class="bg-transparent no-overflow" id="carousel">
+                                    <div class="bg-transparent no-overflow on-phone no-desktop no-tablet" id="carousel1">
                                         <?php
                                         foreach ($slides as $value) {
                                             ?>
@@ -61,18 +61,48 @@ limitations under the License.
                                             <?php
                                         }
                                         ?> 
-                                        <a class="controls left fg-white"><i class="icon-arrow-left-5"></i></a>
-                                        <a class="controls right  fg-white"><i class="icon-arrow-right-5"></i></a>
+                                    </div>
+                                    <div class="bg-transparent no-overflow no-phone" id="carousel2">
+                                        <?php
+                                        foreach ($slides as $value) {
+                                            ?>
+                                            <a class="slide image-container" href="<?= $value['href'] ?>">
+                                                <img  src="<?= HOSTNAME . $value['img_url'] ?>" alt="" class="image"/>
+                                                <div class="overlay">
+                                                    <h2 class="fg-white">
+                                                        <?= $value['caption'] ?> 
+                                                    </h2>
+                                                </div>
+                                            </a>
+                                            <?php
+                                        }
+                                        ?> 
+    <!--                                        <a class="controls left fg-white"><i class="icon-arrow-left-5"></i></a>
+    <a class="controls right  fg-white"><i class="icon-arrow-right-5"></i></a>-->
                                     </div>
                                 </div>
                             </div>
                             <script>
                                 $(function () {
-                                    $("#carousel").carousel({
+                                    $("#carousel1").carousel({
                                         period: 5000,
                                         duration: 1000,
                                         effect: 'fade',
-                                        height: <?= $browser_t === "web" ? 500 : 220 ?>,
+                                        height: 180,
+                                        controls: false,
+                                        markers: {
+                                            show: true,
+                                            type: "default",
+                                            position: "bottom-right"
+                                        }
+                                    });
+                                });
+                                $(function () {
+                                    $("#carousel2").carousel({
+                                        period: 5000,
+                                        duration: 1000,
+                                        effect: 'fade',
+                                        height: 500,
                                         controls: false,
                                         markers: {
                                             show: true,
@@ -86,9 +116,6 @@ limitations under the License.
                     </div>
                     <div class="row padding10 ntm">
                         <!--smaller home page images-->
-                        <?php
-                        $mark; //This is a mark for the html div below
-                        ?>
                         <div class="span9">
                             <?php
                             //Add default images
@@ -146,7 +173,7 @@ limitations under the License.
                                 </div>
                             </div>
 
-                            <div  class="row ntm ">
+                            <div  class="row ntm">
                                 <h4 class="padding5 bg-NACOSS-UNN fg-white">Latest Stories</h4>
                                 <?php
                                 $allNews = $news->getAllNews();
@@ -183,7 +210,7 @@ limitations under the License.
                                         ?>
                                         <div class="row ntm">
                                             <a href="news_post.php?id=<?= $value['id'] ?>" class="span12">
-                                                <span class="fg-dark span1">&bullet;</span> 
+                                                <span class="fg-dark span1">&bullet; </span> 
                                                 <span class="fg-lightBlue fg-hover-dark span11"> 
                                                     <?= $value['title'] ?>
                                                 </span>

@@ -54,99 +54,103 @@ limitations under the License.
         <div class="container bg-white" id="wrapper">            
             <?php require_once 'header.php'; ?>
             <div class="padding20">
-                <div class="grid fluid">
+                <div class="">
                     <h1>Executives</h1>
                     <?php if (empty($executives) && empty($session)) { ?>
                         <div class="row">
                             <p>Not available at the moment</p>
                         </div>
                     <?php } else { ?>
-
-                        <form class="row" method="post" action="executives.php">
-                            <p class="span2">Session</p>
-                            <select name="session" class="select span3">
-                                <option></option>
-                                <?php
-                                $year = date("Y");
-                                $endYear = "2014";
-                                while ($year >= $endYear) {
-                                    $nextSession = ($year - 1) . "/" . ($year);
-                                    echo "<option "
-                                    . (strcasecmp($session, $nextSession) === 0 ? "selected" : "")
-                                    . ">"
-                                    . $nextSession
-                                    . "</option>";
-                                    $year--;
-                                }
-                                ?>
-                            </select>
-                            <input class="span4 bg-NACOSS-UNN fg-white bg-hover-dark" name="switchSession" type="submit" value="View Session"/>
-                        </form>
-                        <div class="row">
-                            <?php include 'pagination.php'; ?>
-                            <table class="table hovered striped">
-                                <?php
-                                if (empty($executives)) {
-                                    echo '<tr class="">
+                        <div class="grid">
+                            <form class="row" method="post" action="executives.php">
+                                <p class="span1">Session</p>
+                                <select name="session" class="select span4">
+                                    <option></option>
+                                    <?php
+                                    $year = date("Y") + 1;
+                                    $endYear = "2014";
+                                    while ($year >= $endYear) {
+                                        $nextSession = ($year - 1) . "/" . ($year);
+                                        echo "<option "
+                                        . (strcasecmp($session, $nextSession) === 0 ? "selected" : "")
+                                        . ">"
+                                        . $nextSession
+                                        . "</option>";
+                                        $year--;
+                                    }
+                                    ?>
+                                </select>
+                                <input class="span1 bg-NACOSS-UNN fg-white bg-hover-dark" name="switchSession" type="submit" value="View"/>
+                            </form>
+                        </div>
+                        <div class="grid fluid">
+                            <div class="row">
+                                <?php include 'pagination.php'; ?>
+                                <table class="table hovered striped">
+                                    <?php
+                                    if (empty($executives)) {
+                                        echo '<tr class="">
                                             <td class="">
                                             <div class="text-center">';
-                                    echo '<h2>Nothing found</h2>';
-                                    echo '</div>
+                                        echo '<h2>Nothing found</h2>';
+                                        echo '</div>
                                         </td>
                                         </tr>';
-                                } else {
-                                    $start = ($page - 1) * $max_view_length;
-                                    $remainingItems = count($executives) - $start;
-                                    $stop = $start + min(array($remainingItems, $max_view_length));
-                                    for ($index = $start; $index < $stop; $index++) {
-                                        ?>
-                                        <tr class="">
-                                            <td class="">
-                                                <div class="row ntm nbm">
-                                                    <div class="span2 shadow">
-                                                        <?php
-                                                        if (file_exists(ROOT . $executives[$index]['pic_url'])) {
-                                                            ?>
-                                                            <img src="<?= HOSTNAME . $executives[$index]['pic_url'] ?>" alt="Icon"/>
+                                    } else {
+                                        $start = ($page - 1) * $max_view_length;
+                                        $remainingItems = count($executives) - $start;
+                                        $stop = $start + min(array($remainingItems, $max_view_length));
+                                        for ($index = $start; $index < $stop; $index++) {
+                                            ?>
+                                            <tr class="">
+                                                <td class="">
+                                                    <div class="row ntm nbm">
+                                                        <div class="span2 shadow">
                                                             <?php
-                                                        } else {
+                                                            if (is_file(ROOT . $executives[$index]['pic_url'])) {
+                                                                ?>
+                                                                <img src="<?= HOSTNAME . $executives[$index]['pic_url'] ?>" alt="Icon"/>
+                                                                <?php
+                                                            } else {
+                                                                ?>
+                                                                <img src="img/picture5.png" alt="Icon"/>
+                                                                <?php
+                                                            }
                                                             ?>
-                                                            <img src="img/picture5.png" alt="Icon"/>
-                                                            <?php
-                                                        }
-                                                        ?>
+                                                        </div>
+                                                        <div class="span10">
+                                                            <h4>
+                                                                <a class="" href="user_profile.php?id=<?= $executives[$index]['regno'] ?>&url=<?= $defaultPage ?>">
+                                                                    <?=
+                                                                    ucwords(
+                                                                            $executives[$index]['last_name']
+                                                                            . " "
+                                                                            . $executives[$index]['first_name']
+                                                                            . " "
+                                                                            . $executives[$index]['other_names']
+                                                                    )
+                                                                    ?> 
+                                                                </a>
+                                                            </h4>
+                                                            <p>
+                                                                <?= $executives[$index]['post'] ?>
+                                                                <br/>
+                                                                <?= $executives[$index]['session'] ?>
+                                                                <br/>
+                                                                <?= $executives[$index]['department'] ?>
+                                                            </p>   
+                                                        </div>
                                                     </div>
-                                                    <div class="span10">
-                                                        <h4>
-                                                            <a class="" href="user_profile.php?id=<?= $executives[$index]['regno'] ?>&url=<?= $defaultPage ?>">
-                                                                <?=
-                                                                $executives[$index]['last_name']
-                                                                . " "
-                                                                . $executives[$index]['first_name']
-                                                                . " "
-                                                                . $executives[$index]['other_names']
-                                                                ?> 
-                                                            </a>
-                                                        </h4>
-                                                        <p>
-                                                            <?= $executives[$index]['post'] ?>
-                                                            <br/>
-                                                            <?= $executives[$index]['session'] ?>
-                                                            <br/>
-                                                            <?= $executives[$index]['department'] ?>
-                                                        </p>   
-                                                    </div>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                        <?php
+                                                </td>
+                                            </tr>
+                                            <?php
+                                        }
                                     }
-                                }
-                                ?>
-                            </table>
-                            <?php include 'pagination.php'; ?>
+                                    ?>
+                                </table>
+                                <?php include 'pagination.php'; ?>
+                            </div>
                         </div>
-
                     <?php } ?>
 
                 </div>

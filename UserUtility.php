@@ -138,13 +138,10 @@ class UserUtility {
     }
 
     public static function getVerificationMessage($ID, $password) {
-        $message = '<html>'
-                . '<body">'
-                . 'find your login details below:<br/>'
-                . '<strong>ID:</strong> ' . $ID . '<br/>'
-                . '<strong>Password:</strong> ' . $password . '<br/>'
-                . '</body>'
-                . '</html>';
+        $message = '<h2>Welcome to the network!</h2>'
+                . '<p>Find your login details below:</p>'
+                . '<strong>Username/ID:</strong> ' . $ID . '<br/>'
+                . '<strong>Password:</strong> ' . $password . '<br/>';
         return $message;
     }
 

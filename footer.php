@@ -20,9 +20,9 @@
                 flat: true,
                 icon: '<img src="favicon.ico">',
                 title: 'Feedback',
-                content: '<div class="span5">' +
+                content: '<div class="span3">' +
                         '<label id="feedBackLabel">We appreciate your feedback. What do you want to tell us?</label>' +
-                        '<textarea rows="5" id="feedBackMessage" class="span5"></textarea>' +
+                        '<textarea rows="5" id="feedBackMessage" class="span3"></textarea>' +
                         '<div id="feedBackButtonDiv">' +
                         '<button class="bg-NACOSS-UNN bg-hover-amber" onclick="sendFeedBack()">Send FeedBack</button>' +
                         '</div>' +

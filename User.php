@@ -16,7 +16,9 @@
  * limitations under the License.
  */
 
+require_once 'constants.php';
 require_once 'UserUtility.php';
+require_once 'functions.php';
 
 class User {
 
@@ -79,19 +81,7 @@ class User {
                 $row = mysqli_fetch_array($result);
                 $hash = $row['password'];
                 // Verify stored hash against plain-text password
-                if (password_verify($password, $hash)) {
-                    $options = array('cost' => UserUtility::getHashCost());
-                    // Check if a newer hashing algorithm is available
-                    // or the cost has changed
-                    if (password_needs_rehash($hash, PASSWORD_DEFAULT, $options)) {
-                        // If so, create a new hash, and replace the old one
-                        $newHash = password_hash($password, PASSWORD_DEFAULT, $options);
-                        $hash = mysqli_escape_string($link, $newHash);
-                        $query = "update users set password = '$hash' where regno = '$ID'";
-                        mysqli_query($link, $query);
-                    }
-                    //Log error
-                    UserUtility::logMySQLError($link);
+                if ($this->verifyPassword($password, $hash)) {
                     //update data
                     $ok = $this->setUserCookies($ID, $hash);
                     $this->userInfo = $this->getUserData();
@@ -178,7 +168,7 @@ class User {
         }
 
         $prefix = str_replace("/", "", $this->getUserID());
-        $url = "uploads/userpics/" . uniqid($prefix) . $file_ext;
+        $url = "uploads/userpics/" . $prefix . $file_ext;
         $moved = move_uploaded_file($_FILES[$filename]["tmp_name"], $url);
 
         if ($moved) {
@@ -261,8 +251,7 @@ class User {
     private function addNewUser($ID, $password, $email, $first_name, $last_name, $phone) {
         $link = UserUtility::getDefaultDBConnection();
         $regno = mysqli_escape_string($link, $ID);
-        $options = array('cost' => UserUtility::getHashCost());
-        $hash = password_hash($password, PASSWORD_DEFAULT, $options);
+        $hash = crypt($password);
         $pwd = mysqli_escape_string($link, $hash);
         $email_address = mysqli_escape_string($link, $email);
         $fname = mysqli_escape_string($link, $first_name);
@@ -303,12 +292,10 @@ class User {
         // Mail login id and password to user
         if ($ok) {
             try {
-                mail($email, "Subject: NACOSS UNN login details", wordwrap(UserUtility::getVerificationMessage($ID, $password), 70, "\r\n"), "From: NACOSS UNN\r\n"
-                        . 'X-Mailer: PHP/' . phpversion());
+                sendMail($email, "Login Details", UserUtility::getVerificationMessage($ID, $password));
             } catch (Exception $exc) {
                 //Mailing failed
                 UserUtility::writeToLog($exc);
-                //            return false;
             }
         }
         return $ok;
@@ -401,15 +388,22 @@ class User {
         }
     }
 
+    /**
+     * Verifies and changes User's password (This is supported on php version >= 5.5.0)
+     * @param type $oldPassword
+     * @param type $newPassword1
+     * @param type $newPassword2
+     * @return type
+     * @throws Exception
+     */
     public function changePassword($oldPassword, $newPassword1, $newPassword2) {
-        if (password_verify($oldPassword, $this->getUserPassword())) {
+        if ($this->verifyPassword($oldPassword, $this->getUserPassword())) {
             //Check password
             $this->validatePassword($newPassword1);
             $ok = strcmp($newPassword1, $newPassword2) === 0;
             if ($ok) {
                 $link = UserUtility::getDefaultDBConnection();
-                $options = array('cost' => UserUtility::getHashCost());
-                $pwd = password_hash($newPassword1, PASSWORD_DEFAULT, $options);
+                $pwd = crypt($newPassword1);
                 $query = "update users set password='" . $pwd . "' where regno='" . $this->getUserID() . "'";
                 mysqli_query($link, $query);
                 //Log error
@@ -425,6 +419,10 @@ class User {
         } else {
             throw new Exception("Wrong password");
         }
+    }
+
+    public function verifyPassword($password, $hash) {
+        return crypt($password, $hash) === $hash;
     }
 
 }

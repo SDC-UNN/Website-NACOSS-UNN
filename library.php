@@ -11,7 +11,7 @@ $order = SORT_ASC;
 
 if (!$user->isLoggedIn()) {
     //This page is for registered users only
-    header("Location: login.php");
+    header("Location: login.php?url=library.php");
 } else {
     $searchQuery = "";
     $searchRequest = filter_input(INPUT_POST, "submit");
@@ -86,9 +86,9 @@ limitations under the License.
                     </div>
 
                     <div class="row ntm">
-                        <div class="row ntm">
-                            <label class="span2">Sort by: </label>
-                            <div class="input-control radio span3">
+                        <div class="span8">
+                            <label class="">Sort by: </label>
+                            <div class="input-control radio ">
                                 <label>
                                     <input type="radio" name="sort_type" 
                                     <?=
@@ -100,7 +100,7 @@ limitations under the License.
                                     Title
                                 </label>
                             </div>
-                            <div class="input-control radio span3">
+                            <div class="input-control radio ">
                                 <label>
                                     <input type="radio" name="sort_type"
                                     <?=
@@ -112,9 +112,9 @@ limitations under the License.
                                     Author
                                 </label>
                             </div>
-                            <div class="input-control radio span3">
+                            <div class="input-control radio ">
                                 <label>
-                                    <input class="span1" type="radio" name="sort_type"
+                                    <input class="" type="radio" name="sort_type"
                                     <?=
                                     isset($sort_type) ?
                                             ($sort_type == Collections::SORT_TYPE_DATE_ADDED ? "checked" : "") :
@@ -126,9 +126,9 @@ limitations under the License.
                             </div>
                         </div>
 
-                        <div class="row ntm">
-                            <label class="span2">Order: </label>
-                            <div class="input-control radio span3">
+                        <div class="span4">
+                            <label class="">Order: </label>
+                            <div class="input-control radio">
                                 <label>
                                     <input type="radio" name="sort_order"
                                     <?= isset($order) ? ($order == SORT_ASC ? "checked" : "") : "checked" ?>
@@ -137,7 +137,7 @@ limitations under the License.
                                     Ascending
                                 </label>
                             </div>
-                            <div class="input-control radio span3">
+                            <div class="input-control radio">
                                 <label>
                                     <input type="radio" name="sort_order"
                                     <?= isset($order) ? ($order == SORT_DESC ? "checked" : "") : "" ?>
@@ -170,7 +170,7 @@ limitations under the License.
                                     <div class="row ntm nbm">
                                         <div class="span1">
                                             <?php
-                                            if (file_exists("img/file_types/" . $array[$index]['file_type'] . ".png")) {
+                                            if (file_exists(ROOT . "img/file_types/" . strtolower($array[$index]['file_type']) . ".png")) {
                                                 ?>
                                                 <img src="img/file_types/<?= $array[$index]['file_type'] ?>.png" alt="Icon"/>
                                                 <?php
@@ -187,8 +187,19 @@ limitations under the License.
                                                 <?= empty($array[$index]['file_type']) ? "" : "[" . $array[$index]['file_type'] . "]" ?>
                                             </h4>
                                             <p>
-                                                by <?= $array[$index]['author'] ?>
-                                                <a class="button link" target="_blank" href="download.php?id=<?= $array[$index]['id'] ?>">Download</a>
+                                                <?php
+                                                if (!empty($array[$index]['author'])) {
+                                                    echo "by {$array[$index]['author']}<br/>";
+                                                }
+                                                ?>
+                                                <a class="button image-button image-left bg-hover-amber" target="_blank" href="download.php?id=<?= $array[$index]['id'] ?>">Download<?php
+                                                    if (is_file(ROOT . $array[$index]['link'])) {
+                                                        $size = filesize(ROOT . $array[$index]['link']);
+                                                        echo " [" . bytesToSize($size) . "]";
+                                                    }
+                                                    ?>
+                                                    <i class="icon-download-2 bg-lighterBlue"></i>
+                                                </a>
                                                 <br/>
                                                 <?= $array[$index]['num_of_downloads'] ?> download(s)
                                             </p>   

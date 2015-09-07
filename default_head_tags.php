@@ -23,12 +23,13 @@
 //require_once 'detect.php';
 //if ($browser_t === "web") {
 ?>
-    <!--<meta http-equiv="refresh" content="0; URL=////<?= $_SERVER["HTTP_HOST"] . "/" . $_SERVER["REQUEST_URI"] ?>" />-->
+    <!--<meta http-equiv="refresh" content="0; URL=//<?= $_SERVER["HTTP_HOST"] . "/" . $_SERVER["REQUEST_URI"] ?>" />-->
 <?php
 //}
 ?>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<!--<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">-->
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <link rel="icon" href="<?= HOSTNAME ?>favicon.ico" type="image/x-icon" />
 <link rel="shortcut icon" href="<?= HOSTNAME ?>favicon.ico" type="image/x-icon" />
 

@@ -5,11 +5,13 @@ $user = new User();
 if ($user->isLoggedIn()) {
     header("location: profile.php");
 } else {
+    $url = html_entity_decode(filter_input(INPUT_GET, "url"));
     $isFormRequest = filter_input(INPUT_POST, "submit");
 
     if ($isFormRequest) {
         //Handle a post request from form
         $isRegister = filter_input(INPUT_POST, "type") === "2";
+        $url = html_entity_decode(filter_input(INPUT_POST, "url"));
         if ($isRegister) {
             //handle request from registration form
             $showLoginPage = false;
@@ -52,7 +54,11 @@ if ($user->isLoggedIn()) {
             $password = html_entity_decode(filter_input(INPUT_POST, "password"));
             $success = $user->loginUser($id, $password);
             if ($success) {
-                header("location: profile.php");
+                if (!empty($url)) {
+                    header("location: " . $url);
+                } else {
+                    header("location: profile.php");
+                }
             } else {
                 //login unsuccessful
                 $error_message = "Wrong ID or password";
@@ -138,7 +144,7 @@ limitations under the License.
                 <?php } ?>
                 <div class="grid fluid">
                     <div class="row">
-                        <div class="panel shadow" style="margin-left: auto; margin-right: auto; width: 70%">
+                        <div class="panel shadow" style="margin-left: auto; margin-right: auto; width: 80%">
                             <h2 class="panel-header bg-grayDark fg-white">
                                 <?= $showLoginPage ? "Login" : "Register" ?>
                             </h2>
@@ -149,27 +155,30 @@ limitations under the License.
                             <?php } ?>
                             <div  class="panel-content">                                
                                 <form method='post' action='login.php'>
+                                    <input hidden="" name="url" value="<?= empty($url) ? "" : urldecode($url) ?>"/>
                                     <?php if ($showLoginPage) { ?>
                                         <!--Login form-->
 
                                         <input name="type" value="1" hidden=""/>
                                         <div class="row ntm">
-                                            <label class="span2">ID <i title="Registration number" class="icon-help fg-blue"></i></label>
-                                            <div class="span10">
-                                                <input class="text" placeholder="Registration Number" name='id' maxlength="11" style="width: inherit" required type='text' 
+                                            <label class="span3">ID <i title="Registration number" class="icon-help fg-blue"></i></label>
+                                            <div class="span9">
+                                                <input class="text span12" placeholder="Registration Number" name='id' maxlength="11" required type='text' 
                                                        <?= $isFormRequest ? "value='$id'" : ""; ?> tabindex='1' />
                                             </div>
                                         </div>
                                         <div class="row ntm" >
-                                            <label class="span2">Password</label>
-                                            <div class="span10">
-                                                <input class="password" name='password' style="width: inherit" type='password' tabindex='2' />
+                                            <label class="span3">Password</label>
+                                            <div class="span9">
+                                                <input class="password span12" name='password'  type='password' tabindex='2' />
                                             </div>
                                         </div>
                                         <div class="row ntm">
-                                            <input class="offset2 button default bg-NACOSS-UNN bg-hover-dark span2" type='submit'
-                                                   name='submit' value='Login' tabindex='3'/>
-                                            <a href="login.php?s=2" class="button small span4 bg-transparent fg-lightBlue">create account?</a>
+                                            <input class="offset3 button default bg-NACOSS-UNN bg-hover-dark span9" type='submit'
+                                                   name='submit' value='Login' tabindex='3'/>                                            
+                                        </div>
+                                        <div class="row ntm">
+                                            <a href="login.php?s=2" class="button small offset3 span4 bg-transparent fg-lightBlue">create account?</a>
                                             <a class="button small requestRegnoButton span4 bg-transparent fg-lightBlue">forgot password?</a>
                                         </div>
 
@@ -227,7 +236,7 @@ limitations under the License.
                                             </div>
                                         </div>
                                         <div class="row">
-                                            <input class="offset2 button default bg-NACOSS-UNN bg-hover-dark span3" type='submit'
+                                            <input class="offset2 button default bg-NACOSS-UNN bg-hover-dark span5" type='submit'
                                                    name='submit' value='Register' tabindex='9'/>
                                             <a href="login.php?s=1" class="button span5 bg-transparent fg-lightBlue">already a user?</a>
                                         </div>

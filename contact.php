@@ -170,7 +170,7 @@ limitations under the License.
                                 </div>
                             </div>
                             <div class="row">
-                                <input class="offset2 span4 button default bg-NACOSS-UNN bg-hover-dark" type='submit'
+                                <input class="offset2 span5 button default bg-NACOSS-UNN bg-hover-dark" type='submit'
                                        name='submit' value='Send Message' tabindex='9'/>
                             </div>
                         </form>

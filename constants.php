@@ -26,9 +26,10 @@ define("HOSTNAME", "http://localhost/Website-NACOSS-UNN/");
  * If this change, 
  * you should also check /cpanel/class_lib.php. Modify required constants.php path appropriately
  */
-define("ROOT", filter_input(INPUT_SERVER, "DOCUMENT_ROOT") . "Website-NACOSS-UNN/");
+define("ROOT", filter_input(INPUT_SERVER, "DOCUMENT_ROOT") . "/Website-NACOSS-UNN/");
 
 define("NDG_HOMEPAGE", HOSTNAME . "ndg/"); //NDG Homepage
-define("CPANEL_URL", HOSTNAME . "cpanel/"); //Location of cpanel
-define("LIBRARY_UPLOAD_DIR", HOSTNAME . 'uploads/');
+define("CPANEL_URL", HOSTNAME . "admin/"); //Location of cpanel
+define("LIBRARY_UPLOAD_DIR", 'uploads/files/');
 define("ALUMNI_HOMEPAGE", HOSTNAME . "alumni/"); //Alumni Homepage
+define("FORUM_HOMEPAGE", HOSTNAME . "discuss/"); //Forum Homepage

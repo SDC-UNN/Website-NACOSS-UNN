@@ -33,7 +33,7 @@ limitations under the License.
             <?php require_once 'header.php'; ?>
             <div class="padding20">
                 <h1 class="fg-dark">Prospectus</h1>
-                <div class="grid fluid">
+                <div class="grid">
                     <div class="row">
                         <div class="span3">
                             <nav class="sidebar">

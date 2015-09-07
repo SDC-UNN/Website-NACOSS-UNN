@@ -15,29 +15,30 @@
  * limitations under the License.
  */
 
-require_once './UserUtility.php';
+require_once 'class_lib.php';
 
 $id = filter_input(INPUT_GET, "id"); //Material id
 $link = UserUtility::getDefaultDBConnection();
-$query = "select link from library where id = '$id'";
+$query = "select * from library where id = '$id'";
 $result = mysqli_query($link, $query);
 if ($result) {
     $row = mysqli_fetch_array($result);
-    $link = $row['link'];
-	if(is_file($link)){
-		//Log download
-		$update_q ="update library set num_of_downloads += 1 where id = '$id'";
-    	//Redirect to download
-    	header("location: $link");
-	}else{
-		//Log Error: Stail link
-		$exe = new Exception("Stale Download Link: ".$link."; File ID: ".$id);
-		UserUtility::writeToLog($exe);
-	}
-}else{
-	//Log MySQL Error
-	UserUtility::logMySQLError($link);
-
+    $dlink = $row['link'];
+    $is_link = $row['file_type'] === "link";
+    //count downloads
+    $update_q = "update library set num_of_downloads = num_of_downloads + 1 where id = '$id'";
+    $result = mysqli_query($link, $update_q);
+    if ($result == FALSE) {
+        //Log MySQL Error
+        UserUtility::logMySQLError($link);
+    } else {
+        //Redirect to download
+        $url = ($is_link ? "" : HOSTNAME) . $dlink;
+        header("location: " . $url);
+    }
+} else {
+    //Log MySQL Error
+    UserUtility::logMySQLError($link);
 }
 ?>
 <!--if not successful-->

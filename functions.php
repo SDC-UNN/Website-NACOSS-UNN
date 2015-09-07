@@ -18,60 +18,48 @@
 
 function sendMail($email, $subject, $msg) {
     if (filter_var($email, FILTER_VALIDATE_EMAIL)) {
-        $header = "From: NACOSS UNN\r\n"
+        $header = "From: no-reply@nacossunn.org\r\n"
                 . "Content-type: text/html\r\n"
                 . "X-Mailer: PHP/" . phpversion();
-        return mail($email, $subject, getMessage($msg), $header);
+        return mail($email, $subject, wordwrap(getMessage($msg), 70), $header);
     } else {
         return false;
     }
 }
 
 function getMessage($content) {
-    return "<html>
-        <head>
-            <meta charset='utf-8'>
-            <meta name='description' content='NACOSS UNN official website'>
-            <meta name='author' content='NDG'>
-            
-            <link href='" . HOSTNAME . "css/metro-bootstrap.css' rel='stylesheet'>
-            <link href='" . HOSTNAME . "css/metro-bootstrap-responsive.css' rel='stylesheet'>
-            <link href='" . HOSTNAME . "css/iconFont.css' rel='stylesheet'>
-            <link href='" . HOSTNAME . "js/prettify/prettify.css' rel='stylesheet'>
-
-            <script src='" . HOSTNAME . "js/metro/metro.min.js'></script>
-
-            <!-- Load JavaScript Libraries -->
-            <script src='" . HOSTNAME . "js/jquery/jquery.min.js'></script>
-            <script src='" . HOSTNAME . "js/jquery/jquery.widget.min.js'></script>
-            <script src='" . HOSTNAME . "js/jquery/jquery.mousewheel.js'></script>
-            <script src='" . HOSTNAME . "js/prettify/prettify.js'></script>
-
-            <!-- Metro UI CSS JavaScript plugins -->
-            <script src='" . HOSTNAME . "js/metro.min.js'></script>
-
-            <!-- Local JavaScript -->
-            <script src='" . HOSTNAME . "js/docs.js'></script>
-            <script src='" . HOSTNAME . "js/github.info.js'></script>
-        </head>
-        <body class='metro'>
-            <div class='grid'>
-                <div class='bg-NACOSS-UNN row ntm'>
-                    <h3 class='span2'> NACOSS UNN </h3>
-                </div>
-                <br/>
-                <div>
-                    $content
-                </div>
-            </div>
-            <div class='bg-dark'>
-                <div class='container tertiary-text bg-dark fg-white' style='padding: 10px'>
-                    &copy; <a href='" . NDG_HOMEPAGE . "' target='_blank' class='fg-white fg-hover-yellow fg-active-amber'>NACOSS UNN Developers Group (NDG)</a>        
-                </div>
-            </div>
+    return <<<HTML
+    <html>
+        <body>
+            <table style="width: 100%; background-color: white">
+                <thead>
+                    <tr style='background-color: #60a917'>
+                        <th style='padding: 10px; color: white; height: 30px; text-align: left'> 
+							<img src="http://nacossunn.org/favicon.ico" style="height:100%;"/> 
+							<span style="font-family: 'Segoe UI Semibold', 'Open Sans Bold', Verdana, Arial, Helvetica, sans-serif; font-size: 30px; margin-left: 10px">NACOSS UNN</span>
+						</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td style="padding: 10px; font-family: 'Segoe UI', 'Open Sans', Verdana, Arial, Helvetica, sans-serif;">
+                            $content
+                            <br/>
+                            Kind Regards,<br/>
+                            The NACOSS UNN Developers Group
+                        </td>
+                    </tr>
+                    <tr style='background-color: #333333'>
+                        <td style='color: white; padding: 10px'>
+							<p style='color: gray; font-size: 11px'>This email is automatically generated, do not reply.</p>
+                            copyright NACOSS UNN
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
         </body>
     </html>
-    ";
+HTML;
 }
 
 /**
@@ -82,8 +70,7 @@ function getMessage($content) {
 function resetUserPassword($regno, $newPassword) {
     //Check password
     $link = UserUtility::getDefaultDBConnection();
-    $options = array('cost' => UserUtility::getHashCost());
-    $pwd = password_hash($newPassword, PASSWORD_DEFAULT, $options);
+    $pwd = crypt($newPassword);
     $query = "update users set password='" . $pwd . "' where regno='$regno'";
     mysqli_query($link, $query);
     //Log error
@@ -98,8 +85,7 @@ function resetUserPassword($regno, $newPassword) {
 function resetAdminPassword($id, $newPassword) {
     //Check password
     $link = AdminUtility::getDefaultDBConnection();
-    $options = array('cost' => AdminUtility::getHashCost());
-    $pwd = password_hash($newPassword, PASSWORD_DEFAULT, $options);
+    $pwd = crypt($newPassword);
     $query = "update admins set password='" . $pwd . "' where username='$id'";
     mysqli_query($link, $query);
     //Log error
@@ -115,4 +101,13 @@ function isClassRep($regno) {
     } else {
         return false;
     }
+}
+
+function bytesToSize($bytes) {
+    $sizes = array('Bytes', 'KB', 'MB', 'GB', 'TB');
+    if ($bytes === 0) {
+        return '0 Bytes';
+    }
+    $i = intval(floor(log($bytes) / log(1024)));
+    return round($bytes / pow(1024, $i), 2) . ' ' . $sizes[$i];
 }
